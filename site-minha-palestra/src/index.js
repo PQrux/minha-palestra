@@ -5,15 +5,22 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import * as firebase from "firebase";
 import secret from "./secret";
-
+import $ from "jquery";
 if(process.env.REACT_APP_PRODUCTION !== "s"){
     console.log("VERSÃO DE DESENVOLVIMENTO");
 }
 else{
     console.log("VERSÃO DE PRODUÇÃO");
 }
-
 firebase.initializeApp(secret.firebase_key);
+
+
+setTimeout(function () {
+    let viewheight = $(window).height();
+    let viewwidth = $(window).width();
+    let viewport = document.querySelector("meta[name=viewport]");
+    viewport.setAttribute("content", "height=" + viewheight + "px, width=" + viewwidth + "px, initial-scale=1.0");
+}, 300);
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

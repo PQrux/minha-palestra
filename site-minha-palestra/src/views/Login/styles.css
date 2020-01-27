@@ -20,18 +20,24 @@
 .Login_titles{
     flex: 1;
 }
-
+.Login_down_button{
+    align-self: center;
+    display: none !important;
+}
 .Login_text_container{
     display: flex;
     flex-direction: column;
     flex: 1;
     padding: 20px;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 790px) {
     .Login_container{
         flex-direction: column-reverse;
     }
     .Login_container > *{
         flex: unset !important;
+    }
+    .Login_down_button{
+        display: inline-flex !important;
     }
 }

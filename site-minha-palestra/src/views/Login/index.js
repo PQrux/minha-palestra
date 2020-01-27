@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { Box, Typography } from "@material-ui/core";
+import { Box, Fab } from "@material-ui/core";
+import { KeyboardArrowDown } from "@material-ui/icons";
 import "./styles.css";
 import palestra from "../../assets/images/palestra_img.jpg";
 import AuthenticationLogin from "../AuthenticationLogin";
+import $ from "jquery";
 export default class Login extends Component {
+  descer = () =>{
+    let target = $('html,body'); 
+    target.animate({scrollTop: target.height()}, 2000);
+  }
   render() {
     return (
         <Box className="Login_container">
@@ -22,6 +28,10 @@ export default class Login extends Component {
                   Com o Minha Palestra, você pode participar de diversas palestras e ainda receber certificados por isso!
                 </p>
               </div>
+              <Fab variant="extended" color="primary" onClick={this.descer} className="Login_down_button">
+                <KeyboardArrowDown className="whiteText"/>
+                <span className="whiteText">Conectar-se</span>
+              </Fab>
               <p className="whiteText centerText">Minha Palestra v0.1 - {new Date().getFullYear()}</p>
             </div>
           </Box>
