@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "development": "minha-palestra-dev",
+    "production": "minha-palestra-producao",
+    "default": "minha-palestra-dev"
+  }
+}

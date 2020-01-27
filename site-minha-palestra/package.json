@@ -1,0 +1,47 @@
+{
+  "name": "site-minha-palestra",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/pickers": "^3.2.9",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "firebase": "^7.7.0",
+    "models-minha-palestra": "file:../models-minha-palestra",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start:production:cmd": "set \"REACT_APP_PRODUCTION=s\" && react-scripts start",
+    "start:production:bash": "REACT_APP_PRODUCTION=s react-scripts start",
+    "build": "react-scripts build",
+    "build:production:cmd": "set \"REACT_APP_PRODUCTION=s\" && react-scripts build",
+    "build:production:bash": "REACT_APP_PRODUCTION=s react-scripts build",
+    "deploy": "react-scripts build && firebase use development && firebase deploy --only hosting:minha-palestra-dev",
+    "deploy:production:cmd": "set \"REACT_APP_PRODUCTION=s\" && react-scripts build && firebase use production && firebase deploy --only hosting:minhapalestra",
+    "deploy:production:bash": "REACT_APP_PRODUCTION=s react-scripts build && firebase use production && firebase deploy --only hosting:minhapalestra",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
