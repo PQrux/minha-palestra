@@ -57,6 +57,7 @@ export default class MaskedTextField extends Component {
         }
         this.value = value;
         if(this.props.onChange) this.props.onChange(event);
+        if(this.props.onChangeText) this.props.onChangeText(value);
     }
     render() {
         return (

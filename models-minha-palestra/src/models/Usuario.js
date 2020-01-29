@@ -37,4 +37,11 @@ module.exports = class Usuario extends FirestoreObject{
         this.aprovadoComoPalestrante = new Date(aprovadoComoPalestrante);
         this.aprovadoComoAdministrador = new Date(aprovadoComoAdministrador);
     }
+    static GRUPOS(){
+        return {
+            ADMINISTRADOR: "ADMINISTRADOR",
+            PALESTRANTE: "PALESTRANTE",
+            USUARIO: "USUARIO",
+        }
+    }
 }

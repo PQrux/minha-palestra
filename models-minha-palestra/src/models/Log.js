@@ -17,4 +17,11 @@ module.exports = class Log extends FirestoreObject{
         this.mensagem = mensagem;
         this.dh = new Date(dh);
     }
+    static TIPOS(){
+        return {
+            CRIACAO: "CRIACAO",
+            ATUALIZACAO: "ATUALIZACAO",
+            REMOCAO: "REMOCAO",
+        }
+    }
 }

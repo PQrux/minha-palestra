@@ -24,6 +24,7 @@ export default class AuthenticationLogin extends Component {
                     label="E-mail" variant="outlined"
                     className="AuthenticationLogin_INPUTS"
                     value={this.state.email} name="email"
+                    mask="00.000.000/0000-00"
                 />
                 <MaskedTextField
                     onChange={this.change}
