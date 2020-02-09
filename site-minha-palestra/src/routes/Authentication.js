@@ -4,14 +4,12 @@ import {
   AuthenticationCriarConta,
   AuthenticationLogin,
   AuthenticationSobreVoce,
-  AuthenticationFim,
   AuthenticationSelfie,
   PedidoParaSerPalestrante,
   AuthenticationInformacoesLegais,
   AuthenticationQuemE,
   AuthenticationEsqueciSenha,
 } from "../views";
-import { multiStorager } from '../utils';
 import { UsuarioHelper } from '../services';
 import DeterminarTelaCadastroUsuario from '../utils/DeterminarTelaUsuario';
 export default class Authentication extends Component {

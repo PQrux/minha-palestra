@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Box, Button, Typography } from '@material-ui/core';
-import { MaskedTextField, DatePicker } from '../../components';
+import React from 'react';
+import { Box, Button } from '@material-ui/core';
 import Authentication from "../Authentication";
 export default class AuthenticationQuemE extends Authentication {
     go = (tipo) => {

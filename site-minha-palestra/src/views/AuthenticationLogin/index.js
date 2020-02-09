@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Box, Button, Link } from "@material-ui/core";
 import logo from "../../assets/images/logo.png";
 import { MaskedTextField, EasyComponent } from "../../components";

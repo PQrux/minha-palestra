@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Box, Button, Typography } from '@material-ui/core';
-import { MaskedTextField, DatePicker } from '../../components';
+import { MaskedTextField } from '../../components';
 import Authentication from "../Authentication";
 export default class AuthenticationInformacoesLegais extends Authentication {
     changeDate = (value) =>{

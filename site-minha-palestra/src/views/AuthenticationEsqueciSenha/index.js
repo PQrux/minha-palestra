@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Box, Button, Link, Typography } from "@material-ui/core";
-import logo from "../../assets/images/logo.png";
+import React from 'react';
+import { Box, Button, Typography } from "@material-ui/core";
 import { MaskedTextField, EasyComponent } from "../../components";
 import { UsuarioHelper } from '../../services';
 
@@ -80,12 +79,5 @@ export default class AuthenticationEsqueciSenha extends EasyComponent {
                 </Button>
             </Box>
         )
-    }
-}
-const styles = {
-    img: {
-      height: "150px",
-      maxWidth: "90vw",
-      marginBottom: "20px",
     }
 }

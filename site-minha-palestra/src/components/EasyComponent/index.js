@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { Paper, CircularProgress, Button, Box } from "@material-ui/core";
+import React from 'react';
+import { CircularProgress, Button, Box } from "@material-ui/core";
 import PureEasyComponent from "../PureEasyComponent";
 import { ErrorOutline, Search } from "@material-ui/icons";
 import "./style.css";
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import { green, red } from '@material-ui/core/colors';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/styles';
 
 const greenTheme = createMuiTheme({

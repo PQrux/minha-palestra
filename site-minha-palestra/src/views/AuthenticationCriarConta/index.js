@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Box, Button, Typography } from '@material-ui/core';
 import { MaskedTextField, EasyComponent } from '../../components';
-import Authentication from "../Authentication";
 import { UsuarioHelper } from '../../services';
 export default class AuthenticationCriarConta extends EasyComponent {
     constructor(props){
