@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import "firebase/auth";
 import "firebase/database";
-import { multiStorager } from "../utils";
+import { multiStorager, TraduzirErroAuth } from "../utils";
 import { Usuario, Resultado, Log } from "models-minha-palestra";
 import LogHelper from "./LogHelper";
 
@@ -28,8 +28,9 @@ export default class UsuarioHelper{
                         novoUsuario.path = snap.ref.path.toString();
                         novoUsuario.email = user.email;
                         novoUsuario.nome = user.displayName;
-                        novoUsuario.fotoPerfil = photoURL;
+                        novoUsuario.fotoPerfil = user.photoURL;
                         novoUsuario.dhResgistro = new Date();
+                        novoUsuario.grupo = Usuario.GRUPOS().USUARIO;
                         snap.ref.set(novoUsuario.toJson()).then(()=>{
                             resolve(novoUsuario);
                         })
@@ -37,7 +38,12 @@ export default class UsuarioHelper{
                             reject(new Resultado(-1,"Erro ao criar registro de usuário.", err, {user}));
                         })
                     }
-                })   
+                })
+                .catch(err=>{
+                    console.log(err);
+                    UsuarioHelper.desconectar();
+                    reject(new Resultado(-1,"Erro ao buscar informações na base de dados. Desconectando.", err, {user}));
+                }) 
             }
         });
     }
@@ -94,7 +100,7 @@ export default class UsuarioHelper{
                 })
             })
             .catch(err=>{
-                reject(new Resultado(-1, "Erro ao conectar.", err, {email, senha}));
+                reject(new Resultado(-1, TraduzirErroAuth(err), err, {email, senha}));
             })
         });
     }
@@ -105,17 +111,19 @@ export default class UsuarioHelper{
      * @returns {Promise.<Usuario["prototype"]>}
      */
     static registrarEmail(email, senha){
-        firebase.auth().createUserWithEmailAndPassword(email, senha).then(credential=>{
-            UsuarioHelper.prepararUsuarioByUser(credential.user).then(usuario=>{
-                resolve(usuario);
+        return new Promise(async (resolve,reject)=>{
+            firebase.auth().createUserWithEmailAndPassword(email, senha).then(credential=>{
+                UsuarioHelper.prepararUsuarioByUser(credential.user).then(usuario=>{
+                    resolve(usuario);
+                })
+                .catch(err=>{
+                    reject(err);
+                })
             })
             .catch(err=>{
-                reject(err);
+                reject(new Resultado(-1, TraduzirErroAuth(err), err, {email, senha}));
             })
-        })
-        .catch(err=>{
-            reject(new Resultado(-1, "Erro ao registrar.", err, {email, senha}));
-        })
+        });
     }
     /**
      * Realiza login através de um provedor externo.
@@ -123,17 +131,19 @@ export default class UsuarioHelper{
      * @returns {Promise.<Usuario["prototype"]>}
      */
     static loginProvedorExterno(provedor){
-        firebase.auth().signInWithPopup(provedor).then(credential=>{
-            UsuarioHelper.prepararUsuarioByUser(credential.user).then(usuario=>{
-                resolve(usuario);
+        return new Promise(async (resolve,reject)=>{
+            firebase.auth().signInWithPopup(provedor).then(credential=>{
+                UsuarioHelper.prepararUsuarioByUser(credential.user).then(usuario=>{
+                    resolve(usuario);
+                })
+                .catch(err=>{
+                    reject(err);
+                })
             })
             .catch(err=>{
-                reject(err);
+                reject(new Resultado(-1, TraduzirErroAuth(err), err, {provedor}));
             })
-        })
-        .catch(err=>{
-            reject(new Resultado(-1, "Erro ao conectar.", err, {email, senha}));
-        })
+        });
     }
     static PROVEDORES_EXTERNOS(){
         return {
@@ -173,6 +183,31 @@ export default class UsuarioHelper{
             })
             .catch(err=>{
                 reject(new Resultado(-1, "Erro ao atualizar usuário.",err, {usuario}));
+            })
+        });
+    }
+    /**
+     * Desconecta um usuário do sistema.
+     */
+    static desconectar(){
+        return new Promise(async (resolve,reject)=>{
+            multiStorager.DataStorager.delete("usuario");
+            await firebase.auth().signOut()
+            .catch(console.log);
+            resolve();
+        });
+    }
+    /**
+     * Envia um e-mail de recuperação de senha para o endereço informado.
+     * @param {string} email E-mail para o qual se deseja recuperar a senha.
+     */
+    static enviarEmailDeRecuperacaoDeSenha(email){
+        return new Promise(async (resolve,reject)=>{
+            firebase.auth().sendPasswordResetEmail(email).then(()=>{
+                resolve();
+            })
+            .catch(err=>{
+                reject(new Resultado(-1, TraduzirErroAuth(err), err, {email}));
             })
         });
     }

@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Box, Button, Link } from "@material-ui/core";
+import { Box, Button, Link, Typography } from "@material-ui/core";
 import logo from "../../assets/images/logo.png";
 import { MaskedTextField, EasyComponent } from "../../components";
 import { UsuarioHelper } from '../../services';
-import DeterminarTelaCadastroUsuario from '../../utils/DeterminarTelaUsuario';
 
-export default class AuthenticationLogin extends EasyComponent {
+export default class AuthenticationEsqueciSenha extends EasyComponent {
     constructor(props){
         super(props, undefined, undefined, undefined, undefined, {flex: 1});
         this.state = {
             email: "",
-            senha: "",
+            feito: false,
         }
     }
     disablePermissao = true;
@@ -18,29 +17,41 @@ export default class AuthenticationLogin extends EasyComponent {
     change = (event) =>{
         this.setState({[event.target.name]: event.target.value});
     }
-    goToCriarConta = () =>{
-        this.props.history.push("criarconta");
-    }
     submit = () => {
-        const { email, senha } = this.state;
+        const { email } = this.state;
         this.setCarregando(true);
-        UsuarioHelper.loginEmail(email, senha)
-        .then(usuario=>{
-            let tc = DeterminarTelaCadastroUsuario(usuario);
-            if(tc) this.props.history.push(tc);
+        UsuarioHelper.enviarEmailDeRecuperacaoDeSenha(email)
+        .then(()=>{
+            this.setCarregando(false);
+            this.setState({feito: true});
         })
         .catch(err=>{
+            console.log(err);
             this.setCarregando(false);
             this.setErro(err.descricao);
         })
     }
-    goToEsqueci = () =>{
-        this.props.history.push("esqueciminhasenha");
-    }
     renderWrite() {
+        if(this.state.feito)
         return (
             <Box className="DefaultPages_ROOT">
-                <img src={logo} style={styles.img} alt="logo"></img>
+                <Typography align="center">
+                    Um e-mail de recuperação foi enviado para a sua caixa de entrada, por favor, atualize sua senha e tente conectar-se novamente.
+                </Typography>
+                <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={this.props.history.goBack}>
+                    VOLTAR
+                </Button>
+            </Box>
+        )
+        else
+        return (
+            <Box className="DefaultPages_ROOT">
+                <Typography align="center">
+                    Esqueceu sua senha? Não se preocupe, vamos recuperá-la agora para você.
+                </Typography>
+                <Typography align="center">
+                    Basta que informe o seu endereço de e-mail abaixo e lhe enviaremos um e-mail de recuperação de senha.
+                </Typography>
                 <MaskedTextField
                     onChange={this.change}
                     label="E-mail" variant="outlined"
@@ -48,21 +59,11 @@ export default class AuthenticationLogin extends EasyComponent {
                     className="DefaultPages_INPUTS"
                     value={this.state.email} name="email"
                 />
-                <MaskedTextField
-                    onChange={this.change}
-                    label="Senha" variant="outlined"
-                    type="password"
-                    className="DefaultPages_INPUTS"
-                    value={this.state.senha} name="senha"
-                />
-                <Link onClick={this.goToEsqueci}>
-                    Esqueci minha senha
-                </Link>
                 <Button className="DefaultPages_BUTTON" color="primary" variant="outlined" onClick={this.submit}>
-                    ENTRAR
+                    ENVIAR
                 </Button>
-                <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={this.goToCriarConta}>
-                    CRIAR UMA CONTA
+                <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={this.props.history.goBack}>
+                    VOLTAR
                 </Button>
             </Box>
         );

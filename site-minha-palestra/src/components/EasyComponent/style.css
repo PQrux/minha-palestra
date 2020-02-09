@@ -1,0 +1,18 @@
+.easycomponentpaper{
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.easycomponentpaper.horizontal.start{
+    align-items: flex-start;
+}
+.easycomponentpaper.vertical.start{
+    justify-content: flex-start;
+}
+.easycomponentpaper.horizontal.center{
+    align-items: center;
+}
+.easycomponentpaper.vertical.center{
+    justify-content: center;
+}

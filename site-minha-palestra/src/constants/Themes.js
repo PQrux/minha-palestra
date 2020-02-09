@@ -5,6 +5,11 @@ export default {
         palette: {
             primary: green,
             secondary: blue,
+        },
+        typography: {
+            fontFamily: [
+                'Montserrat', "sans-serif"
+            ]
         }
     })
 }

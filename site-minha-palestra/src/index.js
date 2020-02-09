@@ -13,7 +13,7 @@ else{
     console.log("VERSÃO DE PRODUÇÃO");
 }
 firebase.initializeApp(secret.firebase_key);
-
+firebase.auth().setPersistence("session");
 
 setTimeout(function () {
     let viewheight = $(window).height();
