@@ -9,7 +9,7 @@ export default class AuthenticationFim extends Component {
     }
     render() {
         return (
-                <Box className="DefaultPages_ROOT">
+                <Box className="DefaultPages_ROOT" justifyContent="center" height="100vh" paddingTop="0" paddingBottom="0">
                     <Typography variant="h2" align="center">
                         Parabéns!
                     </Typography>

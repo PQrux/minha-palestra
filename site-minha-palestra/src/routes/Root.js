@@ -20,15 +20,18 @@ export default class Root extends Component {
       else return "conectado";
     }
     usuarioCallback = (usuario)=>{
-      console.log(this.definirConectado(usuario))
       this.setState({estado: this.definirConectado(usuario), usuario: usuario});
     }
     componentDidMount(){
-      multiStorager.DataStorager.addListener("usuario",this.usuarioCallback);
-      UsuarioHelper.getUsuarioAtual().then(this.usuarioCallback)
+      UsuarioHelper.getUsuarioAtual().then(()=>{
+        multiStorager.DataStorager.addListener("usuario", "root_page",this.usuarioCallback);
+      })
       .catch(err=>{
         this.setState({estado: "desconectado"});
       })
+    }
+    componentWillUnmount(){
+      multiStorager.DataStorager.deleteListener("usuario","root_page");
     }
     render() {
         if(this.state.estado === "conectado"){

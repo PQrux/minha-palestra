@@ -20,7 +20,7 @@ class DataStorager{
     set(key,data){
         this.data[key] = data;
         if(this.listeners[key]){
-            for(let i=0;i<this.listeners[key].length;i++){
+            for(let i in this.listeners[key]){
                 if(typeof this.listeners[key][i] === "function"){
                     this.listeners[key][i](data);
                 }
@@ -30,7 +30,7 @@ class DataStorager{
     delete(key){
         delete this.data[key];
         if(this.listeners[key]){
-            for(let i=0;i<this.listeners[key].length;i++){
+            for(let i in this.listeners[key]){
                 if(typeof this.listeners[key][i] === "function"){
                     this.listeners[key][i](undefined);
                 }
@@ -40,7 +40,7 @@ class DataStorager{
     eraseAll(){
         this.data = {};
         for(let key in this.listeners){
-            for(let i=0;i<this.listeners[key].length;i++){
+            for(let i in this.listeners[key]){
                 if(typeof this.listeners[key][i] === "function"){
                     this.listeners[key][i](undefined);
                 }
@@ -52,14 +52,18 @@ class DataStorager{
      * @param {string} key 
      * @param {function(any)} callback 
      */
-    addListener(key, callback){
-        if(!this.listeners[key]) this.listeners[key] = [];
-        this.listeners[key].push(callback);
+    addListener(key, listenerKey, callback){
+        if(!this.listeners[key]) this.listeners[key] = {};
+        this.listeners[key][listenerKey] = callback;
+        callback(this.data[key]);
     }
-    deleteListener(key){
+    deleteListener(key, listenerKey){
+        if(this.listeners[key])
+        delete this.listeners[key][listenerKey];
+    }
+    deleteAllListeners(key){
         delete this.listeners[key];
     }
-
 }
 class MultiStorager{
     constructor(){

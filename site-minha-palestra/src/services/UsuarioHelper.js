@@ -71,7 +71,8 @@ export default class UsuarioHelper{
                     receberUsuario(firebase.auth().currentUser);
                 }
                 else{
-                    firebase.auth().onAuthStateChanged((user)=>{
+                    let unsubs = firebase.auth().onAuthStateChanged((user)=>{
+                        unsubs();
                         if(user){
                             receberUsuario(user);
                         }
@@ -191,9 +192,9 @@ export default class UsuarioHelper{
      */
     static desconectar(){
         return new Promise(async (resolve,reject)=>{
-            multiStorager.DataStorager.delete("usuario");
             await firebase.auth().signOut()
             .catch(console.log);
+            multiStorager.DataStorager.delete("usuario");
             resolve();
         });
     }
