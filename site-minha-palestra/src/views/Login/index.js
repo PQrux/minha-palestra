@@ -32,7 +32,7 @@ export default class Login extends Component {
                 <KeyboardArrowDown className="whiteText"/>
                 <span className="whiteText">Conectar-se</span>
               </Fab>
-              <p className="whiteText centerText">Minha Palestra v0.1 - {new Date().getFullYear()}</p>
+              <p className="whiteText centerText">Minha Palestra v0.2 - {new Date().getFullYear()}</p>
             </Box>
           </Box>
         </Box>

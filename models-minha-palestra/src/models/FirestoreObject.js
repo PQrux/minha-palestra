@@ -76,6 +76,11 @@ class FirestoreObject{
             }
         })
     }
+    addRastreio(){
+        this.dhCriacao = new Date();
+        this.criarAtributoReferencial("usuarioCriador", true);
+        this.ultimoLog = {};
+    }
     /**
      * Transforma o objeto em um objeto simples, para que o mesmo seja inserido no banco de dados.
      * @param {Object} target Realiza o processo de transformação em JSON sobre o objeto definido.

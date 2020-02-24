@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { multiStorager } from '../utils';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Splash, Login, AuthenticationFim } from "../views";
+import { Splash, Login, AuthenticationFim, Home } from "../views";
 import { UsuarioHelper } from '../services';
 export default class Root extends Component {
     constructor(props){
@@ -11,7 +11,7 @@ export default class Root extends Component {
         usuario: undefined,
       }
       this.rotas = [
-        {component: AuthenticationFim, path: "*"}
+        {component: Home, path: "*"},
       ];
     }
     definirConectado(usuario){

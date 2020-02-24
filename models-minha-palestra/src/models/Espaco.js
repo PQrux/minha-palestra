@@ -17,6 +17,7 @@ module.exports = class Espaco extends FirestoreObject{
         usuarioCriador,  dhCriacao,  habilitado,  palestraEmUso
     ){
         super(path);
+        this.addRastreio();
         this.nome = nome;
         this.descricao = descricao;
         this.limiteDePessoas = limiteDePessoas;

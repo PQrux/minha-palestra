@@ -20,7 +20,7 @@ module.exports = class Usuario extends FirestoreObject{
     constructor(
         path, grupo, email, nome, cpf, registroAcademico,
         fotoPerfil, sobre, dataNascimento, dhResgistro, palestras,
-        minhasPalestras, aprovadoComoPalestrante, aprovadoComoAdministrador
+        minhasPalestras, aprovadoComoPalestrante, aprovadoComoAdministrador, usuarioCriador
     ){
         super(path);
         this.grupo = grupo;
@@ -36,6 +36,7 @@ module.exports = class Usuario extends FirestoreObject{
         this.minhasPalestras = minhasPalestras;
         this.aprovadoComoPalestrante = new Date(aprovadoComoPalestrante);
         this.aprovadoComoAdministrador = new Date(aprovadoComoAdministrador);
+        this.usuarioCriador = usuarioCriador;
     }
     static GRUPOS(){
         return {

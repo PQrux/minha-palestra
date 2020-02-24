@@ -32,6 +32,7 @@ module.exports = class Palestra extends FirestoreObject{
     ){
         super(path);
         this.nome = nome;
+        this.criarAtributoReferencial("palestrante", true);
         this.palestrante = palestrante;
         this.duracao = duracao;
         this.descricao = descricao;
@@ -40,9 +41,11 @@ module.exports = class Palestra extends FirestoreObject{
         this.sugeridoLimiteDeParticipantes = sugeridoLimiteDeParticipantes;
         this.dhApresentacao = new Date(dhApresentacao);
         this.sugeridoDhApresentacao = new Date(sugeridoDhApresentacao);
+        this.criarAtributoReferencial("espaco", true);
         this.espaco = espaco;
         this.participantes = participantes;
         this.usuarioCriador = usuarioCriador;
+        this.criarAtributoReferencial("usuarioAprovacao", true);
         this.usuarioAprovacao = usuarioAprovacao;
         this.finalizada = finalizada;
         this.cancelada = cancelada;

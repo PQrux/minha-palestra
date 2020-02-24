@@ -8,9 +8,6 @@ export default class AuthenticationQuemE extends Authentication {
     renderWrite() {
         return (
                 <Box className="DefaultPages_ROOT">
-                    <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={()=>{this.go("aluno")}}>
-                        Sou aluno de uma instituição de ensino!
-                    </Button>
                     <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={()=>{this.go("palestrante")}}>
                         Sou um palestrante!
                     </Button>

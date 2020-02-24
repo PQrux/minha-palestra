@@ -9,6 +9,7 @@ import PedidoParaSerPalestrante from "./PedidoParaSerPalestrante";
 import AuthenticationInformacoesLegais from "./AuthenticationInformacoesLegais";
 import AuthenticationQuemE from "./AuthenticationQuemE";
 import AuthenticationEsqueciSenha from "./AuthenticationEsqueciSenha";
+import Home from "./Home";
 export {
     Splash,
     Login,
@@ -21,4 +22,5 @@ export {
     AuthenticationInformacoesLegais,
     AuthenticationQuemE,
     AuthenticationEsqueciSenha,
+    Home,
 }
