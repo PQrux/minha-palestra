@@ -9,13 +9,14 @@ module.exports = class Log extends FirestoreObject{
 	 * @param {string} mensagem Mensagem da ação do log.
 	 * @param {Date} dh Data em que o log foi registrado.
      */
-    constructor(path, registros, usuarioAcao, tipo, mensagem, dh){
+    constructor(path, registros, usuarioAcao, tipo, mensagem, dh, nomeUsuario){
         super(path);
-        this.registros = registros;
+        this.registros = registros||{};
         this.usuarioAcao = usuarioAcao;
         this.tipo = tipo;
         this.mensagem = mensagem;
         this.dh = new Date(dh);
+        this.nomeUsuario = nomeUsuario;
     }
     static TIPOS(){
         return {
@@ -23,5 +24,9 @@ module.exports = class Log extends FirestoreObject{
             ATUALIZACAO: "ATUALIZACAO",
             REMOCAO: "REMOCAO",
         }
+    }
+    setRegistro(path){
+        path = path.replace(/\//g,"_");
+        this.registros[path] = true;
     }
 }

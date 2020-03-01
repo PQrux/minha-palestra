@@ -174,13 +174,12 @@ export default class UsuarioHelper{
                 reject(new Resultado(-1, "Você não tem permissão para executar esta ação.", null, {usuario}));
                 return;
             }
-            LogHelper.logar([usuario.path], Log.TIPOS().ATUALIZACAO)
-            .catch(console.log);
-            firebase.database().ref(usuario.path).update(usuario.toJson()).then(()=>{
-                if(usuario.path === usuarioAtual.path){
-                    multiStorager.DataStorager.set("usuario",usuario);
+            LogHelper.logarECommitar([usuario.path], Log.TIPOS().ATUALIZACAO,undefined, usuario)
+            .then((usuarioAtualizado)=>{
+                if(usuarioAtualizado.path === usuarioAtual.path){
+                    multiStorager.DataStorager.set("usuario",usuarioAtualizado);
                 }
-                resolve(usuario);
+                resolve(usuarioAtualizado);
             })
             .catch(err=>{
                 reject(new Resultado(-1, "Erro ao atualizar usuário.",err, {usuario}));

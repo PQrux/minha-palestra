@@ -79,6 +79,7 @@ class FirestoreObject{
     addRastreio(){
         this.dhCriacao = new Date();
         this.criarAtributoReferencial("usuarioCriador", true);
+        /**@type {import("./Log")} */
         this.ultimoLog = {};
     }
     /**

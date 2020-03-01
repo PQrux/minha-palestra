@@ -1,27 +1,17 @@
 import React, { Component } from 'react';
-import { Navigator } from "../../components";
-import { Box, Tabs, Tab } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import { ResponsiveDivider } from "../../components";
+import { Box, Tabs, Tab, Button } from '@material-ui/core';
+import { AccountCircle, History, LiveTv } from '@material-ui/icons';
 import SwipeableViews from 'react-swipeable-views';
+import { Perfil } from '../../partialviews';
 export default class Home extends Component {
   constructor(props){
     super(props);
     this.options = [
-      { label: "Meu Perfil", icon: <AccountCircle/>, component: (
-        <div style={Object.assign({}, styles.slide, styles.slide1)}>
-          slide n°1
-        </div>
-      ) },
-      { label: "Favoritos", component: (
-        <div style={Object.assign({}, styles.slide, styles.slide2)}>
-          slide n°2
-        </div>
-      )},
-      { label: "Próximo", component: (
-        <div style={Object.assign({}, styles.slide, styles.slide3)}>
-          slide n°3
-        </div>
-      )},
+      { label: "Palestras Disponíveis", icon: <LiveTv/>, OptionComponent: Slide2, OptionComponentProps: {}},
+      { label: "Meu Perfil", icon: <AccountCircle/>, OptionComponent: Perfil, OptionComponentProps: {useCurrentUser: true, showNotFound: true} },
+
+      { label: "Usuários", icon : <History/>, OptionComponent: Usuarios, OptionComponentProps: {}},
     ]
   }
   state = {
@@ -49,10 +39,14 @@ export default class Home extends Component {
           </Tabs>
         </Box>
         <SwipeableViews
+          
           index={this.state.option}
           onChangeIndex={(option)=>{this.setState({option})}}
         >
-          {this.options.map(({component})=>component)}
+          {this.options.map(({OptionComponent, OptionComponentProps}, index)=>{
+            return this.state.option === index ? <OptionComponent {...OptionComponentProps} /> : <div></div>
+          }
+          )}
         </SwipeableViews>
       </Box>
     );
@@ -74,3 +68,14 @@ const styles = {
     background: '#6AC0FF',
   },
 };
+const Usuarios = () => (
+  <ResponsiveDivider>
+    <Button>Teste1</Button>
+    <Button>Teste2</Button>
+  </ResponsiveDivider>
+)
+const Slide2 = () => (
+  <div style={Object.assign({}, styles.slide, styles.slide2)}>
+    slide n°2
+  </div>
+)

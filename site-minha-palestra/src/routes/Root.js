@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { multiStorager } from '../utils';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Splash, Login, AuthenticationFim, Home } from "../views";
+import { Splash, Login, Home } from "../views";
 import { UsuarioHelper } from '../services';
 export default class Root extends Component {
     constructor(props){
@@ -23,11 +23,11 @@ export default class Root extends Component {
       this.setState({estado: this.definirConectado(usuario), usuario: usuario});
     }
     componentDidMount(){
-      UsuarioHelper.getUsuarioAtual().then(()=>{
+      UsuarioHelper.getUsuarioAtual().then(usuario=>{
         multiStorager.DataStorager.addListener("usuario", "root_page",this.usuarioCallback);
       })
       .catch(err=>{
-        this.setState({estado: "desconectado"});
+        multiStorager.DataStorager.addListener("usuario", "root_page",this.usuarioCallback);
       })
     }
     componentWillUnmount(){

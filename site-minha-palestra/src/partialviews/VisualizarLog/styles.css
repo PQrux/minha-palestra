@@ -1,0 +1,16 @@
+.visualizar_log_root{
+    border-color: #bdbdbd;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+.visualizar_log_container{
+    flex-wrap: wrap;
+    display: flex;
+}
+.visualizar_log_container > * {
+    margin-right: 10px !important;
+    margin-bottom: 10px !important;
+}

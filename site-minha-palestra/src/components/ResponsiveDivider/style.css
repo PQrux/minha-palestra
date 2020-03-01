@@ -1,0 +1,20 @@
+.responsive_divider_root{
+    display: flex;
+    flex-direction: row;
+}
+.responsive_divider_inactive{
+    flex: 5;
+    background-color: red;
+}
+.responsive_divider_active{
+    flex: 5;
+    background-color: blue;
+}
+@media only screen and (max-width: 790px) {
+    .responsive_divider_inactive{
+        display: none;
+    }
+    .responsive_divider_active{
+        flex: 1;
+    }
+}
