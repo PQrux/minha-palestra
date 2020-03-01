@@ -4,15 +4,15 @@
 }
 .responsive_divider_inactive{
     flex: 5;
-    background-color: red;
+    border-left: 1px #e3e3e3 solid;
 }
 .responsive_divider_active{
     flex: 5;
-    background-color: blue;
 }
 @media only screen and (max-width: 790px) {
     .responsive_divider_inactive{
         display: none;
+        border-left: unset;
     }
     .responsive_divider_active{
         flex: 1;

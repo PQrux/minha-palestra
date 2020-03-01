@@ -1,0 +1,9 @@
+.custom_list{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
+}
+.custom_list > * {
+    flex-grow: 1;
+}

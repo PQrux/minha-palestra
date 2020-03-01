@@ -8,19 +8,14 @@ import VisualizarLog from '../VisualizarLog';
 const logo = require("../../assets/images/logo.png");
 export default class Perfil extends EasyComponent {
     constructor(props){
-        super(props, "Usuarios");
+        super(props, "Usuarios", "Você não tem permissão para visualizar usuários.", "Nenhum usuário selecionado.",
+        undefined, {minHeight: "100%"});
         this.state = {
             /**@type {Usuario["prototype"]} */
             usuario: {},
             loading: false,
             modificado: false,
         }
-    }
-    componentDidMount(){
-        console.log("perfil montado.")
-    }
-    componentWillUnmount(){
-        console.log("perfil desmontado.")
     }
     carregarEntidade(){
         if(this.props.useCurrentUser){

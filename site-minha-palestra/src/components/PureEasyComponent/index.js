@@ -116,6 +116,11 @@ export default class PureEasyComponent extends Component {
     carregarEntidade(){
         this.setCarregando(false);
     }
+    componentDidUpdate(prevProps){
+        if(this.props.entidade !== prevProps.entidade){
+            this.carregarEntidade();
+        }
+    }
     /**
      * Faz o carregamento das informações do usuário e dados. Não deve ser sobrescrita.
      * @private

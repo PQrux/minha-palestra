@@ -211,4 +211,22 @@ export default class UsuarioHelper{
             })
         });
     }
+    /**
+     * @returns {Promise.<Array<Usuario["prototype"]>>}
+     */
+    static listarUsuarios(){
+        return new Promise(async (resolve,reject)=>{
+            firebase.database().ref("Usuarios").once("value")
+            .then(snaps=>{
+                let usuarios = [];
+                snaps.forEach(snap=>{
+                    usuarios.push(new Usuario().parse(snap.ref.path.toString(), snap.val()));
+                })
+                resolve(usuarios);
+            })
+            .catch(err=>{
+                reject(new Resultado(-1, "Erro ao buscar usuários.", err));
+            })
+        });
+    }
 }

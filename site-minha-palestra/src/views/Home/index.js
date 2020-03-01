@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { ResponsiveDivider } from "../../components";
+import { ResponsiveDivider, ListItem } from "../../components";
 import { Box, Tabs, Tab, Button } from '@material-ui/core';
 import { AccountCircle, History, LiveTv } from '@material-ui/icons';
 import SwipeableViews from 'react-swipeable-views';
 import { Perfil } from '../../partialviews';
+import Usuarios from "../Usuarios";
 export default class Home extends Component {
   constructor(props){
     super(props);
@@ -39,12 +40,13 @@ export default class Home extends Component {
           </Tabs>
         </Box>
         <SwipeableViews
-          
+          style={{flex: 1, display: "flex", flexDirection: "column"}}
           index={this.state.option}
           onChangeIndex={(option)=>{this.setState({option})}}
+          containerStyle={{height: "100%", display: "flex"}}
         >
           {this.options.map(({OptionComponent, OptionComponentProps}, index)=>{
-            return this.state.option === index ? <OptionComponent {...OptionComponentProps} /> : <div></div>
+            return this.state.option === index ? <OptionComponent {...OptionComponentProps} style={{flex: 1}}/> : <div></div>
           }
           )}
         </SwipeableViews>
@@ -68,12 +70,6 @@ const styles = {
     background: '#6AC0FF',
   },
 };
-const Usuarios = () => (
-  <ResponsiveDivider>
-    <Button>Teste1</Button>
-    <Button>Teste2</Button>
-  </ResponsiveDivider>
-)
 const Slide2 = () => (
   <div style={Object.assign({}, styles.slide, styles.slide2)}>
     slide n°2
