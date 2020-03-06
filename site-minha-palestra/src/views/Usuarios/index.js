@@ -15,8 +15,7 @@ export default class Usuarios extends EasyComponent {
     carregarEntidade(){
         UsuarioHelper.listarUsuarios().then(usuarios=>{
             this.usuarios = usuarios;
-            this.state.selecionado = usuarios[0];
-            this.setState({});
+            this.setState({selecionado: usuarios[0]});
             this.setCarregando(false);
         })
         .catch(err=>{
@@ -24,7 +23,6 @@ export default class Usuarios extends EasyComponent {
         })
     }
     changeItem=(item)=>{
-        console.log(item);
         this.setState({selecionado: item});
     }
     renderWrite() {

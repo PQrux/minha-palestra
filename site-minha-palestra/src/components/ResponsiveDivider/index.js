@@ -25,7 +25,7 @@ class ResponsiveDivider extends Component {
       nextState.firstOpened = true;
       return true;
     }
-    return false;
+    return true;
   }
   changeToRight = () => {
     this.gencode = new Date().getTime().toString();

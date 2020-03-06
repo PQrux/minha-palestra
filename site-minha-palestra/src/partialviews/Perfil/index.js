@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Button, Typography, TextField, ListItem } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
 import { Usuario } from "models-minha-palestra";
 import React from 'react';
@@ -10,6 +10,7 @@ export default class Perfil extends EasyComponent {
     constructor(props){
         super(props, "Usuarios", "Você não tem permissão para visualizar usuários.", "Nenhum usuário selecionado.",
         undefined, {minHeight: "100%"});
+        console.log({props});
         this.state = {
             /**@type {Usuario["prototype"]} */
             usuario: {},
@@ -88,6 +89,16 @@ export default class Perfil extends EasyComponent {
                     value={this.state.usuario.email} name="email"
                     disabled={true}
                 />
+                <TextField
+                    onChange={this.change}
+                    label="Grupo" variant="outlined"
+                    className="DefaultPages_INPUTS"
+                    value={this.state.usuario.grupo} name="grupo"
+                    disabled={this.state.loading}
+                    select
+                >
+                    
+                </TextField>
                 <MaskedTextField
                     onChange={this.change}
                     label="Nome" variant="outlined"
