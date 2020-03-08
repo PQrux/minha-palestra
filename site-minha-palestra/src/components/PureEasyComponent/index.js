@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { UsuarioHelper } from "../../services";
-
+import { Permissao } from "models-minha-palestra";
 /**
  * @typedef EasyComponentProps
  * @property {string|Object} entidade Define a entidade (registro da base de dados) sendo utilizada no momento, pode ser uma string referenciando a entidade ou o objeto já carregado.
@@ -13,9 +13,14 @@ import { UsuarioHelper } from "../../services";
   * @extends {Component<EasyComponentProps>}
   */
 export default class PureEasyComponent extends Component {
-    constructor(props, nomePermissao){
+    /**
+     * 
+     * @param {any} props 
+     * @param {Permissao["prototype"]} permissor 
+     */
+    constructor(props, permissor){
         super(props);
-        this.nomePermissao = nomePermissao;
+        this.permissor = permissor;
         this.carregando = true;
         this.erro = undefined;
         this.notFound = false;
@@ -148,12 +153,9 @@ export default class PureEasyComponent extends Component {
         if(this.props.disablePermissao||this.disablePermissao)
         return this.renderWrite();
         else{
-            const { permissoes } = this.usuario;
-            if(!permissoes) 
-            return this.renderDeny();
-            if(permissoes[this.nomePermissao] === "r"||this.props.readOnly)
+            if(this.permissor.permitir(this.usuario) === "r"||this.props.readOnly)
             return this.renderRead();
-            else if (permissoes[this.nomePermissao] === "w")
+            else if (this.permissor.permitir(this.usuario) === "w")
             return this.renderWrite();
             else 
             return this.renderDeny();

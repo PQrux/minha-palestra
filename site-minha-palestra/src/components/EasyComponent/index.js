@@ -6,6 +6,7 @@ import "./style.css";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/styles';
+import { Permissao } from "models-minha-palestra";
 
 const greenTheme = createMuiTheme({
     palette: {
@@ -14,8 +15,13 @@ const greenTheme = createMuiTheme({
 })
 
 export default class EasyComponent extends PureEasyComponent {
-    constructor(props, nomePermissao, mensagemDeny, mensagemNotFound, mensagemLoading, additionalPaperStyle){
-        super(props, nomePermissao);
+    /**
+     * 
+     * @param {any} props 
+     * @param {Permissao["prototype"]} permissor 
+     */
+    constructor(props, permissor, mensagemDeny, mensagemNotFound, mensagemLoading, additionalPaperStyle){
+        super(props, permissor);
         this.mensagemNotFound = mensagemNotFound||"Recurso não encontrado.";
         this.mensagemDeny = mensagemDeny||"Você não possui permissão para acessar esse recurso!";
         this.mensagemLoading = mensagemLoading||"Carregando...";

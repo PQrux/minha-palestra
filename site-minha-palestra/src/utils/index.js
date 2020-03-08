@@ -6,6 +6,7 @@ import FirebaseJoiner from "./FirebaseJoiner";
 import multiStorager from "./multiStorager";
 import DeterminarTelaUsuario from "./DeterminarTelaUsuario";
 import TraduzirErroAuth from "./TraduzirErroAuth";
+import Arrayficar from "./Arrayficar";
 export {
     parseBRL,
     DataLocal,
@@ -14,4 +15,5 @@ export {
     multiStorager,
     DeterminarTelaUsuario,
     TraduzirErroAuth,
+    Arrayficar,
 }

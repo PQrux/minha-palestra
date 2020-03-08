@@ -7,6 +7,7 @@ const ParticipanteDePalestra = require("./ParticipanteDePalestra");
 const Resultado = require("./Resultado");
 const SolicitacaoPalestrante = require("./SolicitacaoPalestrante");
 const Usuario = require("./Usuario");
+const Permissao = require("./Permissao");
 
 module.exports = {
     Espaco,
@@ -18,4 +19,5 @@ module.exports = {
     Resultado,
     SolicitacaoPalestrante,
     Usuario,
+    Permissao,
 }

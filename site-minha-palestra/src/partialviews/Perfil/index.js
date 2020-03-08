@@ -1,15 +1,19 @@
 import { Box, Button, Typography, TextField, ListItem } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
-import { Usuario } from "models-minha-palestra";
+import { Usuario, Permissao } from "models-minha-palestra";
 import React from 'react';
 import { DatePicker, EasyComponent, MaskedTextField } from '../../components';
 import { UsuarioHelper } from '../../services';
 import VisualizarLog from '../VisualizarLog';
+import { Arrayficar } from '../../utils';
 const logo = require("../../assets/images/logo.png");
 export default class Perfil extends EasyComponent {
     constructor(props){
-        super(props, "Usuarios", "Você não tem permissão para visualizar usuários.", "Nenhum usuário selecionado.",
-        undefined, {minHeight: "100%"});
+        super(props, 
+            new Permissao({grupo: "ADMINISTRADOR", permissao: "w"}, {grupo: "USUARIO", permissao: "r"}, {grupo: "PALESTRANTE", permissao: "r"}),
+            "Você não tem permissão para visualizar usuários.", "Nenhum usuário selecionado.",
+            undefined, {minHeight: "100%"}
+        );
         console.log({props});
         this.state = {
             /**@type {Usuario["prototype"]} */
@@ -67,10 +71,13 @@ export default class Perfil extends EasyComponent {
         return (
             <Box className="DefaultPages_ROOT">
                 <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
+                <Typography autoCapitalize>
+                    {this.state.usuario.grupo}
+                </Typography>
                 <Typography>
                     <span style={style.bold}>NOME: </span> {this.state.usuario.nome} 
                 </Typography>
-                <Typography style={style.bold}>SOBRE: </Typography>
+                <Typography style={style.bold}>SOBRE: {this.state.usuario.sobre}</Typography>
                 <Typography>
                     {this.state.usuario.nome} 
                 </Typography>
@@ -97,7 +104,11 @@ export default class Perfil extends EasyComponent {
                     disabled={this.state.loading}
                     select
                 >
-                    
+                    {Arrayficar(Usuario.GRUPOS()).map(grupo=>(
+                        <ListItem key={grupo.value} value={grupo.value}>
+                            {grupo.value}
+                        </ListItem>
+                    ))}
                 </TextField>
                 <MaskedTextField
                     onChange={this.change}
