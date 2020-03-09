@@ -28,7 +28,7 @@ module.exports = class Palestra extends FirestoreObject{
         limiteDeParticipantes,  sugeridoLimiteDeParticipantes,
         dhApresentacao,  sugeridoDhApresentacao,  espaco,  participantes,
         usuarioCriador,  usuarioAprovacao,  finalizada,  cancelada,
-        aprovada,  dhCriacao,  dhFinalizacao,  dhAprovacao
+        aprovada,  dhCriacao,  dhFinalizacao,  dhAprovacao, nomePalestrante
     ){
         super(path);
         this.nome = nome;
@@ -50,8 +50,23 @@ module.exports = class Palestra extends FirestoreObject{
         this.finalizada = finalizada;
         this.cancelada = cancelada;
         this.aprovada = aprovada;
+        Object.defineProperty(this, "_aprovada_finalizada", {
+            enumerable: true,
+            set: () => {},
+            get: () => {
+                return !!(this.aprovada)+"_"+!!(this.finalizada);
+            }
+        })
+        Object.defineProperty(this, "_aprovada_cancelada", {
+            enumerable: true,
+            set: () => {},
+            get: () => {
+                return !!(this.aprovada)+"_"+!!(this.cancelada);
+            }
+        })
         this.dhCriacao = new Date(dhCriacao);
         this.dhFinalizacao = new Date(dhFinalizacao);
         this.dhAprovacao = new Date(dhAprovacao);
+        this.nomePalestrante = nomePalestrante;
     }
 }

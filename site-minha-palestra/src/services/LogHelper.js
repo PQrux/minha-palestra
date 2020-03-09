@@ -46,10 +46,10 @@ export default class LogHelper{
     /**
      * 
      * @param {Array<string>} registros Registros envolvidos no log.
-     * @param {string} tipo Tipo de log.
+     * @param {"CRIACAO"|"ATUALIZACAO"|"REMOCAO"} tipo Tipo de log.
      * @param {string} mensagem Mensagem de log.
      * @param {import("models-minha-palestra/src/models/FirestoreObject")} objetoAlvo
-     * @returns {import("models-minha-palestra/src/models/FirestoreObject")}
+     * @returns {Promise}
      */
     static logarECommitar(registros, tipo, mensagem, objetoAlvo){
         return new Promise(async (resolve,reject)=>{
