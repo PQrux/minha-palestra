@@ -25,7 +25,7 @@ export default class ListItem extends Component {
             color={this.props.selected ? "primary" : "default"}
         >
             {this.props.img ? (
-                <img src={this.props.img} onerror="this.style.display='none'" style={style.img}></img>
+                <img src={this.props.img} onerror="this.style.display='none'" alt="img" style={style.img}></img>
             ) : undefined}
             <Box>
                 <Typography variant="h6">{this.props.titulo||"TITULO"}</Typography>

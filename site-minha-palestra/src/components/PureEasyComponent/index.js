@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { UsuarioHelper } from "../../services";
-import { Permissao } from "models-minha-palestra";
 /**
  * @typedef EasyComponentProps
  * @property {string|Object} entidade Define a entidade (registro da base de dados) sendo utilizada no momento, pode ser uma string referenciando a entidade ou o objeto já carregado.
@@ -16,7 +15,7 @@ export default class PureEasyComponent extends Component {
     /**
      * 
      * @param {any} props 
-     * @param {Permissao["prototype"]} permissor 
+     * @param {import("models-minha-palestra/src/models/Permissao")} permissor 
      */
     constructor(props, permissor){
         super(props);

@@ -58,6 +58,10 @@ body {
   margin-bottom: 20px !important;
   
 }
+.DefaultPages_INSIDER {
+  overflow-y: auto;
+  height: 100%;
+}
 .DefaultPages_INPUTS {
   width: 100%;
 }
@@ -73,6 +77,9 @@ body {
   flex: 1;
   display: flex;
 }
+.responsive_divider_back_to_left_button{
+  display: flex;
+}
 @media only screen and (max-width: 790px) {
   .divDoisElementosResponsiva{
       flex-direction: column;
@@ -80,5 +87,8 @@ body {
   .divDoisElementosResponsiva .filho{
       margin-bottom: 20px;
       margin-right: 0px; 
+  }
+  .responsive_divider_back_to_left_button{
+    display: flex;
   }
 }

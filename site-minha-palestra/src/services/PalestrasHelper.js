@@ -53,7 +53,7 @@ export default class PalestrasHelper{
         });
     }
     /**
-     * @returns {Promise<Palestra>}
+     * @returns {Promise<Palestra["prototype"]>}
      */
     static listarPalestrasDisponiveis(){
         return new Promise(async (resolve,reject)=>{
@@ -70,6 +70,9 @@ export default class PalestrasHelper{
             })
         });
     }
+    /**
+     * @returns {Promise<Array<Palestra["prototype"]>>}
+     */
     static listarPropostasDePalestra(){
         return new Promise(async (resolve,reject)=>{
             firebase.database().ref("Palestras").orderByChild("_aprovada_cancelada").equalTo("false_false")

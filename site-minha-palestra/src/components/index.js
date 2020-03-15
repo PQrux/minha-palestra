@@ -5,6 +5,7 @@ import DatePicker from "./DatePicker";
 import ResponsiveDivider from "./ResponsiveDivider";
 import ListItem from "./ListItem";
 import List from "./List";
+import ResponsiveDividerBackButton from "./ResponsiveDividerBackButton";
 export {
     MaskedTextField,
     EasyComponent,
@@ -13,4 +14,5 @@ export {
     ResponsiveDivider,
     ListItem,
     List,
+    ResponsiveDividerBackButton,
 }

@@ -2,7 +2,7 @@ import { Box, Button, Typography, TextField, ListItem } from '@material-ui/core'
 import { ErrorOutline } from '@material-ui/icons';
 import { Usuario, Permissao } from "models-minha-palestra";
 import React from 'react';
-import { DatePicker, EasyComponent, MaskedTextField } from '../../components';
+import { DatePicker, EasyComponent, MaskedTextField, ResponsiveDividerBackButton } from '../../components';
 import { UsuarioHelper } from '../../services';
 import VisualizarLog from '../VisualizarLog';
 import { Arrayficar } from '../../utils';
@@ -14,7 +14,6 @@ export default class Perfil extends EasyComponent {
             "Você não tem permissão para visualizar usuários.", "Nenhum usuário selecionado.",
             undefined, {minHeight: "100%"}
         );
-        console.log({props});
         this.state = {
             /**@type {Usuario["prototype"]} */
             usuario: {},
@@ -69,92 +68,98 @@ export default class Perfil extends EasyComponent {
     }
     renderRead() {
         return (
-            <Box className="DefaultPages_ROOT">
-                <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
-                <Typography autoCapitalize>
-                    {this.state.usuario.grupo}
-                </Typography>
-                <Typography>
-                    <span style={style.bold}>NOME: </span> {this.state.usuario.nome} 
-                </Typography>
-                <Typography style={style.bold}>SOBRE: {this.state.usuario.sobre}</Typography>
-                <Typography>
-                    {this.state.usuario.nome} 
-                </Typography>
-            </Box>
+            <div className="DefaultPages_INSIDER">
+                <Box className="DefaultPages_ROOT">
+                    <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
+                    <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
+                    <Typography autoCapitalize>
+                        {this.state.usuario.grupo}
+                    </Typography>
+                    <Typography>
+                        <span style={style.bold}>NOME: </span> {this.state.usuario.nome} 
+                    </Typography>
+                    <Typography style={style.bold}>SOBRE: {this.state.usuario.sobre}</Typography>
+                    <Typography>
+                        {this.state.usuario.nome} 
+                    </Typography>
+                </Box>
+            </div>
         )
     }
     renderWrite() {
         return (
-            <Box className="DefaultPages_ROOT">
-                <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
-                <MaskedTextField
-                    onChange={this.change}
-                    label="E-mail" variant="outlined"
-                    inputMode="email"
-                    className="DefaultPages_INPUTS"
-                    value={this.state.usuario.email} name="email"
-                    disabled={true}
-                />
-                <TextField
-                    onChange={this.change}
-                    label="Grupo" variant="outlined"
-                    className="DefaultPages_INPUTS"
-                    value={this.state.usuario.grupo} name="grupo"
-                    disabled={this.state.loading}
-                    select
-                >
-                    {Arrayficar(Usuario.GRUPOS()).map(grupo=>(
-                        <ListItem key={grupo.value} value={grupo.value}>
-                            {grupo.value}
-                        </ListItem>
-                    ))}
-                </TextField>
-                <MaskedTextField
-                    onChange={this.change}
-                    label="Nome" variant="outlined"
-                    className="DefaultPages_INPUTS"
-                    value={this.state.usuario.nome} name="nome"
-                    disabled={this.state.loading}
-                />
-                <MaskedTextField
-                    onChange={this.change}
-                    label="CPF" variant="outlined"
-                    className="DefaultPages_INPUTS"
-                    value={this.state.usuario.cpf} name="cpf"
-                    mask="000.000.000.00"
-                    disabled={this.state.loading}
-                />
-                <DatePicker
-                    variant="dialog"
-                    onChange={this.changeDate}
-                    disableFuture
-                    fullWidth
-                    name="dataNascimento"
-                    label="Data de Nascimento"
-                    inputVariant="outlined"
-                    value={this.state.usuario.dataNascimento}
-                    disabled={this.state.loading}
-                />
-                <MaskedTextField
-                    onChange={this.change}
-                    label="Sobre mim (Opcional)" variant="outlined"
-                    className="DefaultPages_INPUTS"
-                    value={this.state.usuario.sobre} name="sobre"
-                    multiline
-                    disabled={this.state.loading}
-                />
-                <VisualizarLog log={this.state.usuario.ultimoLog} flex="1"/>
-                <Button variant="contained" color="primary" onClick={this.atualizarUsuario} disabled={this.state.loading||!this.state.modificado}>Salvar</Button>
-                {
-                    this.props.useCurrentUser ?
-                    (
-                    <Button color="secondary" variant="outlined" onClick={UsuarioHelper.desconectar}>
-                        SAIR
-                    </Button>
-                    ):undefined
-                }
-            </Box>
+            <div className="DefaultPages_INSIDER">
+                <Box className="DefaultPages_ROOT">
+                    <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
+                    <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
+                    <MaskedTextField
+                        onChange={this.change}
+                        label="E-mail" variant="outlined"
+                        inputMode="email"
+                        className="DefaultPages_INPUTS"
+                        value={this.state.usuario.email} name="email"
+                        disabled={true}
+                    />
+                    <TextField
+                        onChange={this.change}
+                        label="Grupo" variant="outlined"
+                        className="DefaultPages_INPUTS"
+                        value={this.state.usuario.grupo} name="grupo"
+                        disabled={this.state.loading}
+                        select
+                    >
+                        {Arrayficar(Usuario.GRUPOS()).map(grupo=>(
+                            <ListItem key={grupo.value} value={grupo.value}>
+                                {grupo.value}
+                            </ListItem>
+                        ))}
+                    </TextField>
+                    <MaskedTextField
+                        onChange={this.change}
+                        label="Nome" variant="outlined"
+                        className="DefaultPages_INPUTS"
+                        value={this.state.usuario.nome} name="nome"
+                        disabled={this.state.loading}
+                    />
+                    <MaskedTextField
+                        onChange={this.change}
+                        label="CPF" variant="outlined"
+                        className="DefaultPages_INPUTS"
+                        value={this.state.usuario.cpf} name="cpf"
+                        mask="000.000.000.00"
+                        disabled={this.state.loading}
+                    />
+                    <DatePicker
+                        variant="dialog"
+                        onChange={this.changeDate}
+                        disableFuture
+                        fullWidth
+                        name="dataNascimento"
+                        label="Data de Nascimento"
+                        inputVariant="outlined"
+                        value={this.state.usuario.dataNascimento}
+                        disabled={this.state.loading}
+                    />
+                    <MaskedTextField
+                        onChange={this.change}
+                        label="Sobre mim (Opcional)" variant="outlined"
+                        className="DefaultPages_INPUTS"
+                        value={this.state.usuario.sobre} name="sobre"
+                        multiline
+                        disabled={this.state.loading}
+                    />
+                    <VisualizarLog log={this.state.usuario.ultimoLog} flex="1"/>
+                    <Button variant="contained" color="primary" onClick={this.atualizarUsuario} disabled={this.state.loading||!this.state.modificado}>Salvar</Button>
+                    {
+                        this.props.useCurrentUser ?
+                        (
+                        <Button color="secondary" variant="outlined" onClick={UsuarioHelper.desconectar}>
+                            SAIR
+                        </Button>
+                        ):undefined
+                    }
+                </Box>
+            </div>
         );
     }
 }

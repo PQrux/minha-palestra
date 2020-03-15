@@ -29,7 +29,7 @@ export default class UsuarioHelper{
                         novoUsuario.email = user.email;
                         novoUsuario.nome = user.displayName;
                         novoUsuario.fotoPerfil = user.photoURL;
-                        novoUsuario.dhResgistro = new Date();
+                        novoUsuario.dhCriacao = new Date();
                         novoUsuario.grupo = Usuario.GRUPOS().USUARIO;
                         snap.ref.set(novoUsuario.toJson()).then(()=>{
                             resolve(novoUsuario);

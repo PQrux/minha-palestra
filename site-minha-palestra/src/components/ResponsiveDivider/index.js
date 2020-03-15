@@ -46,7 +46,7 @@ class ResponsiveDivider extends Component {
           <Box className={this.state.firstOpened ? "responsive_divider_active" : "responsive_divider_inactive"}>
             {children[0]}
           </Box>
-          <Box className={!this.state.firstOpened ? "responsive_divider_active" : "responsive_divider_inactive"}>
+          <Box className={(!this.state.firstOpened ? "responsive_divider_active" : "responsive_divider_inactive")+" responsive_divider_right"}>
             {children[1]}
           </Box>
       </Box>

@@ -1,10 +1,10 @@
-import React from 'react';
-import { EasyComponent, List, ResponsiveDivider } from '../../components';
+import React, { Component } from 'react';
+import { ResponsiveDivider, List, EasyComponent } from '../../components';
+import { Button, Box } from '@material-ui/core';
 import { Perfil } from '../../partialviews';
 import { UsuarioHelper } from '../../services';
-import { DataLocal } from '../../utils';
 
-export default class PalestrasDisponiveis extends EasyComponent {
+export default class Usuarios extends EasyComponent {
     constructor(props){
         super(props);
         this.disablePermissao = true;
@@ -31,16 +31,13 @@ export default class PalestrasDisponiveis extends EasyComponent {
                 <List
                     items={this.usuarios}
                     titulo={"nome"}
-                    descriptors={[
-                        {propriedade: "grupo", orderbyLabel: "Grupo"}, 
-                        {label: "Descrição:", propriedade: "sobre", orderbyLabel: "Descrição"},
-                        {label: "Registrado em:", propriedade: "dhCriacao", orderbyLabel: "Data de Registro", transform: DataLocal}
-                    ]}
+                    descriptors={[{label: "Descrição:", propriedade: "sobre"}]}
                     selected={this.state.selecionado}
                     onItemSelected={this.changeItem}
-                    tituloLabel={"Nome do Usuário"}
                 />
-                <Perfil showNotFound entidade={this.state.selecionado}/>
+                <Box style={{overflowY: "auto", height: "100%"}}>
+                    <Perfil showNotFound entidade={this.state.selecionado}/>
+                </Box>
             </ResponsiveDivider>
         );
     }

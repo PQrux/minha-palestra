@@ -6,7 +6,7 @@ import "./style.css";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { ThemeProvider } from '@material-ui/styles';
-import { Permissao } from "models-minha-palestra";
+
 
 const greenTheme = createMuiTheme({
     palette: {
@@ -18,7 +18,7 @@ export default class EasyComponent extends PureEasyComponent {
     /**
      * 
      * @param {any} props 
-     * @param {Permissao["prototype"]} permissor 
+     * @param {import("models-minha-palestra/src/models/Permissao")} permissor 
      */
     constructor(props, permissor, mensagemDeny, mensagemNotFound, mensagemLoading, additionalPaperStyle){
         super(props, permissor);
