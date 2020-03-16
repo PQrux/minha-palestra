@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { ResponsiveDivider, List, EasyComponent } from '../../components';
-import { Button, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
+import React from 'react';
+import { EasyComponent, List, ResponsiveDivider } from '../../components';
 import { Perfil } from '../../partialviews';
 import { UsuarioHelper } from '../../services';
 

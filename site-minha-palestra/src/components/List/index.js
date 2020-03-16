@@ -1,5 +1,5 @@
-import { Box, InputAdornment, MenuItem, TextField, Typography } from '@material-ui/core';
-import { FilterList, Search } from "@material-ui/icons";
+import { Box, InputAdornment, MenuItem, TextField, Typography, Button } from '@material-ui/core';
+import { FilterList, Search, Add } from "@material-ui/icons";
 import React, { Component } from 'react';
 import ListItem from "../ListItem";
 import "./styles.css";
@@ -76,6 +76,12 @@ export default class List extends Component {
                             </MenuItem>
                         ))}
                     </TextField>
+                    {
+                        this.props.add ?
+                        <Button onClick={this.props.add.onClick} fullWidth color="primary" variant="outlined" style={{marginTop: "10px"}}>
+                            <Add/> {this.props.add.label}
+                        </Button>: undefined
+                    }
                 </Box>
                 {this.renderItems()}
             </Box>

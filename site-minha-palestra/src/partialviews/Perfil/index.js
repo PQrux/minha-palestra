@@ -2,15 +2,17 @@ import { Box, Button, Typography, TextField, ListItem } from '@material-ui/core'
 import { ErrorOutline } from '@material-ui/icons';
 import { Usuario, Permissao } from "models-minha-palestra";
 import React from 'react';
-import { DatePicker, EasyComponent, MaskedTextField, ResponsiveDividerBackButton } from '../../components';
+import { DatePicker, EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingButton } from '../../components';
 import { UsuarioHelper } from '../../services';
 import VisualizarLog from '../VisualizarLog';
 import { Arrayficar } from '../../utils';
+import { Permissoes } from "../../constants";
 const logo = require("../../assets/images/logo.png");
+
 export default class Perfil extends EasyComponent {
     constructor(props){
         super(props, 
-            new Permissao({grupo: "ADMINISTRADOR", permissao: "w"}, {grupo: "USUARIO", permissao: "r"}, {grupo: "PALESTRANTE", permissao: "r"}),
+            Permissoes.perfil,
             "Você não tem permissão para visualizar usuários.", "Nenhum usuário selecionado.",
             undefined, {minHeight: "100%"}
         );
@@ -59,6 +61,7 @@ export default class Perfil extends EasyComponent {
         this.setState({loading: true});
         UsuarioHelper.atualizarUsuario(this.state.usuario)
         .then(usuario=>{
+            if(this.props.refreshParent) this.props.refreshParent(usuario);
             this.setState({loading: false, modificado: false, usuario});
         })
         .catch(err=>{
@@ -148,8 +151,7 @@ export default class Perfil extends EasyComponent {
                         multiline
                         disabled={this.state.loading}
                     />
-                    <VisualizarLog log={this.state.usuario.ultimoLog} flex="1"/>
-                    <Button variant="contained" color="primary" onClick={this.atualizarUsuario} disabled={this.state.loading||!this.state.modificado}>Salvar</Button>
+                    <VisualizarLog log={this.state.usuario.ultimoLog} width="100%"/>
                     {
                         this.props.useCurrentUser ?
                         (
@@ -158,6 +160,7 @@ export default class Perfil extends EasyComponent {
                         </Button>
                         ):undefined
                     }
+                    <FloatingButton variant="contained" color="primary" onClick={this.atualizarUsuario} disabled={this.state.loading||!this.state.modificado} visible={this.state.modificado}>Salvar</FloatingButton>
                 </Box>
             </div>
         );

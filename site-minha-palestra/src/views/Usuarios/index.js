@@ -40,7 +40,7 @@ export default class PalestrasDisponiveis extends EasyComponent {
                     onItemSelected={this.changeItem}
                     tituloLabel={"Nome do Usuário"}
                 />
-                <Perfil showNotFound entidade={this.state.selecionado}/>
+                <Perfil showNotFound entidade={this.state.selecionado} refreshParent={()=>{this.setState({})}}/>
             </ResponsiveDivider>
         );
     }

@@ -23,7 +23,7 @@ export default class PureEasyComponent extends Component {
         this.carregando = true;
         this.erro = undefined;
         this.notFound = false;
-        /**@type {import("happytoyou-models/src/models")["UsuarioDoSistema"]["prototype"]} */
+        /**@type {import("models-minha-palestra/src/models/Usuario")} */
         this.usuario = {};
         this.carregar();
     }

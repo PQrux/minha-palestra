@@ -24,7 +24,7 @@ export default class LogHelper{
                 }
                 log.tipo = tipo;
                 log.nomeUsuario = usuario.nome;
-                //log.mensagem = mensagem;
+                log.mensagem = mensagem;
                 log.usuarioAcao = usuario.path;
                 log.dh = firebase.database.ServerValue.TIMESTAMP;
                 firebase.database().ref("Logs").push(log.toJson()).then(ref=>{
@@ -62,7 +62,7 @@ export default class LogHelper{
                 }
                 log.tipo = tipo;
                 log.nomeUsuario = usuario.nome;
-                //log.mensagem = mensagem;
+                log.mensagem = mensagem;
                 log.usuarioAcao = usuario.path;
                 log.dh = firebase.database.ServerValue.TIMESTAMP;
                 firebase.database().ref("Logs").push().then(ref=>{

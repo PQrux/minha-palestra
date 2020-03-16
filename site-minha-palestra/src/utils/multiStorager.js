@@ -69,6 +69,12 @@ class MultiStorager{
     constructor(){
         this.DataStorager = new DataStorager();
     }
+    getOtherDataStorager(name){
+        if(!this[name]){
+            this[name] = new DataStorager();
+        }
+        return this[name];
+    }
 }
 
 const multiStorager = new MultiStorager();

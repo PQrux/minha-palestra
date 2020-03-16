@@ -6,6 +6,10 @@ import ResponsiveDivider from "./ResponsiveDivider";
 import ListItem from "./ListItem";
 import List from "./List";
 import ResponsiveDividerBackButton from "./ResponsiveDividerBackButton";
+import Modal from "./Modal";
+import DialogPronto from "./DialogPronto";
+import FloatingButton from "./FloatingButton";
+
 export {
     MaskedTextField,
     EasyComponent,
@@ -15,4 +19,7 @@ export {
     ListItem,
     List,
     ResponsiveDividerBackButton,
+    Modal,
+    DialogPronto,
+    FloatingButton,
 }

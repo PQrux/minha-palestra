@@ -1,17 +1,16 @@
 import { Box, Tab, Tabs } from '@material-ui/core';
-import { AccountCircle, History, LiveTv } from '@material-ui/icons';
+import { AccountCircle, History, LiveTv, Place } from '@material-ui/icons';
 import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { Perfil } from '../../partialviews';
-import PalestrasDisponiveis from "../PalestrasDisponiveis";
+import EspacosDeApresentacao from "../EspacosDeApresentacao";
 import Usuarios from "../Usuarios";
 export default class Home extends Component {
   constructor(props){
     super(props);
     this.options = [
-      { label: "Palestras Disponíveis", icon: <LiveTv/>, OptionComponent: PalestrasDisponiveis, OptionComponentProps: {}},
+      { label: "Espaços de Apresentação", icon: <Place/>, OptionComponent: EspacosDeApresentacao, OptionComponentProps: {}},
       { label: "Meu Perfil", icon: <AccountCircle/>, OptionComponent: Perfil, OptionComponentProps: {useCurrentUser: true, showNotFound: true} },
-
       { label: "Usuários", icon : <History/>, OptionComponent: Usuarios, OptionComponentProps: {}},
     ]
   }

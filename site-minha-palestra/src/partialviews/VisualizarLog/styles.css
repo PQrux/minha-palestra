@@ -3,8 +3,9 @@
     border-width: 1px;
     border-radius: 5px;
     border-style: solid;
-    padding-top: 10px;
-    padding-left: 10px;
+}
+.visualizar_log_subroot{
+    padding: 10px;
 }
 .visualizar_log_container{
     flex-wrap: wrap;

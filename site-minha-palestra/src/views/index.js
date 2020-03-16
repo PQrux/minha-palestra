@@ -10,6 +10,7 @@ import AuthenticationInformacoesLegais from "./AuthenticationInformacoesLegais";
 import AuthenticationQuemE from "./AuthenticationQuemE";
 import AuthenticationEsqueciSenha from "./AuthenticationEsqueciSenha";
 import Home from "./Home";
+import EspacosDeApresentacao from "./EspacosDeApresentacao";
 export {
     Splash,
     Login,
@@ -23,4 +24,5 @@ export {
     AuthenticationQuemE,
     AuthenticationEsqueciSenha,
     Home,
+    EspacosDeApresentacao,
 }
