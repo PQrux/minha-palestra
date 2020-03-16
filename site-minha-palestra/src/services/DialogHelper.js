@@ -1,6 +1,6 @@
 import { multiStorager } from "../utils";
 import React from 'react';
-import { Button, CircularProgress, Box } from '@material-ui/core';
+import { Button, CircularProgress, Box, LinearProgress, Typography } from '@material-ui/core';
 
 export default class DialogHelper{
     /**
@@ -56,6 +56,24 @@ export default class DialogHelper{
                 </Box>
             )
         )
+    }
+    static showFileSenderProgress(nErrorFiles, nTransfdFiles, nTotalFiles, bytesTransfd, nTotalBytes){
+        let porcent = ((bytesTransfd * 100) / nTotalBytes).toFixed(2);
+        DialogHelper.showDialog("Enviando Arquivos", (
+            <Box display="flex" flexDirection="column" flex="1" justifyContent="center">
+                <Box display="flex" marginBottom="50px">
+                    <Box flex="1" marginRight="10px">
+                        <Typography>Enviados: {nTransfdFiles}</Typography>
+                        <Typography>Erros: {nErrorFiles}</Typography>
+                    </Box>
+                    <Box  flex="1">
+                        <Typography align="right">Total de Arquivos: {nTotalFiles}</Typography>
+                    </Box>
+                </Box>
+                <Typography align="center">{porcent}%</Typography>
+                <LinearProgress value={porcent} color="primary" variant="determinate" style={{width: "100%"}} />
+            </Box>
+        ), undefined, true);
     }
     static okButton = (<Button onClick={()=>{DialogHelper.closeDialog()}}>OK</Button>)
 } 

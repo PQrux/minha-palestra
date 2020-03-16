@@ -1,6 +1,6 @@
 import { Box, Button, Typography, TextField, ListItem } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
-import { Usuario, Permissao } from "models-minha-palestra";
+import { Usuario } from "models-minha-palestra";
 import React from 'react';
 import { DatePicker, EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingButton } from '../../components';
 import { UsuarioHelper } from '../../services';

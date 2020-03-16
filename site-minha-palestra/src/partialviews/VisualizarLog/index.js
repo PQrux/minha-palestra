@@ -2,7 +2,6 @@ import { Box, Typography } from '@material-ui/core';
 import React from 'react';
 import { DataLocal } from "../../utils";
 import "./styles.css";
-import { Permissao } from "models-minha-palestra";
 import { EasyComponent } from '../../components';
 import { Permissoes } from "../../constants";
 

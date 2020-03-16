@@ -78,7 +78,7 @@ export default class List extends Component {
                     </TextField>
                     {
                         this.props.add ?
-                        <Button onClick={this.props.add.onClick} fullWidth color="primary" variant="outlined" style={{marginTop: "10px"}}>
+                        <Button onClick={this.addClick} fullWidth color="primary" variant="outlined" style={{marginTop: "10px"}}>
                             <Add/> {this.props.add.label}
                         </Button>: undefined
                     }
@@ -86,6 +86,10 @@ export default class List extends Component {
                 {this.renderItems()}
             </Box>
         );
+    }
+    addClick = () => {
+        if(this.props.add) this.props.add.onClick();
+        if(this.props.changeToRight) this.props.changeToRight();
     }
     change=({target})=>{
         this.setState({[target.name]: target.value});

@@ -5,14 +5,18 @@ import LogHelper from "./LogHelper";
 
 export default class FileHelper{
     /**
+     * @param {boolean} multiple Define se devem ser capturados múltiplos arquivos.
+     * @param {string} acceptType Define restrição de tipo de arquivos.
+     * @param {boolean} capture Define se devem ser utilizados os recursos do aparelho, como câmera por exemplo.
      * @returns {Promise.<Array<File>>}
      */
-    static getFiles(multiple, acceptType){
+    static getFiles(multiple, acceptType, capture){
         return new Promise(async (resolve,reject)=>{
             var fileSelector = document.createElement('input');
             fileSelector.setAttribute('type', 'file');
             if(multiple) fileSelector.setAttribute("multiple", true);
             if(acceptType) fileSelector.setAttribute("accept", acceptType);
+            if(capture) fileSelector.setAttribute("capture", true);
             fileSelector.onchange = ()=>{ 
                 if (!fileSelector.files) { 
                     reject("Impossível carregar arquivos no seu navegador!");
@@ -67,6 +71,7 @@ export default class FileHelper{
                 return;
             }
             let 
+                finalizado = false,
                 nErrorFiles = 0,
                 nTransfdFiles = 0, 
                 nTotalFiles = files.length, 
@@ -80,10 +85,12 @@ export default class FileHelper{
              * @param {{b: number}} progress
              */
             let onProgress = async (currentUpload, snap, progress) => {
-                if(snap){
+                if(snap && !finalizado){
                     bytesTransfd = (bytesTransfd - progress.b) + snap.bytesTransferred;
                     progress.b = snap.bytesTransferred;
                     if(progressCallback) progressCallback(nErrorFiles, nTransfdFiles, nTotalFiles, bytesTransfd, nTotalBytes);
+                    console.log("em andamento.")
+                    console.log({nErrorFiles, nTransfdFiles, nTotalFiles, bytesTransfd, nTotalBytes});
                 }
             }
             /**
@@ -98,6 +105,7 @@ export default class FileHelper{
              */
             let onComplete = async (currentUpload, unsubscribe) => {
                 let ok = true;
+                finalizado = true;
                 if(unsubscribe) unsubscribe();
                 let url = await currentUpload.snapshot.ref.getDownloadURL()
                 .catch(err=>{
@@ -110,17 +118,20 @@ export default class FileHelper{
                     nTransfdFiles++;
                 }
                 if(nTransfdFiles+nErrorFiles === nTotalFiles){
+                    console.log("comitando.")
                     if(propIsArray){
                         if(overrideProp) obj[prop] = urls;
                         else {
                             if(!Array.isArray(obj[prop])) obj[prop] = [];
-                            obj[prop].concat(urls);
+                            obj[prop] = obj[prop].concat(urls);
                         }
                     }
                     else{
                         obj[prop] = urls[0];
                     }
                     LogHelper.logarECommitar([obj.path], "ATUALIZACAO", "Adicionado fotos", obj).then(()=>{
+                        console.log("concluído");
+                        console.log(obj);
                         resolve(obj);
                     })
                     .catch(err=>{
@@ -129,7 +140,7 @@ export default class FileHelper{
                 }
             }
             files.forEach(file=>{
-                let currentUpload = firebase.storage().ref(obj.path).put(file);
+                let currentUpload = firebase.storage().ref(obj.path).child(new Date().getTime().toString()).put(file);
                 let progress = {b: 0};
                 currentUpload.on(firebase.storage.TaskEvent.STATE_CHANGED, 
                     (snap)=>{onProgress(currentUpload, snap, progress)}, 

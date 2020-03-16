@@ -1,5 +1,5 @@
 import { Box, Tab, Tabs } from '@material-ui/core';
-import { AccountCircle, History, LiveTv, Place } from '@material-ui/icons';
+import { AccountCircle, History, Place } from '@material-ui/icons';
 import React, { Component } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { Perfil } from '../../partialviews';

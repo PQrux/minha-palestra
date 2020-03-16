@@ -2,10 +2,10 @@ import React from 'react';
 import { EasyComponent } from '../../components';
 import { Box, Button, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
-import { ModalHelper, DialogHelper } from '../../services';
-import { Permissao } from "models-minha-palestra";
-//const noImage = require("../../assets/images/no-image.png");
+import { ModalHelper, DialogHelper, FileHelper } from '../../services';
+import { FirestoreObject } from "models-minha-palestra";
 import { Permissoes } from "../../constants";
+
 export default class Galeria extends EasyComponent {
     constructor(props){
         super(props, Permissoes.galeria);
@@ -14,9 +14,34 @@ export default class Galeria extends EasyComponent {
         }
     }
     addImagem = () => {
-        
+        FileHelper.getFiles(true, "image/*", true).then(files=>{
+            if(files.length > 0){
+                FileHelper.saveFiles(DialogHelper.showFileSenderProgress, files, this.props.entidade, this.props.entidadeProp, true)
+                .then((entidade)=>{
+                    if(this.props.refreshParent) this.props.refreshParent(entidade);
+                    this.setState({imgs: this.props.entidade[this.props.entidadeProp]});
+                    DialogHelper.closeDialog();
+                })
+                .catch(err=>{
+                    DialogHelper.showError(err);
+                })
+            }
+        })
+        .catch(err=>{
+            DialogHelper.showError(err);
+        })
     }
     carregarEntidade(){
+        let { entidade, entidadeProp } = this.props;
+        if((entidade instanceof FirestoreObject) && entidadeProp){
+            if(!Array.isArray(entidade[entidadeProp])){
+                entidade[entidadeProp] = [];
+            }
+            this.state.imgs = entidade[entidadeProp];
+        }
+        else{
+            this.setNotFound(true);
+        }
         this.setCarregando(false);
     }
     renderWrite() {
@@ -44,9 +69,9 @@ export default class Galeria extends EasyComponent {
         return (
             <Box style={{display: "flex", overflowX: "auto", width: "100%"}}>
                 { withAdd ? 
-                    <Button {...buttonopts} style={styles.button} onClick={this.addImagem}>
+                    <Button {...buttonopts} style={styles.button} onClick={this.addImagem} disabled={!this.props.entidade||!this.props.entidade.path}>
                         <Add></Add>
-                        <Typography color="primary">ADICIONAR FOTO</Typography>
+                        <Typography>ADICIONAR FOTO</Typography>
                     </Button> : undefined
                 }
                 {this.state.imgs.map((img,i)=>(
@@ -54,7 +79,7 @@ export default class Galeria extends EasyComponent {
                         {...buttonopts} 
                         onClick={this.setSelected}
                         name={i}
-                        style={Object.assign({backgroundImage: `url(${img})`}, styles.button)} 
+                        style={Object.assign({backgroundImage: `url(${img})`, backgroundColor: "white"}, styles.button)} 
                         key={i}
                     />
                 ))}
