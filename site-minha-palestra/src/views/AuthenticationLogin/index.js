@@ -39,7 +39,7 @@ export default class AuthenticationLogin extends EasyComponent {
     }
     renderWrite() {
         return (
-            <Box className="DefaultPages_ROOT">
+            <form className="DefaultPages_ROOT" onSubmit={this.submit}>
                 <img src={logo} style={styles.img} alt="logo"></img>
                 <MaskedTextField
                     onChange={this.change}
@@ -58,13 +58,13 @@ export default class AuthenticationLogin extends EasyComponent {
                 <Link onClick={this.goToEsqueci}>
                     Esqueci minha senha
                 </Link>
-                <Button className="DefaultPages_BUTTON" color="primary" variant="outlined" onClick={this.submit}>
+                <Button type="submit" className="DefaultPages_BUTTON" color="primary" variant="outlined">
                     ENTRAR
                 </Button>
                 <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={this.goToCriarConta}>
                     CRIAR UMA CONTA
                 </Button>
-            </Box>
+            </form>
         );
     }
     resetError = () => {

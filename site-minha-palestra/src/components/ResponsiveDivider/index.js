@@ -10,6 +10,7 @@ class ResponsiveDivider extends Component {
       firstOpened: true,
       lastUpdate: "",
     }
+    window.testor = this.props;
     this.gencode = new Date().getTime().toString();
     if(props.changeToRightRef) props.changeToRightRef(this.changeToRight);
     if(props.changeToLeftRef) props.changeToLeftRef(this.changeToLeft);
@@ -29,7 +30,9 @@ class ResponsiveDivider extends Component {
   }
   changeToRight = () => {
     this.gencode = new Date().getTime().toString();
-    this.props.history.push(this.gencode);
+    let path = !this.props.match.url || this.props.match.url === "/" ? "" : this.props.match.url;
+    path += "/"+this.gencode;
+    this.props.history.push(path);
   }
   changeToLeft = () => {
     this.props.history.goBack();
@@ -43,10 +46,10 @@ class ResponsiveDivider extends Component {
     else children.push(this.props.children);
     return (
       <Box className="responsive_divider_root" {...this.props}>
-          <Box className={this.state.firstOpened ? "responsive_divider_active" : "responsive_divider_inactive"}>
+          <Box className={["responsive_divider_child", this.state.firstOpened ? "responsive_divider_active" : "responsive_divider_inactive"]}>
             {children[0]}
           </Box>
-          <Box className={(!this.state.firstOpened ? "responsive_divider_active" : "responsive_divider_inactive")+" responsive_divider_right"}>
+          <Box className={["responsive_divider_child",(!this.state.firstOpened ? "responsive_divider_active" : "responsive_divider_inactive")," responsive_divider_right"]}>
             {children[1]}
           </Box>
       </Box>

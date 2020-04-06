@@ -8,8 +8,9 @@ import List from "./List";
 import ResponsiveDividerBackButton from "./ResponsiveDividerBackButton";
 import Modal from "./Modal";
 import DialogPronto from "./DialogPronto";
-import FloatingButton from "./FloatingButton";
-
+import Navigation from "./Navigation";
+import FloatingBox from "./FloatingBox";
+import Carregamento from "./Carregamento";
 export {
     MaskedTextField,
     EasyComponent,
@@ -21,5 +22,7 @@ export {
     ResponsiveDividerBackButton,
     Modal,
     DialogPronto,
-    FloatingButton,
+    Navigation,
+    FloatingBox,
+    Carregamento,
 }

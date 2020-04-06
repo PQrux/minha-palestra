@@ -8,12 +8,12 @@ import $ from "jquery";
 export default class Login extends Component {
   descer = () =>{
     let target = $('html,body'); 
-    target.animate({scrollTop: target.height()}, 2000);
+    target.animate({scrollTop: $("#scrollTarget").offset().top}, 1000);
   }
   render() {
     return (
         <Box className="Login_container">
-          <Box display="flex" flex="3">
+          <Box display="flex" flex="3" id="scrollTarget">
             <Authentication history={this.props.history}/>
           </Box>
           <Box 

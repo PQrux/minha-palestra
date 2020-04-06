@@ -1,7 +1,7 @@
-import { Box, FormControlLabel, MenuItem, Switch, TextField } from '@material-ui/core';
+import { Box, FormControlLabel, MenuItem, Switch, TextField, Button } from '@material-ui/core';
 import { Espaco } from "models-minha-palestra";
 import React from 'react';
-import { EasyComponent, FloatingButton, MaskedTextField, ResponsiveDividerBackButton } from '../../components';
+import { EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingBox } from '../../components';
 import { Permissoes } from "../../constants";
 import { DialogHelper, EspacosHelper } from '../../services';
 import { Arrayficar } from '../../utils';
@@ -47,7 +47,6 @@ export default class VisualizarEspaco extends EasyComponent {
         return (
         <Box className="DefaultPages_INSIDER">
             <Box className="DefaultPages_ROOT">
-                <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
                 <TextField
                     label="Nome do Espaço"
                     variant="outlined"
@@ -124,16 +123,18 @@ export default class VisualizarEspaco extends EasyComponent {
                 />
                 <Galeria entidade={this.state.espaco} entidadeProp="fotos"/>
                 <VisualizarLog log={this.state.espaco.ultimoLog} width="100%"/>
-                <FloatingButton 
-                    variant="contained"
-                    color="primary"
-                    onClick={this.salvar}
-                    disabled={this.state.loading||!this.state.modificado}
-                    visible={this.state.modificado}
-
-                >
-                    Salvar
-                </FloatingButton>
+                <FloatingBox>
+                    <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
+                    <Button 
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.salvar}
+                        disabled={this.state.loading||!this.state.modificado}
+                        style={{marginLeft: 10, display: this.state.modificado ? "block" : "none"}}
+                    >
+                        Salvar
+                    </Button>
+                </FloatingBox>
             </Box>
         </Box>
         );

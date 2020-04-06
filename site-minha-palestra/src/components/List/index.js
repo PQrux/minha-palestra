@@ -34,6 +34,12 @@ export default class List extends Component {
                 className={["custom_list", this.props.className||""].join(" ")}
             >
                 <Box display="flex" flexDirection="column" padding="10px" paddingTop="20px">
+                    {
+                        this.props.tituloLista ?
+                        <Typography variant="h3" align="center" style={{marginBottom: 20}}>
+                            {this.props.tituloLista}
+                        </Typography>:undefined
+                    }
                     <TextField 
                         variant="outlined" 
                         fullWidth

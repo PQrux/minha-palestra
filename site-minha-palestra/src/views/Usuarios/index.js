@@ -29,6 +29,7 @@ export default class PalestrasDisponiveis extends EasyComponent {
         return (
             <ResponsiveDivider style={{height: "100%"}}>
                 <List
+                    tituloLista="Usuários"
                     items={this.usuarios}
                     titulo={"nome"}
                     descriptors={[

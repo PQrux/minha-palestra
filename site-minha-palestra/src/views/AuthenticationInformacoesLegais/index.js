@@ -10,13 +10,16 @@ export default class AuthenticationInformacoesLegais extends Authentication {
     submitPalestrante = () => {
         this.submit();
     }
+    checkInfo = {
+        "cpf": {type: "string", max: 14, min: 14, aviso: "Insira um CPF válido!"},
+    }
     nextPage = "cadastroconcluido";
     changeApelo = ({target}) => {
         this.setState({apelo: target.value});
     }
     renderWrite() {
         return (
-                <Box className="DefaultPages_ROOT">
+                <form className="DefaultPages_ROOT" onSubmit={this.submit}>
                     <Typography align="center">Só precisamos de mais algumas informações:</Typography>
                     <MaskedTextField
                         onChange={this.change}
@@ -29,13 +32,13 @@ export default class AuthenticationInformacoesLegais extends Authentication {
                         Seu CPF será utilizado apenas para lhe identificar em seus 
                         certificados e dentro do sistema.
                     </Typography>
-                    <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={this.submit}>
+                    <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" type="submit">
                         {"PROSSEGUIR"}
                     </Button>
                     <Button color="primary" className="DefaultPages_BUTTON" variant="outlined" onClick={this.props.history.goBack}>
                         Voltar
                     </Button>
-                </Box>
+                </form>
         );
     }
 }

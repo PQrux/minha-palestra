@@ -9,8 +9,9 @@ import PedidoParaSerPalestrante from "./PedidoParaSerPalestrante";
 import AuthenticationInformacoesLegais from "./AuthenticationInformacoesLegais";
 import AuthenticationQuemE from "./AuthenticationQuemE";
 import AuthenticationEsqueciSenha from "./AuthenticationEsqueciSenha";
-import Home from "./Home";
 import EspacosDeApresentacao from "./EspacosDeApresentacao";
+import Usuarios from "./Usuarios";
+import MenuConfiguracoes from "./MenuConfiguracoes";
 export {
     Splash,
     Login,
@@ -23,6 +24,7 @@ export {
     AuthenticationInformacoesLegais,
     AuthenticationQuemE,
     AuthenticationEsqueciSenha,
-    Home,
     EspacosDeApresentacao,
+    Usuarios,
+    MenuConfiguracoes,
 }

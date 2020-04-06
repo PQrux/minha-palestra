@@ -44,7 +44,7 @@ export default class AuthenticationEsqueciSenha extends EasyComponent {
         )
         else
         return (
-            <Box className="DefaultPages_ROOT">
+            <form className="DefaultPages_ROOT" onSubmit={this.submit}>
                 <Typography align="center">
                     Esqueceu sua senha? Não se preocupe, vamos recuperá-la agora para você.
                 </Typography>
@@ -58,13 +58,13 @@ export default class AuthenticationEsqueciSenha extends EasyComponent {
                     className="DefaultPages_INPUTS"
                     value={this.state.email} name="email"
                 />
-                <Button className="DefaultPages_BUTTON" color="primary" variant="outlined" onClick={this.submit}>
+                <Button className="DefaultPages_BUTTON" color="primary" variant="outlined" type="submit">
                     ENVIAR
                 </Button>
                 <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={this.props.history.goBack}>
                     VOLTAR
                 </Button>
-            </Box>
+            </form>
         );
     }
     resetError = () => {

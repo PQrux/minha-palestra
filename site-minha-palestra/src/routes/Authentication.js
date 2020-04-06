@@ -10,31 +10,46 @@ import {
   AuthenticationQuemE,
   AuthenticationEsqueciSenha,
 } from "../views";
+import { multiStorager } from '../utils';
+import { Button, Box } from '@material-ui/core';
 import { UsuarioHelper } from '../services';
-import DeterminarTelaCadastroUsuario from '../utils/DeterminarTelaUsuario';
 export default class Authentication extends Component {
-  usuarioCallback = (usuario)=>{
-    let tc = DeterminarTelaCadastroUsuario(usuario);
-    if(tc && this.props.history && !this.unmounted) this.props.history.push(tc);
+  state = {
+    conectado: false,
   }
   componentDidMount(){
-    UsuarioHelper.getUsuarioAtual().then(this.usuarioCallback)
-    .catch(err=>{});
+    multiStorager.DataStorager.addListener("usuario", "authentication_page", (usuario)=>{
+      this.setState({conectado: usuario ? true : false});
+    });
   }
   componentWillUnmount(){
-    this.unmounted = true;
+    multiStorager.DataStorager.deleteListener("usuario","authentication_page");
+  }
+  sair = () => {
+    UsuarioHelper.desconectar();
+    this.props.history.push("");
   }
   render() {
-    return (
+    if(this.state.conectado) return (
+      <Box flex="1" display="flex" flexDirection="column">
+        <BrowserRouter>
+          <Switch>
+            <Route path="/cadastroselfie" exact component={AuthenticationSelfie}/>
+            <Route path="/cadastroinformacoeslegais" exact component={AuthenticationInformacoesLegais}/>
+            <Route path="/cadastrosobrevoce" exact component={AuthenticationSobreVoce}/>
+            <Route path="*" component={AuthenticationSobreVoce}/>
+          </Switch>
+        </BrowserRouter>
+        <Button style={{marginTop: 10}} variant="text" color="primary" onClick={this.sair}>
+          Sair
+        </Button>
+      </Box>
+    )
+    else return (
       <BrowserRouter>
         <Switch>
-          <Route path="/esqueciminhasenha" exact component={AuthenticationEsqueciSenha}/>
-          <Route path="/cadastroselfie" exact component={AuthenticationSelfie}/>
-          <Route path="/cadastroinformacoeslegais" exact component={AuthenticationInformacoesLegais}/>
-          <Route path="/cadastroqueme" exact component={AuthenticationQuemE}/>
-          <Route path="/cadastroserpalestrante" exact component={PedidoParaSerPalestrante}/>
-          <Route path="/cadastrosobrevoce" exact component={AuthenticationSobreVoce}/>
           <Route path="/criarconta" exact component={AuthenticationCriarConta}/>
+          <Route path="/esqueciminhasenha" exact component={AuthenticationEsqueciSenha}/>
           <Route path="/login" component={AuthenticationLogin}/>
           <Route path="/" exact component={AuthenticationLogin}/>
           <Route path="*" component={AuthenticationLogin}/>

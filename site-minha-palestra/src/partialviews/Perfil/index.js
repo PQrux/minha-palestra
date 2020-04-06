@@ -2,7 +2,7 @@ import { Box, Button, Typography, TextField, ListItem } from '@material-ui/core'
 import { ErrorOutline } from '@material-ui/icons';
 import { Usuario } from "models-minha-palestra";
 import React from 'react';
-import { DatePicker, EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingButton } from '../../components';
+import { DatePicker, EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingBox } from '../../components';
 import { UsuarioHelper } from '../../services';
 import VisualizarLog from '../VisualizarLog';
 import { Arrayficar } from '../../utils';
@@ -73,7 +73,6 @@ export default class Perfil extends EasyComponent {
         return (
             <div className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
                     <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
                     <Typography autoCapitalize>
                         {this.state.usuario.grupo}
@@ -85,6 +84,9 @@ export default class Perfil extends EasyComponent {
                     <Typography>
                         {this.state.usuario.nome} 
                     </Typography>
+                    <FloatingBox>
+                        <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
+                    </FloatingBox>
                 </Box>
             </div>
         )
@@ -93,7 +95,6 @@ export default class Perfil extends EasyComponent {
         return (
             <div className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
                     <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
                     <MaskedTextField
                         onChange={this.change}
@@ -103,20 +104,23 @@ export default class Perfil extends EasyComponent {
                         value={this.state.usuario.email} name="email"
                         disabled={true}
                     />
-                    <TextField
-                        onChange={this.change}
-                        label="Grupo" variant="outlined"
-                        className="DefaultPages_INPUTS"
-                        value={this.state.usuario.grupo} name="grupo"
-                        disabled={this.state.loading}
-                        select
-                    >
-                        {Arrayficar(Usuario.GRUPOS()).map(grupo=>(
-                            <ListItem key={grupo.value} value={grupo.value}>
-                                {grupo.value}
-                            </ListItem>
-                        ))}
-                    </TextField>
+                    {
+                        this.state.usuario.grupo === "ADMINISTRADOR" || this.props.useCurrentUser ?
+                        <TextField
+                            onChange={this.change}
+                            label="Grupo" variant="outlined"
+                            className="DefaultPages_INPUTS"
+                            value={this.state.usuario.grupo} name="grupo"
+                            disabled={this.state.loading}
+                            select
+                        >
+                            {Arrayficar(Usuario.GRUPOS()).map(grupo=>(
+                                <ListItem key={grupo.value} value={grupo.value}>
+                                    {grupo.value}
+                                </ListItem>
+                            ))}
+                        </TextField>:undefined
+                    }
                     <MaskedTextField
                         onChange={this.change}
                         label="Nome" variant="outlined"
@@ -152,15 +156,18 @@ export default class Perfil extends EasyComponent {
                         disabled={this.state.loading}
                     />
                     <VisualizarLog log={this.state.usuario.ultimoLog} width="100%"/>
-                    {
-                        this.props.useCurrentUser ?
-                        (
-                        <Button color="secondary" variant="outlined" onClick={UsuarioHelper.desconectar}>
-                            SAIR
+                    <FloatingBox>
+                        <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            onClick={this.atualizarUsuario} 
+                            disabled={this.state.loading||!this.state.modificado} 
+                            style={{marginLeft: 10, display: this.state.modificado ? "block" : "none"}}                    
+                        >
+                            Salvar
                         </Button>
-                        ):undefined
-                    }
-                    <FloatingButton variant="contained" color="primary" onClick={this.atualizarUsuario} disabled={this.state.loading||!this.state.modificado} visible={this.state.modificado}>Salvar</FloatingButton>
+                    </FloatingBox>
                 </Box>
             </div>
         );
@@ -172,7 +179,8 @@ const style = {
         height: "200px",
         maxWidth: "auto",
         borderRadius: "10px",
-        marginBottom: "10px"
+        marginBottom: "10px",
+        boxShadow:"grey 1px 1px 6px 1px"
     },
     bold: {
         fontWeight: "bold"

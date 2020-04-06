@@ -30,7 +30,7 @@ export default class AuthenticationCriarConta extends EasyComponent {
     }
     renderWrite() {
         return (
-                <Box className="DefaultPages_ROOT">
+                <form className="DefaultPages_ROOT" onSubmit={this.registrar}>
                     <Typography align="center">Para começar, nos informe seu e-mail e uma senha:</Typography>
                     <MaskedTextField
                         onChange={this.change}
@@ -46,13 +46,13 @@ export default class AuthenticationCriarConta extends EasyComponent {
                         className="DefaultPages_INPUTS"
                         value={this.state.senha} name="senha"
                     />
-                    <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" onClick={this.registrar}>
+                    <Button className="DefaultPages_BUTTON" color="secondary" variant="outlined" type="submit">
                         PROSSEGUIR
                     </Button>
                     <Button color="primary" className="DefaultPages_BUTTON" variant="outlined" onClick={this.props.history.goBack}>
                         Voltar
                     </Button>
-                </Box>
+                </form>
         );
     }
     resetError = () => {

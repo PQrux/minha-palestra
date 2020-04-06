@@ -1,8 +1,9 @@
-body {
+html, body, #root {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 .whiteText{
   color: white;
@@ -25,7 +26,7 @@ body {
   text-align: center;
 }
 .fullHeightFlex {
-  height: 100vh;
+  height: 100%;
   display: flex;
 }
 .divDoisElementosResponsiva{
@@ -49,7 +50,7 @@ body {
   overflow-y: auto;
 }
 .root_page {
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   display: flex;
   flex-direction: column;

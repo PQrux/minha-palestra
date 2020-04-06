@@ -15,7 +15,41 @@ export default class Authentication extends EasyComponent {
     disablePermissao = true;
     anonymousAllowed = true;
     nextPage = "";
+    /**@type {Object<string, {type: "string"|"number"|"Date", max: any, min: any, aviso: string}>} */
+    checkInfo = {};
     submit = () => {
+        for(let i in this.checkInfo){
+            let check = this.checkInfo[i];
+            let prop = this.usuario[i];
+            if(prop == null){
+                this.setErro(check.aviso);
+                return;
+            }
+            if(check.type === "number"){
+                if(typeof prop !== "number"||
+                (check.min && check.min > prop)||
+                (check.max && check.max < prop)){
+                    this.setErro(check.aviso);
+                    return;
+                }
+            }
+            else if(check.type === "string"){
+                if(typeof prop !== "string"||
+                (check.min && check.min > prop.length)||
+                (check.max && check.max < prop.length)){
+                    this.setErro(check.aviso);
+                    return;
+                }
+            }
+            else if(check.type === "Date"){
+                if(typeof prop.getTime !== "function"|| !prop.getTime() ||
+                (check.min && check.min > prop)||
+                (check.max && check.max < prop)){
+                    this.setErro(check.aviso);
+                    return;
+                }
+            }
+        }
         this.setCarregando(true);
         UsuarioHelper.atualizarUsuario(this.usuario).then(usuario=>{
             this.setState({usuario: usuario});

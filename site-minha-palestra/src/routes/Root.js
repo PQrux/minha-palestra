@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { multiStorager } from '../utils';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Splash, Login, Home } from "../views";
+import { Splash, Login } from "../views";
 import { UsuarioHelper } from '../services';
+import HomeNavigation from "./HomeNavigation";
 export default class Root extends Component {
     constructor(props){
       super(props);
@@ -10,13 +11,12 @@ export default class Root extends Component {
         estado: "carregando",
         usuario: undefined,
       }
-      this.rotas = [
-        {component: Home, path: "*"},
-      ];
     }
     definirConectado(usuario){
-      if(!usuario||!usuario.nome||!usuario.dataNascimento||!usuario.dataNascimento.getTime()||!usuario.cpf)
-      return "desconectado";
+      window.usuario = usuario;
+      if(!usuario||!usuario.nome||!usuario.dataNascimento||!usuario.dataNascimento.getTime()||!usuario.cpf){
+        return "desconectado";
+      }
       else return "conectado";
     }
     usuarioCallback = (usuario)=>{
@@ -36,13 +36,7 @@ export default class Root extends Component {
     render() {
         if(this.state.estado === "conectado"){
             return (
-              <BrowserRouter>
-                  <Switch>
-                    {this.rotas.map(rota=>(
-                      <Route key={rota.path} path={rota.path} component={rota.component}/>
-                    ))}
-                  </Switch>
-              </BrowserRouter>
+              <HomeNavigation/>
             );
         }
         else if(this.state.estado === "desconectado"){

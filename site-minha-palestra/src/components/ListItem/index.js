@@ -51,6 +51,7 @@ const style = {
         justifyContent: 'flex-start',
         borderBottom: "1px #e3e3e3 solid", 
         padding: "10px",
+        paddingLeft: "20px",
         borderRadius: "0px",
         textAlign: "left"
     }

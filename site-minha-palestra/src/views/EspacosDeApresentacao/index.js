@@ -3,6 +3,7 @@ import { EasyComponent, List, ResponsiveDivider } from '../../components';
 import { VisualizarEspaco } from '../../partialviews';
 import { EspacosHelper } from '../../services';
 import { Espaco } from "models-minha-palestra";
+import { Typography, Box } from '@material-ui/core';
 
 export default class EspacosDeApresentacao extends EasyComponent {
     constructor(props){
@@ -35,6 +36,7 @@ export default class EspacosDeApresentacao extends EasyComponent {
         return (
             <ResponsiveDivider style={{height: "100%"}}>
                 <List
+                    tituloLista="Espaços de Apresentação"
                     items={this.espacos}
                     titulo={"nome"}
                     descriptors={[
