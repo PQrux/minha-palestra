@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Navigation, Carregamento } from '../components';
 import { DialogHelper, UsuarioHelper } from '../services';
-import { AuthenticationFim, EspacosDeApresentacao, MenuConfiguracoes, Usuarios } from "../views";
-import { VisualizarEvento } from '../partialviews';
+import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Usuarios } from "../views";
+
 export default class Home extends Component {
   constructor(props){
     super(props);
@@ -16,16 +16,16 @@ export default class Home extends Component {
   componentDidMount(){
     let espacos = { path: "/espacos", label: "Espaços", icon: <Place/>, OptionComponent: EspacosDeApresentacao},
     usuarios = { path: "/usuarios", label: "Usuários", icon : <History/>, OptionComponent: Usuarios},
-    eventos = {path: "/eventos", label: "Eventos", icon: <Event/>, OptionComponent: VisualizarEvento},
+    eventos = {path: "/eventos", label: "Eventos", icon: <Event/>, OptionComponent: Eventos},
     ajustes = { path: "/ajustes", label: "Ajustes", icon: <Settings/>, OptionComponent: MenuConfiguracoes };
     UsuarioHelper.getUsuarioAtual().then((usuario)=>{
       switch(usuario.grupo){
         case "ADMINISTRADOR": 
-          this.state.options.push(eventos);
           this.state.options.push(espacos);
           this.state.options.push(usuarios);
         case "PALESTRANTE":
         case "USUARIO":
+          this.state.options.push(eventos);
         default:
           this.state.options.push(ajustes);
       }
@@ -56,11 +56,6 @@ export default class Home extends Component {
                     key={path}
                     render={(props)=>(<OptionComponent {...Object.assign({}, props, OptionComponentProps)}/>)}/>
                   ))}
-                  <Route
-                    path="/cadastroconcluido"
-                    exact
-                    component={AuthenticationFim}
-                  />
                   <Route
                     path="*" 
                     render={(props)=>(<Default.OptionComponent {...Object.assign({}, props, Default.OptionComponentProps)}/>)}

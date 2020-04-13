@@ -14,7 +14,7 @@ export default class Perfil extends EasyComponent {
         super(props, 
             Permissoes.perfil,
             "Você não tem permissão para visualizar usuários.", "Nenhum usuário selecionado.",
-            undefined, {minHeight: "100%"}
+            undefined
         );
         this.state = {
             /**@type {Usuario["prototype"]} */
@@ -26,14 +26,16 @@ export default class Perfil extends EasyComponent {
     carregarEntidade(){
         if(this.props.useCurrentUser){
             this.disablePermissao = true;
-            this.setState({usuario: this.usuario});
+            this.setState({usuario: this.usuario, modificado: false});
+            this.setNotFound(false);
             this.setCarregando(false);
         }
         else if(typeof this.props.entidade === "string"){
             this.setNotFound(true);
         }
         else if(this.props.entidade instanceof Usuario){
-            this.setState({usuario: this.props.entidade});
+            this.setState({usuario: this.props.entidade, modificado: false});
+            this.setNotFound(false);
             this.setCarregando(false);
         }
         else{
@@ -106,7 +108,7 @@ export default class Perfil extends EasyComponent {
                     />
                     {
                         this.state.usuario.grupo === "ADMINISTRADOR" || this.props.useCurrentUser ?
-                        <TextField
+                        <MaskedTextField
                             onChange={this.change}
                             label="Grupo" variant="outlined"
                             className="DefaultPages_INPUTS"
@@ -119,7 +121,7 @@ export default class Perfil extends EasyComponent {
                                     {grupo.value}
                                 </ListItem>
                             ))}
-                        </TextField>:undefined
+                        </MaskedTextField>:undefined
                     }
                     <MaskedTextField
                         onChange={this.change}

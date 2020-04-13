@@ -12,6 +12,7 @@ import AuthenticationEsqueciSenha from "./AuthenticationEsqueciSenha";
 import EspacosDeApresentacao from "./EspacosDeApresentacao";
 import Usuarios from "./Usuarios";
 import MenuConfiguracoes from "./MenuConfiguracoes";
+import Eventos from "./Eventos";
 export {
     Splash,
     Login,
@@ -27,4 +28,5 @@ export {
     EspacosDeApresentacao,
     Usuarios,
     MenuConfiguracoes,
+    Eventos,
 }

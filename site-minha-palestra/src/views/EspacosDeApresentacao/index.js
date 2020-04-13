@@ -16,7 +16,6 @@ export default class EspacosDeApresentacao extends EasyComponent {
     carregarEntidade(){
         EspacosHelper.listar(this.usuario.grupo === "ADMINISTRADOR" ? true : false).then(espacos=>{
             this.espacos = espacos;
-            this.setState({selecionado: espacos[0]});
             this.setCarregando(false);
         })
         .catch(err=>{
@@ -46,7 +45,7 @@ export default class EspacosDeApresentacao extends EasyComponent {
                     selected={this.state.selecionado}
                     onItemSelected={this.changeItem}
                     tituloLabel={"Nome"}
-                    add={{label: "Adicionar Espaço", onClick: ()=>{this.changeItem(new Espaco(undefined, "",  "",  0,  "", "", true))}}}
+                    add={this.usuario.grupo === "ADMINISTRADOR" ? {label: "Adicionar Espaço", onClick: ()=>{this.changeItem(new Espaco(undefined, "",  "",  0,  "", "", true))}} : undefined}
                 />
                 <VisualizarEspaco refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
             </ResponsiveDivider>

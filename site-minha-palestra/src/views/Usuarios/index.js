@@ -15,7 +15,6 @@ export default class PalestrasDisponiveis extends EasyComponent {
     carregarEntidade(){
         UsuarioHelper.listarUsuarios().then(usuarios=>{
             this.usuarios = usuarios;
-            this.setState({selecionado: usuarios[0]});
             this.setCarregando(false);
         })
         .catch(err=>{

@@ -12,9 +12,6 @@ export default class AuthenticationFim extends Component {
                     <Typography align="center">
                         Você concluiu o cadastro no Minha Palestra, seja bem-vindo!!!
                     </Typography>
-                    <Button color="primary" className="DefaultPages_BUTTON" variant="outlined" onClick={()=>{this.props.history.push("")}}>
-                        VER PALESTRAS
-                    </Button>
                 </Box>
         );
     }

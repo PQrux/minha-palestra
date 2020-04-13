@@ -20,7 +20,8 @@ export default class VisualizarEspaco extends EasyComponent {
     }
     carregarEntidade(){
         if((this.props.entidade instanceof Espaco)){
-            this.setState({espaco: this.props.entidade});
+            this.setState({espaco: this.props.entidade, modificado: false});
+            this.setNotFound(false);
             this.setCarregando(false);
         }
         else{
@@ -47,7 +48,7 @@ export default class VisualizarEspaco extends EasyComponent {
         return (
         <Box className="DefaultPages_INSIDER">
             <Box className="DefaultPages_ROOT">
-                <TextField
+                <MaskedTextField
                     label="Nome do Espaço"
                     variant="outlined"
                     fullWidth
@@ -56,7 +57,7 @@ export default class VisualizarEspaco extends EasyComponent {
                     onChange={this.change}
                     disabled={this.state.loading}
                 />
-                <TextField
+                <MaskedTextField
                     label="Descrição"
                     variant="outlined"
                     fullWidth
@@ -75,7 +76,7 @@ export default class VisualizarEspaco extends EasyComponent {
                     onChange={this.change}
                     disabled={this.state.loading}
                 />
-                <TextField
+                <MaskedTextField
                     label="Tamanho"
                     select
                     fullWidth
@@ -90,8 +91,8 @@ export default class VisualizarEspaco extends EasyComponent {
                             {item.value}
                         </MenuItem>
                     ))}
-                </TextField>
-                <TextField
+                </MaskedTextField>
+                <MaskedTextField
                     label="Tipo"
                     select
                     fullWidth
@@ -106,7 +107,7 @@ export default class VisualizarEspaco extends EasyComponent {
                             {item.value}
                         </MenuItem>
                     ))}
-                </TextField>
+                </MaskedTextField>
                 <FormControlLabel
                     style={{alignSelf: "flex-start"}}
                     control={

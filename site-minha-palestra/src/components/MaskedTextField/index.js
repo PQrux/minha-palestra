@@ -61,7 +61,7 @@ export default class MaskedTextField extends Component {
     }
     render() {
         return (
-            <TextField {...this.props} onChange={this.checkText}>
+            <TextField {...this.props} value={this.props.value||""} onChange={this.checkText}>
                 {this.props.children}
             </TextField>
         );

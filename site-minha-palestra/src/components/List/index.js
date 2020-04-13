@@ -3,6 +3,7 @@ import { FilterList, Search, Add } from "@material-ui/icons";
 import React, { Component } from 'react';
 import ListItem from "../ListItem";
 import "./styles.css";
+import { MaskedTextField } from '..';
 
 /**
  * @typedef ListProps
@@ -40,7 +41,7 @@ export default class List extends Component {
                             {this.props.tituloLista}
                         </Typography>:undefined
                     }
-                    <TextField 
+                    <MaskedTextField 
                         variant="outlined" 
                         fullWidth
                         label="Pesquisa" 
@@ -57,7 +58,7 @@ export default class List extends Component {
                             )
                         }}
                     />
-                    <TextField
+                    <MaskedTextField
                         select
                         label="Ordenar por"
                         variant="outlined"
@@ -81,7 +82,7 @@ export default class List extends Component {
                                 {orderbyLabel ? orderbyLabel : label}
                             </MenuItem>
                         ))}
-                    </TextField>
+                    </MaskedTextField>
                     {
                         this.props.add ?
                         <Button onClick={this.addClick} fullWidth color="primary" variant="outlined" style={{marginTop: "10px"}}>

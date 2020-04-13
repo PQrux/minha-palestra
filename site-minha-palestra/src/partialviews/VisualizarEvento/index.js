@@ -1,12 +1,11 @@
-import { Box, FormControlLabel, MenuItem, Switch, TextField, Button } from '@material-ui/core';
+import { Box, FormControlLabel, MenuItem, Switch, TextField, Button, Typography } from '@material-ui/core';
 import { Evento } from "models-minha-palestra";
 import React from 'react';
 import { EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingBox, DatePicker } from '../../components';
 import { Permissoes } from "../../constants";
-import { DialogHelper, EspacosHelper } from '../../services';
-import { Arrayficar } from '../../utils';
-import Galeria from '../Galeria';
+import { DialogHelper, EventosHelper } from '../../services';
 import VisualizarLog from '../VisualizarLog';
+import { DataLocal } from '../../utils';
 
 export default class VisualizarEvento extends EasyComponent {
     constructor(props){
@@ -19,24 +18,20 @@ export default class VisualizarEvento extends EasyComponent {
         }
     }
     carregarEntidade(){
-        let evento = new Evento();
-        if(!evento.inicio || isNaN(evento.inicio.getTime())){
-            evento.inicio = null;
-        }
-        if(!evento.termino || isNaN(evento.termino.getTime())){
-            evento.termino = null;
-        }
-        this.setState({evento});
-        this.setCarregando(false);
-        /*
         if((this.props.entidade instanceof Evento)){
-            this.setState({evento: this.props.entidade});
+            if(!this.props.entidade.inicio || isNaN(this.props.entidade.inicio.getTime())){
+                this.props.entidade.inicio = null;
+            }
+            if(!this.props.entidade.termino || isNaN(this.props.entidade.termino.getTime())){
+                this.props.entidade.termino = null;
+            }
+            this.setState({evento: this.props.entidade, modificado: false});
+            this.setNotFound(false);
             this.setCarregando(false);
         }
         else{
             this.setNotFound(true);
         }
-        */
     }
     change = ({target}) => {
         this.state.evento[target.name] = target.value;
@@ -44,11 +39,11 @@ export default class VisualizarEvento extends EasyComponent {
     }
     changeDate = (prop,value) =>{
         this.state.evento[prop] = value;
-        this.setState({});
+        this.setState({modificado: true});
     }
     salvar = () =>{
         this.setState({loading: true});
-        EspacosHelper.salvar(this.state.evento).then((evento)=>{
+        EventosHelper.salvar(this.state.evento).then((evento)=>{
             if(this.props.refreshParent) this.props.refreshParent(evento);
             this.setState({evento, modificado: false, loading: false});
         })
@@ -57,11 +52,33 @@ export default class VisualizarEvento extends EasyComponent {
             this.setState({loading: false});
         })
     }
+    renderRead(){
+        return (
+            <Box className="DefaultPages_INSIDER">
+                <Box className="DefaultPages_ROOT">
+                    <Typography align="center" variant="h3" style={{wordBreak: "break-all"}}>
+                        {this.state.evento.nome}
+                    </Typography>
+                    <Typography>
+                        {this.state.evento.descricao}
+                    </Typography>
+                    <Typography align="center">
+                        Disponível em: {DataLocal(this.state.evento.inicio)} até {DataLocal(this.state.evento.termino)}
+                    </Typography>
+                    { this.state.evento.limiteInscricoes ? 
+                        <Typography>
+                           Você poderá se inscrever em {this.state.evento.limiteInscricoes} palestras deste evento.
+                        </Typography> : undefined
+                    }
+                </Box>
+            </Box>
+        )
+    }
     renderWrite() {
         return (
         <Box className="DefaultPages_INSIDER">
             <Box className="DefaultPages_ROOT">
-                <TextField
+                <MaskedTextField
                     label="Nome do Evento"
                     variant="outlined"
                     fullWidth
@@ -70,13 +87,14 @@ export default class VisualizarEvento extends EasyComponent {
                     onChange={this.change}
                     disabled={this.state.loading}
                 />
-                <TextField
+                <MaskedTextField
                     label="Descrição"
                     variant="outlined"
                     fullWidth
                     value={this.state.evento.descricao}
                     name="descricao"
                     disabled={this.state.loading}
+                    multiline
                     onChange={this.change}
                 />
                 <MaskedTextField
@@ -98,6 +116,20 @@ export default class VisualizarEvento extends EasyComponent {
                     value={this.state.evento.inicio}
                     onChange={(v)=>{this.changeDate("inicio", v)}}
                     disabled={this.state.loading}
+                    disablePast
+                    maxDate={(this.state.evento.termino instanceof Date) ? new Date(new Date(this.state.evento.termino).setDate(this.state.evento.termino.getDate()-1)) : undefined}
+                />
+                <DatePicker 
+                    inputVariant="outlined" 
+                    label="Data de Encerramento" 
+                    fullWidth 
+                    tipo="datetime"
+                    name="termino"
+                    value={this.state.evento.termino}
+                    onChange={(v)=>{this.changeDate("termino", v)}}
+                    disabled={this.state.loading}
+                    disablePast
+                    minDate={(this.state.evento.inicio instanceof Date) ? new Date(new Date(this.state.evento.inicio).setDate(this.state.evento.inicio.getDate()+1)) : undefined}
                 />
                 <VisualizarLog log={this.state.evento.ultimoLog} width="100%"/>
                 <FloatingBox>
