@@ -5,9 +5,7 @@ import {
   AuthenticationLogin,
   AuthenticationSobreVoce,
   AuthenticationSelfie,
-  PedidoParaSerPalestrante,
   AuthenticationInformacoesLegais,
-  AuthenticationQuemE,
   AuthenticationEsqueciSenha,
 } from "../views";
 import { multiStorager } from '../utils';

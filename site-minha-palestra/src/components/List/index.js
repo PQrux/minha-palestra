@@ -1,4 +1,4 @@
-import { Box, InputAdornment, MenuItem, TextField, Typography, Button } from '@material-ui/core';
+import { Box, InputAdornment, MenuItem, Typography, Button } from '@material-ui/core';
 import { FilterList, Search, Add } from "@material-ui/icons";
 import React, { Component } from 'react';
 import ListItem from "../ListItem";

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TextField } from "@material-ui/core";
-
+import "./styles.css";
 /**
  * @extends {Component<import("@material-ui/core").TextFieldProps|{mask: string}>}
  */
@@ -61,7 +61,7 @@ export default class MaskedTextField extends Component {
     }
     render() {
         return (
-            <TextField {...this.props} value={this.props.value||""} onChange={this.checkText}>
+            <TextField {...this.props} value={this.props.value||""} className={["maskedtextfield",this.props.className].join(" ")} onChange={this.checkText}>
                 {this.props.children}
             </TextField>
         );
