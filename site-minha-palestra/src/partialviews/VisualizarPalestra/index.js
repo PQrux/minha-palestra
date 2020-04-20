@@ -72,6 +72,9 @@ export default class VisualizarPalestra extends EasyComponent {
             this.setState({loading: false});
         })
     }
+    switchInscricao(){
+
+    }
     renderRead(){
         return (
             <Box className="DefaultPages_INSIDER">
@@ -79,6 +82,21 @@ export default class VisualizarPalestra extends EasyComponent {
                     <Typography align="center" variant="h3" style={{wordBreak: "break-all"}}>
                         {this.state.palestra.nome}
                     </Typography>
+                    <Typography align="center">
+                        {this.state.palestra.descricao}
+                    </Typography>
+                    {
+                        this.state.palestra.limiteDeParticipantes ?
+                        <Typography>
+                            {parseInt(this.state.palestra.limiteDeParticipantes) - Object.getOwnPropertyNames(this.state.palestra.participantes||{}).length} Vagas restantes 
+                        </Typography>: undefined
+                    }
+                    <Typography>
+                        Apresentação em: {DataLocal(this.state.palestra.dhApresentacao)}
+                    </Typography>
+                    <Button disabled={this.state.loading} onClick={this.switchInscricao} variant="contained" color="primary">
+                        {this.state.palestra.participantes && this.state.palestra.participantes[this.usuario.path.split("/").pop()] ? "REMOVER INSCRIÇÃO" : "INSCREVER-ME"}
+                    </Button>
                     <LeituraButton disabled={this.state.palestra.finalizada} entidade={this}/>
                 </Box>
             </Box>
