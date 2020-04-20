@@ -5,6 +5,7 @@ import FileHelper from "./FileHelper";
 import DialogHelper from "./DialogHelper";
 import EspacosHelper from "./EspacosHelper";
 import EventosHelper from "./EventosHelper";
+import PalestrasHelper from "./PalestrasHelper";
 export {
     LogHelper,
     UsuarioHelper,
@@ -13,4 +14,5 @@ export {
     DialogHelper,
     EspacosHelper,
     EventosHelper,
+    PalestrasHelper,
 }

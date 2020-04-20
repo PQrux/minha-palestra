@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { MaskedTextField } from '../../components';
 import Authentication from "../Authentication";
 import { DialogHelper } from '../../services';

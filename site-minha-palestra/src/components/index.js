@@ -11,6 +11,8 @@ import DialogPronto from "./DialogPronto";
 import Navigation from "./Navigation";
 import FloatingBox from "./FloatingBox";
 import Carregamento from "./Carregamento";
+import SelectibleList from "./SelectibleList";
+import LeituraButton from "./LeituraButton";
 export {
     MaskedTextField,
     EasyComponent,
@@ -25,4 +27,6 @@ export {
     Navigation,
     FloatingBox,
     Carregamento,
+    SelectibleList,
+    LeituraButton,
 }

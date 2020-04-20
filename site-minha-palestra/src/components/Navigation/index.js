@@ -1,5 +1,5 @@
+import { BottomNavigation, BottomNavigationAction, Box } from '@material-ui/core';
 import React, { Component } from 'react';
-import { Paper, Tabs, Tab, BottomNavigation, BottomNavigationAction, Box } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 class Navigation extends Component {
     constructor(props){

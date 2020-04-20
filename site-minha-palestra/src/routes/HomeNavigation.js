@@ -1,10 +1,10 @@
 import { Box } from '@material-ui/core';
-import { History, Place, Settings, Event } from '@material-ui/icons';
+import { History, Place, Settings, Event, LiveTv } from '@material-ui/icons';
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Navigation, Carregamento } from '../components';
 import { DialogHelper, UsuarioHelper } from '../services';
-import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Usuarios } from "../views";
+import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Usuarios, Palestras } from "../views";
 
 export default class Home extends Component {
   constructor(props){
@@ -17,18 +17,24 @@ export default class Home extends Component {
     let espacos = { path: "/espacos", label: "Espaços", icon: <Place/>, OptionComponent: EspacosDeApresentacao},
     usuarios = { path: "/usuarios", label: "Usuários", icon : <History/>, OptionComponent: Usuarios},
     eventos = {path: "/eventos", label: "Eventos", icon: <Event/>, OptionComponent: Eventos},
+    palestras = {path: "/palestras", label: "Palestras", icon: <LiveTv/>, OptionComponent: Palestras},
     ajustes = { path: "/ajustes", label: "Ajustes", icon: <Settings/>, OptionComponent: MenuConfiguracoes };
     UsuarioHelper.getUsuarioAtual().then((usuario)=>{
-      switch(usuario.grupo){
-        case "ADMINISTRADOR": 
-          this.state.options.push(espacos);
-          this.state.options.push(usuarios);
-        case "PALESTRANTE":
-        case "USUARIO":
-          this.state.options.push(eventos);
-        default:
-          this.state.options.push(ajustes);
+      if(usuario.grupo === "ADMINISTRADOR"){
+        this.state.options.push(palestras);
+        this.state.options.push(eventos);
+        this.state.options.push(espacos);
+        this.state.options.push(usuarios);
       }
+      else if(usuario.grupo === "PALESTRANTE"){
+        this.state.options.push(palestras);
+        this.state.options.push(eventos);
+      }
+      else{
+        this.state.options.push(palestras);
+        this.state.options.push(eventos);
+      }
+      this.state.options.push(ajustes);
       this.setState({options: this.state.options});
     })
     .catch(err=>{

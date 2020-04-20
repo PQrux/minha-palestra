@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import "./styles.css";
 import { ArrowBack } from '@material-ui/icons';
 export default class ResponsiveDividerBackButton extends Component {

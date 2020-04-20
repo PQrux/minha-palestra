@@ -1,10 +1,10 @@
 import React from 'react';
-import { EasyComponent, List, ResponsiveDivider } from '../../components';
+import { List, ResponsiveDivider, SelectibleList } from '../../components';
 import { VisualizarEvento } from '../../partialviews';
 import { EventosHelper } from '../../services';
 import { Evento } from "models-minha-palestra";
 import { DataLocal } from "../../utils";
-export default class Eventos extends EasyComponent {
+export default class Eventos extends SelectibleList {
     constructor(props){
         super(props);
         this.disablePermissao = true;
@@ -20,9 +20,6 @@ export default class Eventos extends EasyComponent {
         .catch(err=>{
             this.setErro(err.descricao);
         })
-    }
-    changeItem=(item)=>{
-        this.setState({selecionado: item});
     }
     refreshChild = (evento) => {
         if(!this.eventos.find(eventoss=>eventoss.path === evento.path)){
@@ -43,9 +40,9 @@ export default class Eventos extends EasyComponent {
                         {label: "Encerramento:", propriedade: "termino", orderbyLabel: "Encerramento", transform: DataLocal},
                     ]}
                     selected={this.state.selecionado}
-                    onItemSelected={this.changeItem}
+                    onItemSelected={this.setSelecionado}
                     tituloLabel={"Nome"}
-                    add={this.usuario.grupo === "ADMINISTRADOR" ? {label: "Adicionar Evento", onClick: ()=>{this.changeItem(new Evento())}} : undefined}
+                    add={this.usuario.grupo === "ADMINISTRADOR" ? {label: "Adicionar Evento", onClick: ()=>{this.setSelecionado(new Evento())}} : undefined}
                 />
                 <VisualizarEvento refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
             </ResponsiveDivider>

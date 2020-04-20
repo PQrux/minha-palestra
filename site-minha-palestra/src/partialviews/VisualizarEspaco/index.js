@@ -1,4 +1,4 @@
-import { Box, FormControlLabel, MenuItem, Switch, TextField, Button } from '@material-ui/core';
+import { Box, FormControlLabel, MenuItem, Switch, Button } from '@material-ui/core';
 import { Espaco } from "models-minha-palestra";
 import React from 'react';
 import { EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingBox } from '../../components';

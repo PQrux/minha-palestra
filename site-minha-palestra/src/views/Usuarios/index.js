@@ -1,10 +1,10 @@
 import React from 'react';
-import { EasyComponent, List, ResponsiveDivider } from '../../components';
+import { List, ResponsiveDivider, SelectibleList } from '../../components';
 import { Perfil } from '../../partialviews';
 import { UsuarioHelper } from '../../services';
 import { DataLocal } from '../../utils';
 
-export default class PalestrasDisponiveis extends EasyComponent {
+export default class PalestrasDisponiveis extends SelectibleList {
     constructor(props){
         super(props);
         this.disablePermissao = true;
@@ -21,9 +21,6 @@ export default class PalestrasDisponiveis extends EasyComponent {
             this.setErro(err.descricao);
         })
     }
-    changeItem=(item)=>{
-        this.setState({selecionado: item});
-    }
     renderWrite() {
         return (
             <ResponsiveDivider style={{height: "100%"}}>
@@ -37,7 +34,7 @@ export default class PalestrasDisponiveis extends EasyComponent {
                         {label: "Registrado em:", propriedade: "dhCriacao", orderbyLabel: "Data de Registro", transform: DataLocal}
                     ]}
                     selected={this.state.selecionado}
-                    onItemSelected={this.changeItem}
+                    onItemSelected={this.setSelecionado}
                     tituloLabel={"Nome do Usuário"}
                 />
                 <Perfil showNotFound entidade={this.state.selecionado} refreshParent={()=>{this.setState({})}}/>

@@ -1,23 +1,12 @@
 import React from 'react';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import { MaskedTextField, DatePicker } from '../../components';
 import Authentication from "../Authentication";
-import { Usuario } from "models-minha-palestra";
+
 export default class AuthenticationSobreVoce extends Authentication {
     changeDate = (value) =>{
         this.state.usuario.dataNascimento = value;
         this.setState({});
-    }
-    carregarEntidade(){
-        this.setCarregando(false);
-        if((this.usuario instanceof Usuario)){
-            this.state.usuario = this.usuario;
-            if(!this.state.usuario.dataNascimento.getTime||isNaN(this.state.usuario.dataNascimento.getTime())) this.state.usuario.dataNascimento = null;
-            this.setCarregando(false);
-        }
-        else{
-            this.props.history.push("");
-        }
     }
     carregarEntidade(){
         super.carregarEntidade();

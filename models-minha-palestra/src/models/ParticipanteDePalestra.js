@@ -11,5 +11,6 @@ module.exports = class ParticipanteDePalestra {
         this.nome = nome;
         this.cpf = cpf;
         this.compareceu = compareceu;
+        this.inscrito = true;
     }
 }

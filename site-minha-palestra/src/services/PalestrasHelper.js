@@ -7,13 +7,21 @@ export default class PalestrasHelper{
     /**
      * @param {Palestra["prototype"]}
      */
-    static salvarPalestra(palestra){
+    static salvarPalestra(palestra, acao){
         return new Promise(async (resolve,reject)=>{
             let ok = true;
             if(!(palestra instanceof Palestra)){
                 reject(new Resultado(-1, "Palestra inválida.", null, {palestra}));
                 return;
             }
+            if(!palestra.nome){
+                reject(new Resultado(-1, "Uma palestra precisa de um nome para ser salva!"));
+                return;
+            }/*
+            if(!palestra.espaco||!palestra.palestrante||!palestra.nome||!palestra.dhApresentacao){
+                reject(new Resultado(-1, "Para ser criada a palestra deve possuir um espaço, palestrante, nome e data de apresentação.", null, {palestra}));
+                return;
+            }*/
             let usuario = await UsuarioHelper.getUsuarioAtual()
             .catch(err=>{
                 reject(err);
@@ -21,7 +29,7 @@ export default class PalestrasHelper{
             })
             if(!ok) return;
             if(palestra.path){
-                LogHelper.logarECommitar([palestra.path, usuario.path], "ATUALIZACAO", undefined, palestra)
+                LogHelper.logarECommitar([palestra.path, usuario.path], acao||"ATUALIZACAO", undefined, palestra)
                 .then(()=>{
                     resolve(palestra);
                 })
@@ -31,7 +39,6 @@ export default class PalestrasHelper{
             }
             else{
                 palestra.dhCriacao = new Date();
-                palestra.aprovada = false;
                 palestra.cancelada = false;
                 palestra.finalizada = false;
                 palestra.usuarioCriador = usuario.path;
@@ -57,7 +64,7 @@ export default class PalestrasHelper{
      */
     static listarPalestrasDisponiveis(){
         return new Promise(async (resolve,reject)=>{
-            firebase.database().ref("Palestras").orderByChild("_aprovada_finalizada").equalTo("true_false")
+            firebase.database().ref("Palestras").orderByChild("finalizada").equalTo(false)
             .once("value").then(snaps=>{
                 let palestras = [];
                 snaps.forEach(snap=>{
@@ -73,9 +80,9 @@ export default class PalestrasHelper{
     /**
      * @returns {Promise<Array<Palestra["prototype"]>>}
      */
-    static listarPropostasDePalestra(){
+    static listarPalestrasFinalizadasOuCanceladas(){
         return new Promise(async (resolve,reject)=>{
-            firebase.database().ref("Palestras").orderByChild("_aprovada_cancelada").equalTo("false_false")
+            firebase.database().ref("Palestras").orderByChild("finalizada").equalTo(true)
             .once("value").then(snaps=>{
                 let palestras = [];
                 snaps.forEach(snap=>{
@@ -86,6 +93,33 @@ export default class PalestrasHelper{
             .catch(err=>{
                 reject(new Resultado(-1, "Erro ao buscar palestras.", err));
             })
+        });
+    }
+    /**
+     * 
+     * @param {Palestra["prototype"]} palestra 
+     */
+    static cancelarPalestra(palestra){
+        return new Promise(async (resolve,reject)=>{
+            let ok = true;
+            if(!(palestra instanceof Palestra)||!palestra.path){
+                reject(new Resultado(-1, "Palestra inválida.", null, {palestra}));
+                return;
+            }
+            let usuario = await UsuarioHelper.getUsuarioAtual()
+            .catch(err=>{
+                reject(err);
+                ok = false;
+            })
+            if(!ok) return;
+            if(usuario.grupo !== "ADMINISTRADOR"){
+                reject(new Resultado(-1, "Você não tem permissão para cancelar uma palestra.", null, {palestra}));
+                return;
+            }
+            palestra.cancelada = true;
+            palestra.finalizada = true;
+            palestra.dhFinalizacao = new Date();
+            PalestrasHelper.salvarPalestra(palestra, "CANCELAMENTO").then(resolve).catch(reject);
         });
     }
 }

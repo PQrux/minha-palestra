@@ -13,6 +13,7 @@ import EspacosDeApresentacao from "./EspacosDeApresentacao";
 import Usuarios from "./Usuarios";
 import MenuConfiguracoes from "./MenuConfiguracoes";
 import Eventos from "./Eventos";
+import Palestras from "./Palestras";
 export {
     Splash,
     Login,
@@ -29,4 +30,5 @@ export {
     Usuarios,
     MenuConfiguracoes,
     Eventos,
+    Palestras,
 }

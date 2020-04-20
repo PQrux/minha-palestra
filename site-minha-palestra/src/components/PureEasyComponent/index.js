@@ -152,7 +152,7 @@ export default class PureEasyComponent extends Component {
         if(this.props.disablePermissao||this.disablePermissao)
         return this.renderWrite();
         else{
-            if(this.permissor.permitir(this.usuario) === "r"||this.props.readOnly)
+            if(this.permissor.permitir(this.usuario) === "r"||this.props.readOnly||this.readOnly)
             return this.renderRead();
             else if (this.permissor.permitir(this.usuario) === "w")
             return this.renderWrite();
