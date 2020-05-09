@@ -31,9 +31,6 @@ export default class MenuConfiguracoes extends Component {
         return (
             <ResponsiveDivider style={{height: "100%"}} changeToRightRef={(ref)=>{this.changeToRight = ref}} changeToLeftRef={(ref)=>{this.changeToLeft = ref}}>
                 <Box display="flex" flexDirection="column" padding="20px">
-                    <Typography align="center" variant="h2" style={{marginBottom: "20px"}}>
-                        Ajustes
-                    </Typography>
                     {this.options.map(({icon, texto}, i)=>(
                         <Button style={styles.button} variant="outlined" name={i} key={i} color="primary" onClick={()=>{this.select(i)}}>
                             {icon} {texto}

@@ -50,7 +50,7 @@ export default class DatePicker extends Component {
       !this.state.dataAtual||
       !this.state.dataAtual.getTime()||
       (
-        this.props.maxDate && this.props.maxDate < this.state.dataAtual||
+        (this.props.maxDate && this.props.maxDate < this.state.dataAtual)||
         (this.props.minDate && this.props.minDate > this.state.dataAtual)
       )||
       (this.props.disableFuture && this.state.dataAtual > new Date())||

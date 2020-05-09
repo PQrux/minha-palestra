@@ -31,6 +31,7 @@ export default class EspacosDeApresentacao extends SelectibleList {
         return (
             <ResponsiveDivider style={{height: "100%"}}>
                 <List
+                    mini
                     tituloLista="Espaços de Apresentação"
                     items={this.espacos}
                     titulo={"nome"}

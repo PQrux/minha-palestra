@@ -1,12 +1,13 @@
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Button, Typography, ThemeProvider } from '@material-ui/core';
 import { Palestra } from "models-minha-palestra";
 import React from 'react';
 import { DatePicker, EasyComponent, FloatingBox, MaskedTextField, ResponsiveDividerBackButton, LeituraButton } from '../../components';
-import { Permissoes } from "../../constants";
+import { Permissoes, Themes } from "../../constants";
 import { DialogHelper } from '../../services';
 import { DataLocal } from '../../utils';
 import VisualizarLog from '../VisualizarLog';
 import PalestrasHelper from '../../services/PalestrasHelper';
+import Galeria from '../Galeria';
 
 export default class VisualizarPalestra extends EasyComponent {
     constructor(props){
@@ -79,7 +80,7 @@ export default class VisualizarPalestra extends EasyComponent {
         return (
             <Box className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <Typography align="center" variant="h3" style={{wordBreak: "break-all"}}>
+                    <Typography align="center" variant="h3" style={{wordBreak: "break-word"}}>
                         {this.state.palestra.nome}
                     </Typography>
                     <Typography align="center">
@@ -94,9 +95,15 @@ export default class VisualizarPalestra extends EasyComponent {
                     <Typography>
                         Apresentação em: {DataLocal(this.state.palestra.dhApresentacao)}
                     </Typography>
-                    <Button disabled={this.state.loading} onClick={this.switchInscricao} variant="contained" color="primary">
-                        {this.state.palestra.participantes && this.state.palestra.participantes[this.usuario.path.split("/").pop()] ? "REMOVER INSCRIÇÃO" : "INSCREVER-ME"}
-                    </Button>
+                    {
+                        this.state.palestra.aprovada && !this.state.palestra.cancelada && !this.state.palestra.finalizada ?
+                        <ThemeProvider theme={Themes.error}>
+                            <Button disabled={this.state.loading} onClick={this.switchInscricao} variant="contained" color={this.state.palestra.participantes[this.usuario.getUid()] ? "secondary" : "primary"}>
+                                {this.state.palestra.participantes && this.state.palestra.participantes[this.usuario.path.split("/").pop()] ? "REMOVER INSCRIÇÃO" : "INSCREVER-ME"}
+                            </Button>
+                        </ThemeProvider>
+                        :undefined
+                    }
                     <LeituraButton disabled={this.state.palestra.finalizada} entidade={this}/>
                 </Box>
             </Box>
@@ -144,21 +151,30 @@ export default class VisualizarPalestra extends EasyComponent {
                     value={this.state.palestra.dhApresentacao}
                     onChange={(v)=>{this.changeDate("dhApresentacao", v)}}
                     disabled={this.state.loading}
-                    disablePast
                 />
+                <Galeria entidade={this.state.palestra} entidadeProp="fotos"/>
+                <Button 
+                    variant="contained"
+                    color="primary"
+                    onClick={this.aprovarPalestra}
+                    disabled={this.state.loading}
+                    style={{marginLeft: 10, display: this.state.palestra.path && !this.state.palestra.cancelada && !this.state.palestra.finalizada ? "block" : "none"}}
+                >
+                    Aprovar Palestra
+                </Button>
+                <Button 
+                    variant="contained"
+                    color="secondary"
+                    onClick={this.cancelarPalestra}
+                    disabled={this.state.loading}
+                    style={{marginLeft: 10, display: this.state.palestra.path && !this.state.palestra.cancelada && !this.state.palestra.finalizada ? "block" : "none"}}
+                >
+                    Cancelar Palestra
+                </Button>
                 <VisualizarLog log={this.state.palestra.ultimoLog} width="100%"/>
                 <LeituraButton disabled={this.state.palestra.finalizada} entidade={this}/>
                 <FloatingBox>
                     <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
-                    <Button 
-                        variant="contained"
-                        color="secondary"
-                        onClick={this.cancelarPalestra}
-                        disabled={this.state.loading}
-                        style={{marginLeft: 10, display: this.state.palestra.path && !this.state.palestra.cancelada && !this.state.palestra.finalizada ? "block" : "none"}}
-                    >
-                        Cancelar Palestra
-                    </Button>
                     <Button 
                         variant="contained"
                         color="secondary"

@@ -1,0 +1,11 @@
+.Palestras_filters{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-left: 10px;
+    justify-content: space-evenly;
+}
+.Palestras_filters > *{
+    margin-right: 10px !important;
+    margin-bottom: 5px !important;
+}

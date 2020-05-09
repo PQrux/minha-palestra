@@ -56,7 +56,7 @@ export default class VisualizarEvento extends EasyComponent {
         return (
             <Box className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <Typography align="center" variant="h3" style={{wordBreak: "break-all"}}>
+                    <Typography align="center" variant="h3" style={{wordBreak: "break-word"}}>
                         {this.state.evento.nome}
                     </Typography>
                     <Typography>
@@ -117,8 +117,6 @@ export default class VisualizarEvento extends EasyComponent {
                     value={this.state.evento.inicio}
                     onChange={(v)=>{this.changeDate("inicio", v)}}
                     disabled={this.state.loading}
-                    disablePast
-                    maxDate={(this.state.evento.termino instanceof Date) ? new Date(new Date(this.state.evento.termino).setDate(this.state.evento.termino.getDate()-1)) : undefined}
                 />
                 <DatePicker 
                     inputVariant="outlined" 
@@ -129,8 +127,6 @@ export default class VisualizarEvento extends EasyComponent {
                     value={this.state.evento.termino}
                     onChange={(v)=>{this.changeDate("termino", v)}}
                     disabled={this.state.loading}
-                    disablePast
-                    minDate={(this.state.evento.inicio instanceof Date) ? new Date(new Date(this.state.evento.inicio).setDate(this.state.evento.inicio.getDate()+1)) : undefined}
                 />
                 <VisualizarLog log={this.state.evento.ultimoLog} width="100%"/>
                 <LeituraButton entidade={this}/>

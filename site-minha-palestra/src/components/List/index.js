@@ -28,74 +28,91 @@ export default class List extends Component {
         orderbyFocus: false,
         orderby: this.props.defaultOrderBy||this.props.titulo,
     }
+    renderTools = () => {
+        return (
+            <Box display="flex" flexDirection="column" padding="10px" paddingTop="20px">
+                <Box display="flex">
+                    <MaskedTextField 
+                        variant="outlined" 
+                        fullWidth
+                        label={"Pesquisar "+this.props.tituloLista}
+                        onChange={this.change} 
+                        value={this.state.filter} 
+                        onFocus={this.changeFocus}
+                        onBlur={this.changeBlur}
+                        name="filter"
+                    />
+                    {
+                        this.props.add ?
+                        <Button onClick={this.addClick} style={{marginLeft: "10px"}} color="primary" variant="contained">
+                            <Add/>
+                        </Button>: undefined
+                    }
+                </Box>
+                <MaskedTextField
+                    select
+                    label="Ordenar por"
+                    variant="outlined"
+                    name="orderby"
+                    value={this.state.orderby}
+                    onChange={this.change}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <FilterList/>
+                            </InputAdornment>
+                        )
+                    }}
+                    style={{marginTop: 10}}
+                >
+                    <MenuItem value={this.props.titulo}>
+                        {this.props.tituloLabel||"Título"}
+                    </MenuItem>
+                    { this.props.descriptors.map(({propriedade, label, orderbyLabel})=>(
+                        <MenuItem value={propriedade} key={propriedade}>
+                            {orderbyLabel ? orderbyLabel : label}
+                        </MenuItem>
+                    ))}
+                </MaskedTextField>
+            </Box>
+        )
+    }
+    renderToolsMini = () => {
+        return (
+            <Box display="flex" flexDirection="row" padding="10px" paddingTop="20px">
+                <MaskedTextField 
+                    variant="outlined" 
+                    fullWidth
+                    label={"Pesquisar "+this.props.tituloLista} 
+                    onChange={this.change} 
+                    value={this.state.filter} 
+                    onFocus={this.changeFocus}
+                    onBlur={this.changeBlur}
+                    name="filter"
+                />
+                {
+                    this.props.add ?
+                    <Button onClick={this.addClick} style={{marginLeft: "10px"}} color="primary" variant="contained">
+                        <Add/>
+                    </Button>: undefined
+                }
+            </Box>
+        )
+    }
     render() {
         return (
             <Box 
                 {...this.props} 
                 className={["custom_list", this.props.className||""].join(" ")}
             >
-                <Box display="flex" flexDirection="column" padding="10px" paddingTop="20px">
-                    {
-                        this.props.tituloLista ?
-                        <Typography variant="h3" align="center" style={{marginBottom: 20}}>
-                            {this.props.tituloLista}
-                        </Typography>:undefined
-                    }
-                    <MaskedTextField 
-                        variant="outlined" 
-                        fullWidth
-                        label="Pesquisa" 
-                        onChange={this.change} 
-                        value={this.state.filter} 
-                        onFocus={this.changeFocus}
-                        onBlur={this.changeBlur}
-                        name="filter"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <Search color={this.state.filterFocus ? "primary":"inherit"}/>
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                    <MaskedTextField
-                        select
-                        label="Ordenar por"
-                        variant="outlined"
-                        name="orderby"
-                        value={this.state.orderby}
-                        onChange={this.change}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <FilterList/>
-                                </InputAdornment>
-                            )
-                        }}
-                        style={{marginTop: 10}}
-                    >
-                        <MenuItem value={this.props.titulo}>
-                            {this.props.tituloLabel||"Título"}
-                        </MenuItem>
-                        { this.props.descriptors.map(({propriedade, label, orderbyLabel})=>(
-                            <MenuItem value={propriedade} key={propriedade}>
-                                {orderbyLabel ? orderbyLabel : label}
-                            </MenuItem>
-                        ))}
-                    </MaskedTextField>
-                    {
-                        this.props.add ?
-                        <Button onClick={this.addClick} fullWidth color="primary" variant="outlined" style={{marginTop: "10px"}}>
-                            <Add/> {this.props.add.label}
-                        </Button>: undefined
-                    }
-                </Box>
+                {this.props.mini ? this.renderToolsMini() : this.renderTools()}
                 {this.renderItems()}
             </Box>
         );
     }
     addClick = () => {
         if(this.props.add) this.props.add.onClick();
+        console.log(this.props.changeToRight);
         if(this.props.changeToRight) this.props.changeToRight();
     }
     change=({target})=>{

@@ -31,6 +31,7 @@ export default class Eventos extends SelectibleList {
         return (
             <ResponsiveDivider style={{height: "100%"}}>
                 <List
+                    mini
                     tituloLista="Eventos"
                     items={this.eventos}
                     titulo={"nome"}

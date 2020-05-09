@@ -1,10 +1,11 @@
 import { Box } from '@material-ui/core';
-import { History, Place, Settings, Event, LiveTv } from '@material-ui/icons';
+import { History, Place, Settings, Event, LiveTv, EventSeat } from '@material-ui/icons';
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Navigation, Carregamento } from '../components';
 import { DialogHelper, UsuarioHelper } from '../services';
-import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Usuarios, Palestras } from "../views";
+import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Usuarios, Palestras, Administracao } from "../views";
+import TelaRapida from '../partialviews/TelaRapida';
 
 export default class Home extends Component {
   constructor(props){
@@ -18,13 +19,20 @@ export default class Home extends Component {
     usuarios = { path: "/usuarios", label: "Usuários", icon : <History/>, OptionComponent: Usuarios},
     eventos = {path: "/eventos", label: "Eventos", icon: <Event/>, OptionComponent: Eventos},
     palestras = {path: "/palestras", label: "Palestras", icon: <LiveTv/>, OptionComponent: Palestras},
-    ajustes = { path: "/ajustes", label: "Ajustes", icon: <Settings/>, OptionComponent: MenuConfiguracoes };
+    ajustes = { path: "/ajustes", label: "Ajustes", icon: <Settings/>, OptionComponent: MenuConfiguracoes },
+    administracao = {
+      path: "/administracao", label: "Gerenciar", icon: <EventSeat/>, OptionComponent: Administracao,
+      OptionComponentProps: {options: [usuarios, espacos]}
+    };
+    this.menu = [palestras, eventos, ajustes];
     UsuarioHelper.getUsuarioAtual().then((usuario)=>{
       if(usuario.grupo === "ADMINISTRADOR"){
         this.state.options.push(palestras);
         this.state.options.push(eventos);
         this.state.options.push(espacos);
         this.state.options.push(usuarios);
+        this.state.options.push(administracao);
+        this.menu.push(administracao);
       }
       else if(usuario.grupo === "PALESTRANTE"){
         this.state.options.push(palestras);
@@ -63,14 +71,19 @@ export default class Home extends Component {
                     render={(props)=>(<OptionComponent {...Object.assign({}, props, OptionComponentProps)}/>)}/>
                   ))}
                   <Route
+                    path="/asad" 
+                    component={TelaRapida}
+                  />
+                  <Route
                     path="*" 
                     render={(props)=>(<Default.OptionComponent {...Object.assign({}, props, Default.OptionComponentProps)}/>)}
                   />
+
                 </Switch>
               </Box>
             </Box>
           </Box>
-          <Navigation options={this.state.options} default={Default}/>
+          <Navigation options={this.menu} default={Default}/>
         </BrowserRouter>
       </Box>
     );

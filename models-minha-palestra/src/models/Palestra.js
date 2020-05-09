@@ -19,9 +19,9 @@ module.exports = class Palestra extends FirestoreObject{
 	 * @param {Date} dhFinalizacao Determina a data e hora de finalização da palestra.
      */
     constructor(
-        path, nome,  palestrante,  descricao, evento,
+        path, nome,  palestrante,  descricao, evento, aprovada,
         limiteDeParticipantes, dhApresentacao,  espaco,  participantes,
-        usuarioCriador,  finalizada,  cancelada, dhCriacao,  dhFinalizacao, nomePalestrante
+        usuarioCriador,  finalizada,  cancelada, dhCriacao,  dhFinalizacao, nomePalestrante, fotos
     ){
         super(path);
         this.addRastreio();
@@ -29,17 +29,28 @@ module.exports = class Palestra extends FirestoreObject{
         this.criarAtributoReferencial("palestrante", true);
         this.palestrante = palestrante;
         this.descricao = descricao;
+        this.criarAtributoReferencial("evento", true);
         this.evento = evento;
         this.limiteDeParticipantes = limiteDeParticipantes;
         this.dhApresentacao = new Date(dhApresentacao);
         this.criarAtributoReferencial("espaco", true);
         this.espaco = espaco;
-        this.participantes = participantes;
+        this.participantes = participantes || {};
+        this.criarAtributoReferencial("usuarioCriador", true);
         this.usuarioCriador = usuarioCriador;
         this.finalizada = finalizada;
         this.cancelada = cancelada;
+        this.aprovada = aprovada;
         this.dhCriacao = new Date(dhCriacao);
         this.dhFinalizacao = new Date(dhFinalizacao);
         this.nomePalestrante = nomePalestrante;
+        this.fotos = fotos || [];
+        Object.defineProperties(this, {
+            "aprovada_finalizada": {
+                get:()=>{return `${this.aprovada}_${this.finalizada}`},
+                set:()=>{},
+                enumerable: true,
+            }
+        })
     }
 }

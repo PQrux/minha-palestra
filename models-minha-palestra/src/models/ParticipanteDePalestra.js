@@ -1,4 +1,6 @@
-module.exports = class ParticipanteDePalestra {
+const FirestoreObject = require("./FirestoreObject");
+
+module.exports = class ParticipanteDePalestra extends FirestoreObject {
     /**
      * Representa a participação de um usuário em uma palestra.
 	 * @param {string} usuario Referência ao usuário.
@@ -7,10 +9,18 @@ module.exports = class ParticipanteDePalestra {
 	 * @param {boolean} compareceu Define se o usuário compareceu ou não na palestra.
      */
     constructor(usuario, nome, cpf, compareceu){
+        super();
         this.usuario = usuario;
         this.nome = nome;
         this.cpf = cpf;
-        this.compareceu = compareceu;
+        this.compareceu = compareceu ? true : false;
         this.inscrito = true;
+        Object.defineProperties(this, {
+            "inscrito_compareceu": {
+                get:()=>{return `${this.inscrito}_${this.compareceu}`},
+                set:()=>{},
+                enumerable: true,
+            }
+        })
     }
 }
