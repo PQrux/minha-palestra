@@ -29,7 +29,7 @@ export default class EspacosDeApresentacao extends SelectibleList {
     }
     renderWrite() {
         return (
-            <ResponsiveDivider style={{height: "100%"}}>
+            <ResponsiveDivider style={{height: "100%"}} noHistory={this.props.noHistory}>
                 <List
                     mini
                     tituloLista="Espaços de Apresentação"
@@ -42,9 +42,9 @@ export default class EspacosDeApresentacao extends SelectibleList {
                     selected={this.state.selecionado}
                     onItemSelected={this.setSelecionado}
                     tituloLabel={"Nome"}
-                    add={this.usuario.grupo === "ADMINISTRADOR" ? {label: "Adicionar Espaço", onClick: ()=>{this.setSelecionado(new Espaco(undefined, "",  "",  0,  "", "", true))}} : undefined}
+                    add={this.usuario.grupo === "ADMINISTRADOR" && !this.props.readOnly ? {label: "Adicionar Espaço", onClick: ()=>{this.setSelecionado(new Espaco(undefined, "",  "",  0,  "", "", true))}} : undefined}
                 />
-                <VisualizarEspaco refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
+                <VisualizarEspaco readOnly={this.props.readOnly} refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
             </ResponsiveDivider>
         );
     }

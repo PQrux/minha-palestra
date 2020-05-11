@@ -7,7 +7,7 @@ export default class LeituraButton extends EasyComponent {
         super(props, new Permissao({grupo: "ADMINISTRADOR", permissao: "w"}));
     }
     carregarEntidade(){
-        if(!(this.props.entidade instanceof EasyComponent)){
+        if(!(this.props.entidade instanceof EasyComponent)||this.props.entidade.props.readOnly){
             this.setErro(".");
         }
         this.setCarregando(false);

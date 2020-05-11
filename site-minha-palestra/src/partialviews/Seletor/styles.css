@@ -1,0 +1,11 @@
+.seletor_root{
+    border-color: #bdbdbd;
+    border-width: 1px;
+    border-radius: 5px;
+    border-style: solid;
+}
+.seletor_root > * {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}

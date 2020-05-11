@@ -8,34 +8,40 @@ class ResponsiveDivider extends Component {
     super(props);
     this.state = {
       firstOpened: true,
-      lastUpdate: "",
     }
-    window.testor = this.props;
     this.gencode = new Date().getTime().toString();
     if(props.changeToRightRef) props.changeToRightRef(this.changeToRight);
     if(props.changeToLeftRef) props.changeToLeftRef(this.changeToLeft);
   }
   shouldComponentUpdate(nextProps, nextState){
-    let gencode = nextProps.history.location.pathname.split("/").pop();
-    if(this.gencode === gencode && nextState.lastUpdate !== gencode){
-      nextState.lastUpdate = gencode;
+    if(this.props.noHistory) return true;
+    let gencode = window.location.hash;
+    console.log({gencode, thiss: this.gencode, test: gencode === this.gencode})
+    if("#"+this.gencode === gencode){
       nextState.firstOpened = false;
-      return true;
     }
-    else if(this.gencode !== gencode && nextState.firstOpened !== true){
+    else{
       nextState.firstOpened = true;
-      return true;
     }
+    console.log({sold: nextState.firstOpened})
     return true;
   }
   changeToRight = () => {
-    this.gencode = new Date().getTime().toString();
-    let path = !this.props.match.url || this.props.match.url === "/" ? "" : this.props.match.url;
-    path += "/"+this.gencode;
-    this.props.history.push(path);
+    if(this.props.noHistory){
+      this.setState({firstOpened: false});
+    }
+    else{
+      this.gencode = new Date().getTime().toString();
+      window.location.hash = this.gencode;
+    }
   }
   changeToLeft = () => {
-    this.props.history.goBack();
+    if(this.props.noHistory){
+      this.setState({firstOpened: true});
+    }
+    else{
+      window.location.hash = "";
+    }
   }
   render() {
     const children = [];
@@ -56,4 +62,4 @@ class ResponsiveDivider extends Component {
     );
   }
 }
-export default withRouter(ResponsiveDivider);
+export default ResponsiveDivider;

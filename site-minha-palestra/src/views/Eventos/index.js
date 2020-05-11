@@ -29,7 +29,7 @@ export default class Eventos extends SelectibleList {
     }
     renderWrite() {
         return (
-            <ResponsiveDivider style={{height: "100%"}}>
+            <ResponsiveDivider style={{height: "100%"}} noHistory={this.props.noHistory}>
                 <List
                     mini
                     tituloLista="Eventos"
@@ -43,9 +43,9 @@ export default class Eventos extends SelectibleList {
                     selected={this.state.selecionado}
                     onItemSelected={this.setSelecionado}
                     tituloLabel={"Nome"}
-                    add={this.usuario.grupo === "ADMINISTRADOR" ? {label: "Adicionar Evento", onClick: ()=>{this.setSelecionado(new Evento())}} : undefined}
+                    add={this.usuario.grupo === "ADMINISTRADOR" && !this.props.readOnly ? {label: "Adicionar Evento", onClick: ()=>{this.setSelecionado(new Evento())}} : undefined}
                 />
-                <VisualizarEvento refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
+                <VisualizarEvento readOnly={this.props.readOnly} refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
             </ResponsiveDivider>
         );
     }

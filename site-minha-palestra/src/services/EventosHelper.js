@@ -74,4 +74,24 @@ export default class EventosHelper{
             })
         });
     }
+    /**
+     * 
+     * @param {string} path 
+     * @returns {Promise.<Evento["prototype"]>}
+     */
+    static buscar(path){
+        return new Promise(async (resolve,reject)=>{
+            if(!path){
+                reject(new Resultado(-1, "Evento indefinido!", null, {path}));
+            }
+            firebase.database().ref(path).once("value")
+            .then(snap=>{
+                if(!snap.exists()) reject(new Resultado(-2, "Evento não encontrado!", null, {path}));
+                else resolve(new Evento().parse(snap.ref.path.toString(), snap.val()));
+            })
+            .catch(err=>{
+                reject(new Resultado(-2, "Erro ao buscar evento!", err, {path}));
+            })
+        });
+    }
 }

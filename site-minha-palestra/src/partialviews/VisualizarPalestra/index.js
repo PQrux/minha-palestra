@@ -8,6 +8,7 @@ import { DataLocal } from '../../utils';
 import VisualizarLog from '../VisualizarLog';
 import PalestrasHelper from '../../services/PalestrasHelper';
 import Galeria from '../Galeria';
+import Seletor from '../Seletor';
 
 export default class VisualizarPalestra extends EasyComponent {
     constructor(props){
@@ -80,7 +81,7 @@ export default class VisualizarPalestra extends EasyComponent {
         return (
             <Box className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <Typography align="center" variant="h3" style={{wordBreak: "break-word"}}>
+                    <Typography align="center" variant="h3">
                         {this.state.palestra.nome}
                     </Typography>
                     <Typography align="center">
@@ -153,6 +154,9 @@ export default class VisualizarPalestra extends EasyComponent {
                     disabled={this.state.loading}
                 />
                 <Galeria entidade={this.state.palestra} entidadeProp="fotos"/>
+                <Seletor BoxProps={{width: "100%"}} tipo="usuario" entidade={this.state.palestra.palestrante}/>
+                <Seletor BoxProps={{width: "100%"}} tipo="espaco" entidade={this.state.palestra.espaco}/>
+                <Seletor BoxProps={{width: "100%"}} tipo="evento" entidade={this.state.palestra.evento}/>
                 <Button 
                     variant="contained"
                     color="primary"

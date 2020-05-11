@@ -229,4 +229,24 @@ export default class UsuarioHelper{
             })
         });
     }
+    /**
+     * 
+     * @param {string} path 
+     * @returns {Promise.<Usuario["prototype"]>}
+     */
+    static buscar(path){
+        return new Promise(async (resolve,reject)=>{
+            if(!path){
+                reject(new Resultado(-1, "Usuário indefinido!", null, {path}));
+            }
+            firebase.database().ref(path).once("value")
+            .then(snap=>{
+                if(!snap.exists()) reject(new Resultado(-2, "Usuário não encontrado!", null, {path}));
+                else resolve(new Usuario().parse(snap.ref.path.toString(), snap.val()));
+            })
+            .catch(err=>{
+                reject(new Resultado(-2, "Erro ao buscar usuário!", err, {path}));
+            })
+        });
+    }
 }

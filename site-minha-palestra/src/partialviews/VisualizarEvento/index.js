@@ -6,6 +6,7 @@ import { Permissoes } from "../../constants";
 import { DialogHelper, EventosHelper } from '../../services';
 import { DataLocal } from '../../utils';
 import VisualizarLog from '../VisualizarLog';
+import Seletor from '../Seletor';
 
 export default class VisualizarEvento extends EasyComponent {
     constructor(props){
@@ -52,11 +53,25 @@ export default class VisualizarEvento extends EasyComponent {
             this.setState({loading: false});
         })
     }
+    renderMinimal(){
+        return (
+            <Box>
+                <Typography style={{textTransform: "uppercase"}}>
+                    {this.state.evento.nome}
+                </Typography>
+                <Typography>
+                    {this.state.evento.descricao}
+                </Typography>
+            </Box>
+        )
+    }
     renderRead(){
+        if(this.props.minimal)
+        return (this.renderMinimal())
         return (
             <Box className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <Typography align="center" variant="h3" style={{wordBreak: "break-word"}}>
+                    <Typography align="center" variant="h3">
                         {this.state.evento.nome}
                     </Typography>
                     <Typography>
@@ -71,6 +86,9 @@ export default class VisualizarEvento extends EasyComponent {
                         </Typography> : undefined
                     }
                     <LeituraButton entidade={this}/>
+                    <Box alignSelf="center">
+                        <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
+                    </Box>
                 </Box>
             </Box>
         )

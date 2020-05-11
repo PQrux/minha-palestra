@@ -86,9 +86,9 @@ export default class Perfil extends EasyComponent {
                     <Typography>
                         {this.state.usuario.nome} 
                     </Typography>
-                    <FloatingBox>
+                    <Box alignSelf="center">
                         <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
-                    </FloatingBox>
+                    </Box>
                 </Box>
             </div>
         )

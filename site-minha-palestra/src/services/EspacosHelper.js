@@ -75,4 +75,24 @@ export default class EspacosHelper{
             })
         });
     }
+    /**
+     * 
+     * @param {string} path 
+     * @returns {Promise.<Espaco["prototype"]>}
+     */
+    static buscar(path){
+        return new Promise(async (resolve,reject)=>{
+            if(!path){
+                reject(new Resultado(-1, "Espaço indefinido!", null, {path}));
+            }
+            firebase.database().ref(path).once("value")
+            .then(snap=>{
+                if(!snap.exists()) reject(new Resultado(-2, "Espaço não encontrado!", null, {path}));
+                else resolve(new Espaco().parse(snap.ref.path.toString(), snap.val()));
+            })
+            .catch(err=>{
+                reject(new Resultado(-2, "Erro ao buscar espaço!", err, {path}));
+            })
+        });
+    }
 }

@@ -23,7 +23,7 @@ export default class PalestrasDisponiveis extends SelectibleList {
     }
     renderWrite() {
         return (
-            <ResponsiveDivider style={{height: "100%"}}>
+            <ResponsiveDivider style={{height: "100%"}} noHistory={this.props.noHistory}>
                 <List
                     tituloLista="Usuários"
                     items={this.usuarios}
@@ -37,7 +37,7 @@ export default class PalestrasDisponiveis extends SelectibleList {
                     onItemSelected={this.setSelecionado}
                     tituloLabel={"Nome do Usuário"}
                 />
-                <Perfil showNotFound entidade={this.state.selecionado} refreshParent={()=>{this.setState({})}}/>
+                <Perfil readOnly={this.props.readOnly} showNotFound entidade={this.state.selecionado} refreshParent={()=>{this.setState({})}}/>
             </ResponsiveDivider>
         );
     }

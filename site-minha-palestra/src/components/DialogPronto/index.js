@@ -45,7 +45,7 @@ export default function ResponsiveDialog() {
             onClose={locked ? undefined : handleClose}
             aria-labelledby="responsive-dialog-title"
         >
-            <DialogTitle id="responsive-dialog-title">{title}</DialogTitle>
+            {title ? <DialogTitle id="responsive-dialog-title">{title}</DialogTitle> : undefined}
             <DialogContent style={{display: "-webkit-flex"}}>
                 {body}
             </DialogContent>
