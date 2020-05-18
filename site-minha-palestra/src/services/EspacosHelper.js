@@ -1,4 +1,4 @@
-import { Espaco, Resultado } from "models-minha-palestra";
+import { Espaco, Resultado, Palestra } from "models-minha-palestra";
 import UsuarioHelper from "./UsuarioHelper";
 import firebase from "firebase";
 import "firebase/database";
@@ -59,10 +59,10 @@ export default class EspacosHelper{
     /**
      * @returns {Promise<Array<Espaco["prototype"]>>}
      */
-    static listar(includeDesabilitados){
+    static listar(tipoFiltro, filtro, mode){
         return new Promise(async (resolve,reject)=>{
             let ref = firebase.database().ref("Espacos");
-            if(!includeDesabilitados) ref = ref.orderByChild("habilitado").equalTo(true)
+            if(filtro && tipoFiltro !== undefined) ref = ref.orderByChild(tipoFiltro)[mode||"equalTo"](filtro);
             ref.once("value").then(snaps=>{
                 let espacos = [];
                 snaps.forEach(snap=>{
@@ -71,7 +71,7 @@ export default class EspacosHelper{
                 resolve(espacos);
             })
             .catch(err=>{
-                reject(new Resultado(-1, "Erro ao buscar espaços.", err, {includeDesabilitados}));
+                reject(new Resultado(-1, "Erro ao buscar espaços.", err));
             })
         });
     }
@@ -92,6 +92,25 @@ export default class EspacosHelper{
             })
             .catch(err=>{
                 reject(new Resultado(-2, "Erro ao buscar espaço!", err, {path}));
+            })
+        });
+    }
+    static capturarPalestrasDoEspaco(espaco){
+        return new Promise(async (resolve,reject)=>{
+            if(!(espaco instanceof Espaco)||!espaco.path){
+                reject(new Resultado(-1, "Espaço inválido.", null, {espaco}));
+                return;
+            }
+            firebase.database().ref("Palestras").orderByChild("espaco_finalizada").equalTo(`${espaco.path}_false`).once("value")
+            .then(snaps=>{
+                const palestras = [];
+                snaps.forEach(snap=>{
+                    palestras.push(new Palestra().parse(snap.ref.path.toString(), snap.val()));
+                })
+                resolve(palestras);
+            })
+            .catch(err=>{
+                reject(new Resultado(-1, "Erro ao buscar palestras vinculadas ao espaço.", err, espaco));
             })
         });
     }

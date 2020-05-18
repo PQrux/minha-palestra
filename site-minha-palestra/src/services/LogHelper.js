@@ -15,28 +15,41 @@ export default class LogHelper{
      */
     static logar(registros, tipo, mensagem, objetoAlvo){
         return new Promise(async (resolve,reject)=>{
+            let ok = true;
+            let log = await LogHelper.gerarLog(registros, tipo, mensagem)
+            .catch((err)=>{
+                reject(err);
+                ok = false;
+            });
+            if(!ok) return;
+            firebase.database().ref("Logs").push(log.toJson()).then(ref=>{
+                log.path = ref.path.toString();
+                if(objetoAlvo) objetoAlvo.ultimoLog = log;
+                console.log(objetoAlvo);
+                resolve(log);
+            })
+            .catch(err=>{
+                reject(new Resultado(-1, "Erro ao salvar log.", err, {log}));
+            })
+        });
+    }
+
+    /**@returns {Log["prototype"]} */
+    static gerarLog(registros, tipo, mensagem){
+        return new Promise(async (resolve,reject)=>{
             UsuarioHelper.getUsuarioAtual().then(usuario=>{
-                let log = new Log();
+                const log = new Log();
                 if(registros && registros.forEach){
                     registros.forEach(registro=>{
-                        log.setRegistro(registro);
+                        if(registro) log.setRegistro(registro);
                     });
                 }
                 log.tipo = tipo;
                 log.nomeUsuario = usuario.nome;
                 log.mensagem = mensagem;
                 log.usuarioAcao = usuario.path;
-                log.dh = firebase.database.ServerValue.TIMESTAMP;
-                firebase.database().ref("Logs").push(log.toJson()).then(ref=>{
-                    log.dh = new Date();
-                    log.path = ref.path.toString();
-                    if(objetoAlvo) objetoAlvo.ultimoLog = log;
-                    console.log(objetoAlvo);
-                    resolve(log);
-                })
-                .catch(err=>{
-                    reject(new Resultado(-1, "Erro ao salvar log.", err, {log}));
-                })
+                log.dh = new Date();
+                resolve(log);
             })
             .catch(err=>{
                 reject(err);
@@ -53,40 +66,29 @@ export default class LogHelper{
      */
     static logarECommitar(registros, tipo, mensagem, objetoAlvo){
         return new Promise(async (resolve,reject)=>{
-            UsuarioHelper.getUsuarioAtual().then(usuario=>{
-                let log = new Log();
-                if(registros && registros.forEach){
-                    registros.forEach(registro=>{
-                        log.setRegistro(registro);
-                    });
-                }
-                log.tipo = tipo;
-                log.nomeUsuario = usuario.nome;
-                log.mensagem = mensagem;
-                log.usuarioAcao = usuario.path;
-                log.dh = firebase.database.ServerValue.TIMESTAMP;
-                firebase.database().ref("Logs").push().then(ref=>{
-                    //log.toJson()
-                    log.dh = new Date();
-                    log.path = ref.path.toString();
-                    objetoAlvo.ultimoLog = log;
-                    let updatingObject = {
-                        [log.path]: log.toJson(),
-                        [objetoAlvo.path]: objetoAlvo.toJson(),
-                    };
-                    firebase.database().ref().update(updatingObject).then(()=>{
-                        resolve(objetoAlvo);
-                    })
-                    .catch(err=>{
-                        reject(new Resultado(-1, "Erro ao salvar log.", err, {log}));
-                    })
+            let ok = true;
+            let log = await LogHelper.gerarLog(registros, tipo, mensagem)
+            .catch((err)=>{
+                reject(err);
+                ok = false;
+            });
+            if(!ok) return;
+            firebase.database().ref("Logs").push().then(ref=>{
+                log.path = ref.path.toString();
+                objetoAlvo.ultimoLog = log;
+                let updatingObject = {
+                    [log.path]: log.toJson(),
+                    [objetoAlvo.path]: objetoAlvo.toJson(),
+                };
+                firebase.database().ref().update(updatingObject).then(()=>{
+                    resolve(objetoAlvo);
                 })
                 .catch(err=>{
                     reject(new Resultado(-1, "Erro ao salvar log.", err, {log}));
                 })
             })
             .catch(err=>{
-                reject(err);
+                reject(new Resultado(-1, "Erro ao salvar log.", err, {log}));
             })
         });
     }

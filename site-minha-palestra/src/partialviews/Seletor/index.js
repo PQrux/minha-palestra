@@ -72,9 +72,9 @@ export default class Seletor extends EasyComponent {
             selecionado = selecao;
         }
         switch(this.props.tipo){
-            case "usuario":selector = (<Usuarios noHistory readOnly onSelecionado={selecionar}/>);break;
+            case "usuario":selector = (<Usuarios noHistory readOnly onSelecionado={selecionar} tipoFiltro="grupo" filtro="PALESTRANTE"/>);break;
             case "evento":selector = (<Eventos noHistory readOnly onSelecionado={selecionar}/>);break;
-            case "espaco":selector = (<EspacosDeApresentacao noHistory readOnly onSelecionado={selecionar}/>);break;
+            case "espaco":selector = (<EspacosDeApresentacao noHistory readOnly onSelecionado={selecionar} tipoFiltro="palestraEmUso" filtro={null}/>);break;
             default: throw "Erro! Tipo inválido.";break;
         }
         DialogHelper.showDialog(null, selector, 

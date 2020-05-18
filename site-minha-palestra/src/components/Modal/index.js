@@ -31,7 +31,7 @@ export default class Modal extends Component {
     render() {
         return (
             <Box 
-                zIndex="999" 
+                zIndex="9999" 
                 position="fixed"
                 width="100%" 
                 height="100%"

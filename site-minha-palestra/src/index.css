@@ -96,3 +96,9 @@ html, body, #root {
     display: flex;
   }
 }
+.default_border{
+  border-color: #bdbdbd;
+  border-width: 1px;
+  border-radius: 5px;
+  border-style: solid;
+}

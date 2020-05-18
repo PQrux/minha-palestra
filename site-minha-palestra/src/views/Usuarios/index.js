@@ -1,8 +1,9 @@
 import React from 'react';
-import { List, ResponsiveDivider, SelectibleList } from '../../components';
+import { List, ResponsiveDivider, SelectibleList, ResponsiveDividerBackButton } from '../../components';
 import { Perfil } from '../../partialviews';
 import { UsuarioHelper } from '../../services';
 import { DataLocal } from '../../utils';
+import { Box } from '@material-ui/core';
 
 export default class PalestrasDisponiveis extends SelectibleList {
     constructor(props){
@@ -13,7 +14,7 @@ export default class PalestrasDisponiveis extends SelectibleList {
         selecionado: null,
     }
     carregarEntidade(){
-        UsuarioHelper.listarUsuarios().then(usuarios=>{
+        UsuarioHelper.listarUsuarios(this.props.tipoFiltro, this.props.filtro).then(usuarios=>{
             this.usuarios = usuarios;
             this.setCarregando(false);
         })
@@ -23,7 +24,7 @@ export default class PalestrasDisponiveis extends SelectibleList {
     }
     renderWrite() {
         return (
-            <ResponsiveDivider style={{height: "100%"}} noHistory={this.props.noHistory}>
+            <ResponsiveDivider style={{height: "100%"}} noHistory={this.props.noHistory} changeToLeftRef={(ref)=>{this.setState({changeToLeft: ref})}}>
                 <List
                     tituloLista="Usuários"
                     items={this.usuarios}
@@ -37,7 +38,10 @@ export default class PalestrasDisponiveis extends SelectibleList {
                     onItemSelected={this.setSelecionado}
                     tituloLabel={"Nome do Usuário"}
                 />
-                <Perfil readOnly={this.props.readOnly} showNotFound entidade={this.state.selecionado} refreshParent={()=>{this.setState({})}}/>
+                <Box>
+                    <ResponsiveDividerBackButton changeToLeft={this.state.changeToLeft}/>
+                    <Perfil readOnly={this.props.readOnly} showNotFound entidade={this.state.selecionado} refreshParent={()=>{this.setState({})}}/>
+                </Box>
             </ResponsiveDivider>
         );
     }

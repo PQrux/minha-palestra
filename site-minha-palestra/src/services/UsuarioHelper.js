@@ -30,7 +30,7 @@ export default class UsuarioHelper{
                         novoUsuario.nome = user.displayName;
                         novoUsuario.fotoPerfil = user.photoURL;
                         novoUsuario.dhCriacao = new Date();
-                        novoUsuario.grupo = Usuario.GRUPOS().USUARIO;
+                        novoUsuario.grupo = Usuario.GRUPOS().ESPECTADOR;
                         snap.ref.set(novoUsuario.toJson()).then(()=>{
                             resolve(novoUsuario);
                         })
@@ -214,10 +214,11 @@ export default class UsuarioHelper{
     /**
      * @returns {Promise.<Array<Usuario["prototype"]>>}
      */
-    static listarUsuarios(){
+    static listarUsuarios(tipoFiltro, filtro, mode){
         return new Promise(async (resolve,reject)=>{
-            firebase.database().ref("Usuarios").once("value")
-            .then(snaps=>{
+            let ref = firebase.database().ref("Usuarios");
+            if(tipoFiltro && tipoFiltro !== undefined) ref = ref.orderByChild(tipoFiltro)[mode||"equalTo"](filtro);
+            ref.once("value").then(snaps=>{
                 let usuarios = [];
                 snaps.forEach(snap=>{
                     usuarios.push(new Usuario().parse(snap.ref.path.toString(), snap.val()));

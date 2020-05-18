@@ -44,23 +44,7 @@ module.exports = class Usuario extends FirestoreObject{
         return {
             ADMINISTRADOR: "ADMINISTRADOR",
             PALESTRANTE: "PALESTRANTE",
-            USUARIO: "USUARIO",
-        }
-    }
-    static PermissoesPorGrupo(){
-        return {
-            ADMINISTRADOR: {
-                Palestras: "w",
-                Usuarios: "w",
-            },
-            PALESTRANTE: {
-                Palestras: "r",
-                Usuarios: "w",
-            },
-            USUARIO: {
-                Palestras: "r",
-                Usuarios: "w",
-            },
+            ESPECTADOR: "ESPECTADOR",
         }
     }
 }

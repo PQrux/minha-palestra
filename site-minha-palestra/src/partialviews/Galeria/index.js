@@ -71,7 +71,7 @@ export default class Galeria extends EasyComponent {
                 { withAdd ? 
                     <Button {...buttonopts} style={styles.button} onClick={this.addImagem} disabled={!this.props.entidade||!this.props.entidade.path}>
                         <Add></Add>
-                        <Typography>ADICIONAR FOTO</Typography>
+                        <Typography style={{wordBreak: "normal"}}>ADICIONAR FOTO</Typography>
                     </Button> : undefined
                 }
                 {this.state.imgs.map((img,i)=>(

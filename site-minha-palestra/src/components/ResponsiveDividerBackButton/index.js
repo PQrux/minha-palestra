@@ -8,7 +8,7 @@ export default class ResponsiveDividerBackButton extends Component {
     }
     render() {
         return (
-            <Box display={this.props.changeToLeft ? "block" : "none"} alignSelf="flex-start">
+            <Box display={this.props.changeToLeft ? "block" : "none"} alignSelf="flex-start" position="sticky" top="0" zIndex="20">
                 <Button className="responsive_divider_back_to_left_button" variant="contained" color="primary" onClick={this.props.changeToLeft}>
                     <ArrowBack />
                 </Button>

@@ -86,9 +86,6 @@ export default class VisualizarEvento extends EasyComponent {
                         </Typography> : undefined
                     }
                     <LeituraButton entidade={this}/>
-                    <Box alignSelf="center">
-                        <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
-                    </Box>
                 </Box>
             </Box>
         )
@@ -149,7 +146,6 @@ export default class VisualizarEvento extends EasyComponent {
                 <VisualizarLog log={this.state.evento.ultimoLog} width="100%"/>
                 <LeituraButton entidade={this}/>
                 <FloatingBox>
-                    <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
                     <Button 
                         variant="contained"
                         color="secondary"

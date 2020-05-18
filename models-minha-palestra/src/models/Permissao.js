@@ -1,7 +1,7 @@
 
 module.exports = class Permissao{
     /**
-     * @param {...{grupo: "ADMINISTRADOR"|"PALESTRANTE"|"USUARIO", permissao: "w"|"r"}} perms
+     * @param {...{grupo: "ADMINISTRADOR"|"PALESTRANTE"|"ESPECTADOR", permissao: "w"|"r"}} perms
      */
     constructor(...perms){
         /**@type {Object<string, "w"|"r">} */
@@ -14,7 +14,7 @@ module.exports = class Permissao{
         return {
             ADMINISTRADOR: "ADMINISTRADOR",
             PALESTRANTE: "PALESTRANTE",
-            USUARIO: "USUARIO",
+            ESPECTADOR: "ESPECTADOR",
         }
     }
     /**

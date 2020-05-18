@@ -59,9 +59,10 @@ export default class EventosHelper{
     /**
      * @returns {Promise<Array<Evento["prototype"]>>}
      */
-    static listar(){
+    static listar(tipoFiltro, filtro, mode){
         return new Promise(async (resolve,reject)=>{
             let ref = firebase.database().ref("Eventos");
+            if(filtro && tipoFiltro !== undefined) ref = ref.orderByChild(tipoFiltro)[mode||"equalTo"](filtro);
             ref.once("value").then(snaps=>{
                 let eventos = [];
                 snaps.forEach(snap=>{

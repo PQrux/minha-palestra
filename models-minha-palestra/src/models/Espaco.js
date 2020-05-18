@@ -12,11 +12,10 @@ module.exports = class Espaco extends FirestoreObject{
 	 * @param {string} usuarioCriador Usuário criador do espaço.
 	 * @param {Date} dhCriacao Data e hora em que foi criado o espaço.
 	 * @param {boolean} habilitado Determina se o espaço está habilitado ou não.
-	 * @param {string} palestraEmUso Referência à palestra utilizando o espaço no momento.
      */
     constructor(
         path, nome,  descricao,  limiteDePessoas,  tamanho, tipo, habilitado, fotos,
-        usuarioCriador,  dhCriacao,  palestraEmUso
+        usuarioCriador,  dhCriacao
     ){
         super(path);
         this.addRastreio();
@@ -28,7 +27,6 @@ module.exports = class Espaco extends FirestoreObject{
         this.dhCriacao = new Date(dhCriacao);
         this.habilitado = habilitado === false ? false : true;
         this.fotos = fotos||[];
-        this.palestraEmUso = palestraEmUso;
         this.tipo = tipo;
     }
     static tamanhos(){

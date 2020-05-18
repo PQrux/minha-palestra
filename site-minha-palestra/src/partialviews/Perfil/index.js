@@ -71,7 +71,26 @@ export default class Perfil extends EasyComponent {
             this.setErro(err.descricao);
         })
     }
+    renderMinimal(){
+        return(
+            <Box>
+                <Box display="flex" alignItems="center" flexDirection="row !important">
+                    <img alt="Foto de Perfil" style={style.img_mini} src={this.state.usuario.fotoPerfil||logo}/>
+                    <Box>
+                        <Typography style={{textTransform: "uppercase"}}>
+                            {this.state.usuario.nome}
+                        </Typography>
+                        <Typography>
+                            {this.state.usuario.sobre}
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+        )
+    }
     renderRead() {
+        if(this.props.minimal)
+        return(this.renderMinimal())
         return (
             <div className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
@@ -86,16 +105,13 @@ export default class Perfil extends EasyComponent {
                     <Typography>
                         {this.state.usuario.nome} 
                     </Typography>
-                    <Box alignSelf="center">
-                        <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
-                    </Box>
                 </Box>
             </div>
         )
     }
     renderWrite() {
         return (
-            <div className="DefaultPages_INSIDER">
+            <Box className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
                     <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
                     <MaskedTextField
@@ -107,7 +123,7 @@ export default class Perfil extends EasyComponent {
                         disabled={true}
                     />
                     {
-                        this.state.usuario.grupo === "ADMINISTRADOR" || this.props.useCurrentUser ?
+                        this.usuario.grupo === "ADMINISTRADOR" ?
                         <MaskedTextField
                             onChange={this.change}
                             label="Grupo" variant="outlined"
@@ -159,7 +175,6 @@ export default class Perfil extends EasyComponent {
                     />
                     <VisualizarLog log={this.state.usuario.ultimoLog} width="100%"/>
                     <FloatingBox>
-                        <ResponsiveDividerBackButton changeToLeft={this.props.changeToLeft}/>
                         <Button 
                             variant="contained" 
                             color="secondary" 
@@ -171,7 +186,7 @@ export default class Perfil extends EasyComponent {
                         </Button>
                     </FloatingBox>
                 </Box>
-            </div>
+            </Box>
         );
     }
 }
@@ -182,6 +197,14 @@ const style = {
         maxWidth: "auto",
         borderRadius: "10px",
         marginBottom: "10px",
+        boxShadow:"grey 1px 1px 6px 1px"
+    },
+    img_mini: {
+        alignSelf: "center",
+        height: "50px",
+        borderRadius: "10px",
+        marginBottom: "10px",
+        marginRight: "10px",
         boxShadow:"grey 1px 1px 6px 1px"
     },
     bold: {

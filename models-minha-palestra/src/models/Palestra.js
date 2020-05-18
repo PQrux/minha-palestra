@@ -21,7 +21,7 @@ module.exports = class Palestra extends FirestoreObject{
     constructor(
         path, nome,  palestrante,  descricao, evento, aprovada,
         limiteDeParticipantes, dhApresentacao,  espaco,  participantes,
-        usuarioCriador,  finalizada,  cancelada, dhCriacao,  dhFinalizacao, nomePalestrante, fotos
+        usuarioCriador,  finalizada,  cancelada, dhCriacao,  dhFinalizacao, nomePalestrante, fotos, observacoes
     ){
         super(path);
         this.addRastreio();
@@ -45,12 +45,18 @@ module.exports = class Palestra extends FirestoreObject{
         this.dhFinalizacao = new Date(dhFinalizacao);
         this.nomePalestrante = nomePalestrante;
         this.fotos = fotos || [];
+        this.observacoes = observacoes;
         Object.defineProperties(this, {
             "aprovada_finalizada": {
                 get:()=>{return `${this.aprovada}_${this.finalizada}`},
                 set:()=>{},
                 enumerable: true,
+            },
+            "espaco_finalizada": {
+                get:()=>{return `${this.espaco}_${this.finalizada}`},
+                set:()=>{},
+                enumerable: true,
             }
-        })
+        });
     }
 }

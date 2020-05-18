@@ -1,4 +1,4 @@
-import { Palestra, Resultado, ParticipanteDePalestra } from "models-minha-palestra";
+import { Palestra, Resultado, ParticipanteDePalestra, Espaco, Evento, Usuario } from "models-minha-palestra";
 import UsuarioHelper from "./UsuarioHelper";
 import firebase from "firebase";
 import "firebase/database";
@@ -43,6 +43,10 @@ export default class PalestrasHelper{
                 palestra.finalizada = false;
                 palestra.aprovada = false;
                 palestra.usuarioCriador = usuario.path;
+                if(usuario.grupo === "PALESTRANTE"){
+                    palestra.palestrante = usuario.path;
+                    palestra.nomePalestrante = usuario.nome;
+                }
                 let ref = await firebase.database().ref("Palestras").push()
                 .catch(err=>{
                     ok = false;
@@ -58,6 +62,30 @@ export default class PalestrasHelper{
                     reject(new Resultado(-2, "Erro ao criar palestra.", err, {palestra}));
                 })
             }
+        });
+    }
+    /**
+     * 
+     * @returns {Promise<Palestra["prototype"]>}
+     */
+    static aprovarPalestra(palestra){
+        return new Promise(async (resolve,reject)=>{
+            if(!(palestra instanceof Palestra)||!palestra.path){
+                reject(new Resultado(-1, "Palestra inválida.", null, {palestra}));
+                return;
+            }
+            if(!palestra.espaco||!palestra.dhApresentacao||!palestra.palestrante){
+                reject(new Resultado(-1, "Para ser aprovada a palestra precisa de um espaço de apresentação, um palestrante e uma data de apresentação!"));
+                return;
+            }
+            palestra.aprovada = true;
+            LogHelper.logarECommitar([palestra.path], "ATUALIZACAO", "Palestra aprovada.", palestra)
+            .then(()=>{
+                resolve(palestra);
+            })
+            .catch(err=>{
+                reject(new Resultado(-1, "Erro ao salvar palestra.", err, {palestra}));
+            })
         });
     }
     /**

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ResponsiveDivider, SelectibleList } from '../../components';
+import { List, ResponsiveDivider, SelectibleList, ResponsiveDividerBackButton } from '../../components';
 import { VisualizarPalestra } from '../../partialviews';
 import { PalestrasHelper } from '../../services';
 import { Palestra } from "models-minha-palestra";
@@ -61,7 +61,7 @@ export default class Palestras extends SelectibleList {
     }
     renderWrite() {
         return (
-            <ResponsiveDivider style={{height: "100%"}}  changeToRightRef={(c)=>{this.changeToRight = c; this.setState({})}}>
+            <ResponsiveDivider style={{height: "100%"}}  changeToRightRef={(c)=>{this.changeToRight = c; this.setState({})}} changeToLeftRef={(ref)=>{this.setState({changeToLeft: ref})}}>
                 <Box>
                     {
                         this.state.filtros.length > 1 ? 
@@ -93,7 +93,10 @@ export default class Palestras extends SelectibleList {
                         add={this.usuario.grupo === "ADMINISTRADOR" || this.usuario.grupo === "PALESTRANTE" ? {label: "Criar Palestra", onClick: ()=>{this.setSelecionado(new Palestra())}} : undefined}
                     />
                 </Box>
-                <VisualizarPalestra refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
+                <Box>
+                    <ResponsiveDividerBackButton changeToLeft={this.state.changeToLeft}/>
+                    <VisualizarPalestra refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
+                </Box>
             </ResponsiveDivider>
         );
     }
