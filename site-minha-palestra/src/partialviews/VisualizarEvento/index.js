@@ -7,6 +7,8 @@ import { DialogHelper, EventosHelper } from '../../services';
 import { DataLocal } from '../../utils';
 import VisualizarLog from '../VisualizarLog';
 import Seletor from '../Seletor';
+import { Palestras } from '../../views';
+import "./styles.css";
 
 export default class VisualizarEvento extends EasyComponent {
     constructor(props){
@@ -70,7 +72,7 @@ export default class VisualizarEvento extends EasyComponent {
         return (this.renderMinimal())
         return (
             <Box className="DefaultPages_INSIDER">
-                <Box className="DefaultPages_ROOT">
+                <Box className="DefaultPages_ROOT evento_root">
                     <Typography align="center" variant="h3">
                         {this.state.evento.nome}
                     </Typography>
@@ -86,6 +88,16 @@ export default class VisualizarEvento extends EasyComponent {
                         </Typography> : undefined
                     }
                     <LeituraButton entidade={this}/>
+                    <Box className="default_border" width="100%">
+                        <Palestras 
+                            noHistory
+                            tipofiltro="evento"
+                            filtro={this.state.evento.path}
+                            post={(lista)=>lista.filter(i=>i.finalizada === false)}
+                            entidade={this.state.evento.path}
+                            readOnly
+                        />
+                    </Box>
                 </Box>
             </Box>
         )

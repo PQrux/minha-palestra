@@ -3,7 +3,27 @@ import UsuarioHelper from "./UsuarioHelper";
 import firebase from "firebase";
 import "firebase/database";
 import { LogHelper } from ".";
+import { ApiReader } from "../utils";
 export default class PalestrasHelper{
+    /**
+     * 
+     * @param {Palestra} palestra 
+     */
+    static finalizarPalestra(palestra){
+        return new Promise(async (resolve,reject)=>{
+            if(!(palestra instanceof Palestra)||!palestra.path){
+                reject(new Resultado(-1, "Palestra inválida.", null, {palestra}));
+                return;
+            }
+            palestra.finalizada = true;
+            palestra.dhFinalizacao = new Date();
+            LogHelper.logarECommitar([], "FINALIZACAO", "Finalização da palestra.", palestra)
+            .then(()=>{
+                resolve(palestra);
+            })
+            .catch(reject);
+        });
+    }
     /**
      * @param {Palestra["prototype"]}
      */
@@ -136,53 +156,20 @@ export default class PalestrasHelper{
     /**
      * Inscreve ou desinscreve o usuário em uma palestra.
      * @param {Palestra["prototype"]} palestra 
+     * @returns {Promise<boolean>}
      */
     static switchInscricaoEmPalestra(palestra){
         return new Promise(async (resolve,reject)=>{
-            let ok = false;
-            if(!(palestra instanceof Palestra)||!palestra.path){
-                reject(new Resultado(-1, "Palestra inválida.", null, {palestra}));
-                return;
-            }
-            if(!palestra.aprovada){
-                reject(new Resultado(-1, "Você não pode se inscrever em palestras ainda não aprovadas.", null, {palestra}));
-                return;
-            }
-            if(palestra.cancelada){
-                reject(new Resultado(-1, "Você não pode se inscrever em palestras canceladas.", null, {palestra}));
-                return;
-            }
-            if(palestra.finalizada){
-                reject(new Resultado(-1, "Você não pode se inscrever em palestras finalizadas.", null, {palestra}));
-                return;
-            }
-            const usuario = await UsuarioHelper.getUsuarioAtual()
-            .catch(err=>{
-                reject(err);
-                ok = false;
+            const usuario = await UsuarioHelper.getUsuarioAtual().catch(reject);
+            if(!usuario) return;
+            const inscrever = palestra.participantes[usuario.getUid()] ? false : true;
+            ApiReader("/Palestras/"+(inscrever ? "inscrever" : "desinscrever"), "POST", {palestra: palestra.path})
+            .then(()=>{
+                if(inscrever) palestra.addParticipante(usuario);
+                else palestra.removeParticipante(usuario);
+                resolve(inscrever);
             })
-            if(!ok) return;
-            if(palestra.participantes[usuario.getUid()] && palestra.participantes[usuario.getUid()].inscrito){
-                firebase.database().ref(palestra.path).child("participantes").child(usuario.getUid()).remove()
-                .then(()=>{
-                    delete palestra.participantes[usuario.getUid()];
-                    resolve(palestra);
-                })
-                .catch(err=>{
-                    reject(new Resultado(-1, "Erro ao se desinscrever em palestra.", err, {palestra}));
-                })
-            }
-            else{
-                let obj = new ParticipanteDePalestra(usuario.path, usuario.nome, usuario.cpf, false);
-                firebase.database().ref(palestra.path).child("participantes").child(usuario.getUid()).set(obj.toJson())
-                .then(()=>{
-                    palestra.participantes[usuario.getUid()] = obj;
-                    resolve(palestra);
-                })
-                .catch(err=>{
-                    reject(new Resultado(-1, "Erro ao se inscrever em palestra.", err, {palestra}));
-                })
-            }
+            .catch(reject);
         });
     }
 }

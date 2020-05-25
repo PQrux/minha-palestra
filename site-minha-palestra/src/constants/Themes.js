@@ -15,7 +15,9 @@ export default {
     error: createMuiTheme({
         palette: {
             primary: green,
-            secondary: red,
+            secondary: {
+                main: red[900],
+            },
         },
         typography: {
             fontFamily: [

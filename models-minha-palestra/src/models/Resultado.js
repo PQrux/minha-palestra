@@ -1,4 +1,4 @@
-class Resultado{
+module.exports = class Resultado{
     /**
      * Utilizada para informar sucesso ou problemas ao realizar atividades dentro do sistema.
      * @param {number} codigo Código da atividade.
@@ -21,4 +21,3 @@ class Resultado{
         this.dados = dados;
     }    
 }
-module.exports =  Resultado;

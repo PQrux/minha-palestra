@@ -17,18 +17,27 @@ export default class Palestras extends SelectibleList {
         filtroSelecionado: 0,
     }
     carregarEntidade(){
-        this.state.filtros = [
-            {orderby: "aprovada_finalizada", equalTo: "true_false", label: "Palestras Disponíveis"},
-            {orderby: `participantes/${this.usuario.getUid()}/inscrito_compareceu`, equalTo: "true_false", label: "Palestras que estou inscrito", post: (palestras)=>{return palestras.filter(p=>(p.finalizada !== true))}},
-            {orderby: `participantes/${this.usuario.getUid()}/compareceu`, equalTo: true, label: "Palestras que Participei"},
-        ]
-        if(this.usuario.grupo === "ADMINISTRADOR" || this.usuario.grupo === "PALESTRANTE"){
-            this.state.filtros.push({orderby: "usuarioCriador", equalTo: this.usuario.path, label: "Palestras que Criei"});
-            this.state.filtros.push({orderby: "palestrante", equalTo: this.usuario.path, label: "Palestras que Ministrei"});
+        if(this.props.tipofiltro && this.props.filtro){
+            this.state.filtros = [
+                {orderby: this.props.tipofiltro, equalTo: this.props.filtro, post: this.props.post},
+            ]
+            this.setState({});
+            this.listarPalestras();
         }
-        if(this.usuario.grupo === "ADMINISTRADOR") this.state.filtros.push({orderby: "aprovada_finalizada", equalTo: "false_false", label: "Pendentes de Aprovação"})
-        this.setState({});
-        this.listarPalestras();
+        else{
+            this.state.filtros = [
+                {orderby: "aprovada_finalizada", equalTo: "true_false", label: "Palestras Disponíveis"},
+                {orderby: `participantes/${this.usuario.getUid()}/inscrito_compareceu`, equalTo: "true_false", label: "Palestras que estou inscrito", post: (palestras)=>{return palestras.filter(p=>(p.finalizada !== true))}},
+                {orderby: `participantes/${this.usuario.getUid()}/compareceu`, equalTo: true, label: "Palestras que Participei"},
+            ]
+            if(this.usuario.grupo === "ADMINISTRADOR" || this.usuario.grupo === "PALESTRANTE"){
+                this.state.filtros.push({orderby: "usuarioCriador", equalTo: this.usuario.path, label: "Palestras que Criei"});
+                this.state.filtros.push({orderby: "palestrante", equalTo: this.usuario.path, label: "Palestras que Ministrei"});
+            }
+            if(this.usuario.grupo === "ADMINISTRADOR") this.state.filtros.push({orderby: "aprovada_finalizada", equalTo: "false_false", label: "Pendentes de Aprovação"})
+            this.setState({});
+            this.listarPalestras();
+        }
     }
     listarPalestras = () =>{
         this.setCarregando(true);
@@ -61,7 +70,7 @@ export default class Palestras extends SelectibleList {
     }
     renderWrite() {
         return (
-            <ResponsiveDivider style={{height: "100%"}}  changeToRightRef={(c)=>{this.changeToRight = c; this.setState({})}} changeToLeftRef={(ref)=>{this.setState({changeToLeft: ref})}}>
+            <ResponsiveDivider style={{height: "100%"}} noHistory={this.props.noHistory} changeToRightRef={(c)=>{this.changeToRight = c; this.setState({})}} changeToLeftRef={(ref)=>{this.setState({changeToLeft: ref})}}>
                 <Box>
                     {
                         this.state.filtros.length > 1 ? 
@@ -90,12 +99,12 @@ export default class Palestras extends SelectibleList {
                         selected={this.state.selecionado}
                         onItemSelected={this.setSelecionado}
                         tituloLabel={"Nome"}
-                        add={this.usuario.grupo === "ADMINISTRADOR" || this.usuario.grupo === "PALESTRANTE" ? {label: "Criar Palestra", onClick: ()=>{this.setSelecionado(new Palestra())}} : undefined}
+                        add={!this.props.readOnly && (this.usuario.grupo === "ADMINISTRADOR" || this.usuario.grupo === "PALESTRANTE") ? {label: "Criar Palestra", onClick: ()=>{this.setSelecionado(new Palestra())}} : undefined}
                     />
                 </Box>
                 <Box>
                     <ResponsiveDividerBackButton changeToLeft={this.state.changeToLeft}/>
-                    <VisualizarPalestra refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado}/>
+                    <VisualizarPalestra refreshParent={this.refreshChild} showNotFound entidade={this.state.selecionado} readOnly={this.props.readOnly}/>
                 </Box>
             </ResponsiveDivider>
         );

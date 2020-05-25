@@ -1,0 +1,6 @@
+.evento_root .custom_list{
+    overflow-y: unset !important;
+}
+.evento_root .responsive_divider_root{
+    width: 100%;
+}

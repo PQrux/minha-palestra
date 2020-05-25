@@ -1,5 +1,5 @@
 const FirestoreObject = require("./FirestoreObject");
-
+const ParticipanteDePalestra = require("./ParticipanteDePalestra");
 module.exports = class Palestra extends FirestoreObject{
     /**
      * Representa uma palestra dentro do sistema.
@@ -10,7 +10,7 @@ module.exports = class Palestra extends FirestoreObject{
 	 * @param {number} limiteDeParticipantes sugestão do palestrante para o limite de participantes.
 	 * @param {Date} dhApresentacao Data e hora da apresentação.
 	 * @param {string} espaco Referência ao espaço em que será realizada a palestra.
-	 * @param {Object<string, import("./ParticipanteDePalestra")>} participantes Lista de participantes da palestra.
+	 * @param {Object<string, ParticipanteDePalestra>} participantes Lista de participantes da palestra.
 	 * @param {string} usuarioCriador Referência ao usuário que criou a palestra.
 	 * @param {boolean} finalizada Determina se a palestra já está finalizada ou não.
 	 * @param {boolean} cancelada Determina se a palestra foi cancelada.
@@ -30,7 +30,18 @@ module.exports = class Palestra extends FirestoreObject{
         this.palestrante = palestrante;
         this.descricao = descricao;
         this.criarAtributoReferencial("evento", true);
-        this.evento = evento;
+        Object.defineProperty(this, "evento",{
+            enumerable: true,
+            get: ()=>evento,
+            set: (value)=>{
+                evento = value;
+                if(this.participantes){
+                    for(let i in this.participantes){
+                        this.participantes[i].usuario_evento = this.participantes[i].usuario+"_"+evento; 
+                    }
+                }
+            }
+        })
         this.limiteDeParticipantes = limiteDeParticipantes;
         this.dhApresentacao = new Date(dhApresentacao);
         this.criarAtributoReferencial("espaco", true);
@@ -58,5 +69,17 @@ module.exports = class Palestra extends FirestoreObject{
                 enumerable: true,
             }
         });
+    }
+    /**@param {import("./Usuario")} usuario*/
+    addParticipante(usuario){
+        if(usuario && usuario.path){
+            this.participantes[usuario.getUid()] = new ParticipanteDePalestra(usuario.path, usuario.nome, usuario.cpf, false, `${usuario.path}_${this.evento}`);
+        }
+    }
+    /**@param {import("./Usuario")} usuario*/
+    removeParticipante(usuario){
+        if(usuario && usuario.path){
+            this.participantes[usuario.getUid()] = null;
+        }   
     }
 }

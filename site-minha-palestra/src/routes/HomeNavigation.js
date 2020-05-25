@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Navigation, Carregamento } from '../components';
 import { DialogHelper, UsuarioHelper } from '../services';
 import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Usuarios, Palestras, Administracao } from "../views";
-import TelaRapida from '../partialviews/TelaRapida';
 
 export default class Home extends Component {
   constructor(props){
@@ -71,14 +70,9 @@ export default class Home extends Component {
                     render={(props)=>(<OptionComponent {...Object.assign({}, props, OptionComponentProps)}/>)}/>
                   ))}
                   <Route
-                    path="/asad" 
-                    component={TelaRapida}
-                  />
-                  <Route
                     path="*" 
                     render={(props)=>(<Default.OptionComponent {...Object.assign({}, props, Default.OptionComponentProps)}/>)}
                   />
-
                 </Switch>
               </Box>
             </Box>

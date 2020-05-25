@@ -7,6 +7,8 @@ import multiStorager from "./multiStorager";
 import DeterminarTelaUsuario from "./DeterminarTelaUsuario";
 import TraduzirErroAuth from "./TraduzirErroAuth";
 import Arrayficar from "./Arrayficar";
+import ApiReader from "./ApiReader";
+
 export {
     parseBRL,
     DataLocal,
@@ -16,4 +18,5 @@ export {
     DeterminarTelaUsuario,
     TraduzirErroAuth,
     Arrayficar,
+    ApiReader,
 }

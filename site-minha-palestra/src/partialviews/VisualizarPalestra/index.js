@@ -104,8 +104,25 @@ export default class VisualizarPalestra extends EasyComponent {
             this.setState({loading: false});
         })
     }
-    switchInscricao(){
-
+    switchInscricao = () =>{
+        this.setState({loading: true});
+        PalestrasHelper.switchInscricaoEmPalestra(this.state.palestra)
+        .then(()=>{
+            this.setState({loading: false});
+            DialogHelper.showDialog("Sucesso!", `Você foi ${this.state.palestra.participantes[this.usuario.getUid()] ? "inscrito na" : "desinscrito da"} palestra com sucesso!`, DialogHelper.okButton);
+        })
+        .catch((err)=>{
+            this.setState({loading: false});
+            DialogHelper.showError(err);
+        });
+    }
+    renderFinalizar = () =>{
+        if(!this.state.palestra.finalizada && this.state.palestra.aprovada && (this.usuario.grupo === "ADMINISTRADOR" || this.state.palestra.palestrante === this.usuario.path))
+        return(
+            <Button color="primary" variant="contained" style={{alignSelf: "center"}}>
+                Finalizar Palestra
+            </Button>
+        )
     }
     renderRead(){
         return (
@@ -133,6 +150,12 @@ export default class VisualizarPalestra extends EasyComponent {
                                     </Typography>:undefined
                                 }
                                 {
+                                    this.state.palestra.dhFinalizacao ?
+                                    <Typography>
+                                        <b>FINALIZADA EM: </b>{DataLocal(this.state.palestra.dhFinalizacao)}
+                                    </Typography>: undefined
+                                }
+                                {
                                     this.state.palestra.limiteDeParticipantes ?
                                     <Typography>
                                         {parseInt(this.state.palestra.limiteDeParticipantes) - Object.getOwnPropertyNames(this.state.palestra.participantes||{}).length} Vagas restantes 
@@ -144,11 +167,12 @@ export default class VisualizarPalestra extends EasyComponent {
 
                     <Seletor BoxProps={{width: "100%"}} tipo="usuario" entidade={this.state.palestra.palestrante} readOnly/>
                     <Seletor BoxProps={{width: "100%"}} tipo="espaco" entidade={this.state.palestra.espaco} readOnly/>
+                    {this.renderFinalizar()}
                     {
-                        this.state.palestra.aprovada && !this.state.palestra.cancelada && !this.state.palestra.finalizada ?
+                        this.state.palestra.aprovada && !this.state.palestra.cancelada && !this.state.palestra.finalizada && this.state.palestra.palestrante !== this.usuario.path ?
                         <ThemeProvider theme={Themes.error}>
                             <Button disabled={this.state.loading} onClick={this.switchInscricao} variant="contained" color={this.state.palestra.participantes[this.usuario.getUid()] ? "secondary" : "primary"}>
-                                {this.state.palestra.participantes && this.state.palestra.participantes[this.usuario.path.split("/").pop()] ? "REMOVER INSCRIÇÃO" : "INSCREVER-ME"}
+                                {this.state.palestra.participantes && this.state.palestra.participantes[this.usuario.getUid()] ? "REMOVER INSCRIÇÃO" : "INSCREVER-ME"}
                             </Button>
                         </ThemeProvider>
                         :undefined
@@ -238,6 +262,7 @@ export default class VisualizarPalestra extends EasyComponent {
                         Aprovar Palestra
                     </Button> : undefined
                 }
+                {this.renderFinalizar()}
                 {
                     !this.state.palestra.cancelada && !this.state.palestra.finalizada ?
                     <Button 
@@ -250,7 +275,6 @@ export default class VisualizarPalestra extends EasyComponent {
                         Cancelar Palestra
                     </Button> : undefined
                 }
- 
                 <VisualizarLog log={this.state.palestra.ultimoLog} width="100%"/>
                 <LeituraButton disabled={this.state.palestra.finalizada} entidade={this}/>
                 <FloatingBox>
