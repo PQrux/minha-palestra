@@ -1,4 +1,4 @@
-import { Box, Button, Typography, ThemeProvider } from '@material-ui/core';
+import { Box, Button, Typography, ThemeProvider, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox, ListItemIcon } from '@material-ui/core';
 import { Palestra } from "models-minha-palestra";
 import React from 'react';
 import { DatePicker, EasyComponent, FloatingBox, MaskedTextField, ResponsiveDividerBackButton, LeituraButton } from '../../components';
@@ -116,10 +116,54 @@ export default class VisualizarPalestra extends EasyComponent {
             DialogHelper.showError(err);
         });
     }
+    finalizarPalestra = () => {
+        const {palestra} = this.state;
+        let body;
+        const change = (participante) => {
+            console.log("vai krl");
+            participante.compareceu = !participante.compareceu; 
+            console.log(participante);
+            this.setState({});
+            DialogHelper.updateDialogBody(body());
+        }
+        body = () => (
+            <List>
+                {Object.getOwnPropertyNames(palestra.participantes||{}).map(key=>(
+                    <ListItem key={key} button onClick={()=>change(palestra.participantes[key])}>
+                        <ListItemText primary={palestra.participantes[key].nome}/>
+                        <ListItemIcon >
+                            <Checkbox checked={palestra.participantes[key].compareceu}/>
+                        </ListItemIcon>
+                    </ListItem>
+                ))}
+            </List>
+        )
+        DialogHelper.showDialog(<Typography align="center" variant="h6">Faça a Chamada</Typography>, body(),(
+            <Box>
+                <Button onClick={DialogHelper.closeDialog}>CANCELAR</Button>
+                <Button 
+                    color="primary"
+                    onClick={()=>{
+                        DialogHelper.showConfirmationBox(()=>{
+                            DialogHelper.showLoading();
+                            PalestrasHelper.finalizarPalestra(palestra)
+                            .then(()=>{
+                                DialogHelper.showDialog("Concluído!", "Palestra encerrada com sucesso!", DialogHelper.okButton);
+                                this.setState({});
+                            })
+                            .catch(DialogHelper.showError);
+                        }, "CONFIRMAÇÃO", "Tem certeza de que deseja encerrar a palestra?");
+                    }}
+                >
+                    CONCLUIR
+                </Button>
+            </Box>
+        ))
+    }
     renderFinalizar = () =>{
         if(!this.state.palestra.finalizada && this.state.palestra.aprovada && (this.usuario.grupo === "ADMINISTRADOR" || this.state.palestra.palestrante === this.usuario.path))
         return(
-            <Button color="primary" variant="contained" style={{alignSelf: "center"}}>
+            <Button color="primary" variant="contained" style={{alignSelf: "center"}} onClick={this.finalizarPalestra}>
                 Finalizar Palestra
             </Button>
         )

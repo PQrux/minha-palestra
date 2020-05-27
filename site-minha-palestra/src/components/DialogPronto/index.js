@@ -32,7 +32,7 @@ export default function ResponsiveDialog() {
         setOpen(false);
     }
     const updateDialogBody = (newBody) =>{
-        setBody(newBody);
+        setBody(newBody||body);
     }
     multiStorager.getOtherDataStorager("dialog").set("showDialog",showDialog);
     multiStorager.getOtherDataStorager("dialog").set("closeDialog",closeDialog);

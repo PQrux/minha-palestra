@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { ResponsiveDivider } from '../../components';
-import { Box, Button, Typography } from '@material-ui/core';
+import { Box, Button, Divider } from '@material-ui/core';
+import { AccountCircle, Info, MeetingRoom } from '@material-ui/icons';
+import React from 'react';
+import { EasyComponent, ResponsiveDivider } from '../../components';
 import { Perfil } from '../../partialviews';
-import { UsuarioHelper, DialogHelper } from '../../services';
-import { MeetingRoom, AccountCircle, Info } from '@material-ui/icons';
+import { DialogHelper, UsuarioHelper } from '../../services';
 
-export default class MenuConfiguracoes extends Component {
+export default class MenuConfiguracoes extends EasyComponent {
     constructor(props){
         super(props);
+        this.disablePermissao = true;
         this.state = {
             selected: 0,
         }
@@ -15,7 +16,11 @@ export default class MenuConfiguracoes extends Component {
             {component: <Perfil useCurrentUser showNotFound/>, icon: (<AccountCircle/>), texto: "Meu Perfil"},
             {texto: "Sobre Nós", icon: (<Info/>), action: ()=>{DialogHelper.showDialog("Em construção!", "O recurso ainda não está disponível!", DialogHelper.okButton)}},
             {texto: "SAIR", icon: (<MeetingRoom/>), action: ()=>{UsuarioHelper.desconectar()}},
-        ]
+        ];
+        this.adminOptions = this.props.adminOptions;
+    }
+    carregarEntidade(){
+        this.setCarregando(false);
     }
     select=(i)=>{
         let selected = this.options[i]||{};
@@ -36,6 +41,17 @@ export default class MenuConfiguracoes extends Component {
                             {icon} {texto}
                         </Button>
                     ))}
+                    {
+                        this.usuario.grupo === "ADMINISTRADOR" ?
+                        <Box display="flex" flexDirection="column">
+                            <Divider style={{marginBottom: "10px"}}/>
+                            {this.adminOptions.map(o=>(
+                                <Button style={styles.button} variant="outlined" key={o.path} color="primary" onClick={()=>{this.props.history.push(o.path)}}>
+                                    {o.icon} {o.label}
+                                </Button>
+                            ))}
+                        </Box> : undefined
+                    }
                 </Box>
                 {
                     this.options[this.state.selected] && this.options[this.state.selected].component ? this.options[this.state.selected].component : <div></div>

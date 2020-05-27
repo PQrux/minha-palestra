@@ -18,11 +18,7 @@ export default class Home extends Component {
     usuarios = { path: "/usuarios", label: "Usuários", icon : <History/>, OptionComponent: Usuarios},
     eventos = {path: "/eventos", label: "Eventos", icon: <Event/>, OptionComponent: Eventos},
     palestras = {path: "/palestras", label: "Palestras", icon: <LiveTv/>, OptionComponent: Palestras},
-    ajustes = { path: "/ajustes", label: "Ajustes", icon: <Settings/>, OptionComponent: MenuConfiguracoes },
-    administracao = {
-      path: "/administracao", label: "Gerenciar", icon: <EventSeat/>, OptionComponent: Administracao,
-      OptionComponentProps: {options: [usuarios, espacos]}
-    };
+    ajustes = { path: "/ajustes", label: "Ajustes", icon: <Settings/>, OptionComponent: MenuConfiguracoes, OptionComponentProps: {adminOptions: [usuarios, espacos]}};
     this.menu = [palestras, eventos, ajustes];
     UsuarioHelper.getUsuarioAtual().then((usuario)=>{
       if(usuario.grupo === "ADMINISTRADOR"){
@@ -30,8 +26,6 @@ export default class Home extends Component {
         this.state.options.push(eventos);
         this.state.options.push(espacos);
         this.state.options.push(usuarios);
-        this.state.options.push(administracao);
-        this.menu.push(administracao);
       }
       else if(usuario.grupo === "PALESTRANTE"){
         this.state.options.push(palestras);

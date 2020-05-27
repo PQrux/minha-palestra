@@ -14,9 +14,7 @@ import Usuarios from "./Usuarios";
 import MenuConfiguracoes from "./MenuConfiguracoes";
 import Eventos from "./Eventos";
 import Palestras from "./Palestras";
-import Administracao from "./Administracao";
 export {
-    Administracao,
     Splash,
     Login,
     AuthenticationLogin,

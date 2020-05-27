@@ -93,7 +93,7 @@ export default class VisualizarEvento extends EasyComponent {
                             noHistory
                             tipofiltro="evento"
                             filtro={this.state.evento.path}
-                            post={(lista)=>lista.filter(i=>i.finalizada === false)}
+                            post={(lista)=>lista.filter(i=>i.finalizada === false && i.aprovada === true)}
                             entidade={this.state.evento.path}
                             readOnly
                         />
