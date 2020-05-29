@@ -1,6 +1,8 @@
-const HorarioDeBrasilia = require("./HorarioDeBrasilia");
+const DateUtils = require("./DateUtils");
 const Requester = require("./Requester");
+const GeradorPDF = require("./GeradorPDF");
 module.exports = {
-    HorarioDeBrasilia,
+    DateUtils,
     Requester,
+    GeradorPDF,
 }

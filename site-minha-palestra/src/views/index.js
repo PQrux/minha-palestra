@@ -14,6 +14,8 @@ import Usuarios from "./Usuarios";
 import MenuConfiguracoes from "./MenuConfiguracoes";
 import Eventos from "./Eventos";
 import Palestras from "./Palestras";
+import Certificado from "./Certificado";
+
 export {
     Splash,
     Login,
@@ -31,4 +33,5 @@ export {
     MenuConfiguracoes,
     Eventos,
     Palestras,
+    Certificado,
 }

@@ -6,12 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import * as firebase from "firebase";
 import secret from "./secret";
 import $ from "jquery";
-if(process.env.REACT_APP_PRODUCTION !== "s"){
-    console.log("VERSÃO DE DESENVOLVIMENTO");
-}
-else{
-    console.log("VERSÃO DE PRODUÇÃO");
-}
+
 firebase.initializeApp(secret.firebase_key);
 firebase.auth().setPersistence("session");
 

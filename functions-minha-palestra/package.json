@@ -15,7 +15,10 @@
   "dependencies": {
     "firebase-admin": "^8.0.0",
     "firebase-functions": "^3.1.0",
-    "models-minha-palestra": "file:models-minha-palestra"
+    "html-pdf": "^2.2.0",
+    "jsdom": "^16.2.2",
+    "models-minha-palestra": "file:models-minha-palestra",
+    "qrcode": "^1.4.4"
   },
   "engines": {
     "node": "10"

@@ -3,7 +3,7 @@ import UsuarioHelper from "./UsuarioHelper";
 import firebase from "firebase";
 import "firebase/database";
 import { LogHelper } from ".";
-import { ApiReader } from "../utils";
+import { ApiReader, PDFFromJSON } from "../utils";
 export default class PalestrasHelper{
     /**
      * 
@@ -168,6 +168,25 @@ export default class PalestrasHelper{
                 if(inscrever) palestra.addParticipante(usuario);
                 else palestra.removeParticipante(usuario);
                 resolve(inscrever);
+            })
+            .catch(reject);
+        });
+    }
+    /**
+     * Gera o certificado de participação da palestra.
+     * @param {Palestra["prototype"]} palestra 
+     * @returns {Promise}
+     */
+    static gerarCerificado(palestra){
+        return new Promise(async (resolve,reject)=>{
+            if(!(palestra instanceof Palestra)||!palestra.path){
+                reject(new Resultado(-1, "Palestra inválida.", null, {palestra}));
+                return;
+            }
+            ApiReader("/Certificado/gerar", "POST", {palestra: palestra.path})
+            .then((resp)=>{
+                PDFFromJSON(resp, "Certificado "+palestra.nome);
+                resolve();
             })
             .catch(reject);
         });

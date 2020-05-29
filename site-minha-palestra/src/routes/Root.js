@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { multiStorager } from '../utils';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Splash, Login } from "../views";
+import { Splash, Login, Certificado } from "../views";
 import { UsuarioHelper } from '../services';
 import HomeNavigation from "./HomeNavigation";
 export default class Root extends Component {
@@ -42,6 +42,7 @@ export default class Root extends Component {
             return(
               <BrowserRouter>
                 <Switch>
+                  <Route path="/certificado/:palestra/:usuarioUid" component={Certificado}/>
                   <Route path="*" component={Login}/>
                 </Switch>
               </BrowserRouter>

@@ -116,6 +116,19 @@ export default class VisualizarPalestra extends EasyComponent {
             DialogHelper.showError(err);
         });
     }
+    gerarPDF = () => {
+        this.setState({loading: true});
+        DialogHelper.showLoading("Gerando certificado...");
+        PalestrasHelper.gerarCerificado(this.state.palestra)
+        .then(()=>{
+            this.setState({loading: false});
+            DialogHelper.showDialog("Sucesso!", "Verifique sua lista de downloads!", DialogHelper.okButton);
+        })
+        .catch((err)=>{
+            this.setState({loading: false});
+            DialogHelper.showError(err);
+        });
+    }
     finalizarPalestra = () => {
         const {palestra} = this.state;
         let body;
@@ -220,6 +233,12 @@ export default class VisualizarPalestra extends EasyComponent {
                             </Button>
                         </ThemeProvider>
                         :undefined
+                    }
+                    {
+                        this.state.palestra.participantes && this.state.palestra.participantes[this.usuario.getUid()] && this.state.palestra.participantes[this.usuario.getUid()].compareceu ?
+                        <Button color="primary" variant="contained" onClick={this.gerarPDF} disabled={this.state.loading}>
+                            GERAR CERTIFICADO
+                        </Button> : undefined
                     }
                     <LeituraButton disabled={this.state.palestra.finalizada} entidade={this}/>
                 </Box>

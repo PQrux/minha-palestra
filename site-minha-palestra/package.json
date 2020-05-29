@@ -22,7 +22,8 @@
     "react-router-transition": "^2.0.0",
     "react-scripts": "3.3.0",
     "react-swipeable-routes": "^0.6.0",
-    "react-swipeable-views": "^0.13.9"
+    "react-swipeable-views": "^0.13.9",
+    "save-as": "^0.1.8"
   },
   "scripts": {
     "start": "react-scripts start",

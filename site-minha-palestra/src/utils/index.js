@@ -8,6 +8,7 @@ import DeterminarTelaUsuario from "./DeterminarTelaUsuario";
 import TraduzirErroAuth from "./TraduzirErroAuth";
 import Arrayficar from "./Arrayficar";
 import ApiReader from "./ApiReader";
+import PDFFromJSON from "./PDFFromJSON";
 
 export {
     parseBRL,
@@ -19,4 +20,5 @@ export {
     TraduzirErroAuth,
     Arrayficar,
     ApiReader,
+    PDFFromJSON,
 }
