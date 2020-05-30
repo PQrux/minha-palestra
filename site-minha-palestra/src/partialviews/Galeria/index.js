@@ -1,10 +1,11 @@
 import React from 'react';
 import { EasyComponent } from '../../components';
 import { Box, Button, Typography, IconButton, ThemeProvider } from '@material-ui/core';
-import { Add, Delete } from '@material-ui/icons';
+import { Add, Delete, PhotoCamera } from '@material-ui/icons';
 import { ModalHelper, DialogHelper, FileHelper } from '../../services';
 import { FirestoreObject } from "models-minha-palestra";
 import { Permissoes, Themes } from "../../constants";
+const noProfile = require("../../assets/images/no-profile.png");
 
 export default class Galeria extends EasyComponent {
     constructor(props){
@@ -16,10 +17,11 @@ export default class Galeria extends EasyComponent {
     addImagem = () => {
         FileHelper.getFiles(true, "image/*", true).then(files=>{
             if(files.length > 0){
-                FileHelper.saveFiles(DialogHelper.showFileSenderProgress, files, this.props.entidade, this.props.entidadeProp, true)
+                FileHelper.saveFiles(DialogHelper.showFileSenderProgress, files, this.props.entidade, this.props.entidadeProp, !this.props.isNotArray)
                 .then((entidade)=>{
                     if(this.props.refreshParent) this.props.refreshParent(entidade);
-                    this.setState({imgs: this.props.entidade[this.props.entidadeProp]});
+                    if(this.props.isNotArray) this.setState({imgs: [this.props.entidade[this.props.entidadeProp]]});
+                    else this.setState({imgs: this.props.entidade[this.props.entidadeProp]});
                     DialogHelper.closeDialog();
                 })
                 .catch(err=>{
@@ -42,10 +44,15 @@ export default class Galeria extends EasyComponent {
     carregarEntidade(){
         let { entidade, entidadeProp } = this.props;
         if((entidade instanceof FirestoreObject) && entidadeProp){
-            if(!Array.isArray(entidade[entidadeProp])){
-                entidade[entidadeProp] = [];
+            if(this.props.isNotArray){
+                this.state.imgs = [entidade[entidadeProp]||noProfile];
             }
-            this.state.imgs = entidade[entidadeProp];
+            else{
+                if(!Array.isArray(entidade[entidadeProp])){
+                    entidade[entidadeProp] = [];
+                }
+                this.state.imgs = entidade[entidadeProp];
+            }
         }
         else{
             this.setNotFound(true);
@@ -53,10 +60,12 @@ export default class Galeria extends EasyComponent {
         this.setCarregando(false);
     }
     renderWrite() {
-        return this.renderList(true);
+        if(this.props.isNotArray) return this.renderSolo(true);
+        else return this.renderList(true);
     }
     renderRead() {
-        return this.renderList(false);
+        if(this.props.isNotArray) return this.renderSolo(false);
+        else return this.renderList(false);
     }
     setSelected = ({target}) =>{
         ModalHelper.setState({selected: target.name});
@@ -69,7 +78,25 @@ export default class Galeria extends EasyComponent {
             <Box flex="1" padding="20px" display="flex" flexDirection="column">
                 <Box style={Object.assign({backgroundImage: `url(${this.state.imgs[state.selected]})`}, styles.bigimg)}>
                 </Box>
-                {this.renderList(false)}
+                {this.props.isNotArray ? undefined : this.renderList(false)}
+            </Box>
+        )
+    }
+    renderSolo(withAdd){
+        return (
+            <Box style={{display: "flex", flexDirection: "column", alignItems:"center"}}>
+                <Button 
+                    {...buttonopts}
+                    name={0}
+                    onClick={this.setSelected}
+                    style={Object.assign({backgroundImage: `url(${this.state.imgs[0]})`, backgroundColor: "white"}, styles.button, {width: "200px", height: "200px"})} 
+                />
+                {
+                    withAdd ?
+                    <Button variant="outlined" color="primary" onClick={this.addImagem} disabled={!this.props.entidade||!this.props.entidade.path}>
+                        <PhotoCamera/>
+                    </Button>:undefined
+                }
             </Box>
         )
     }

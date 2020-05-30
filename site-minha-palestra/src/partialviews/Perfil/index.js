@@ -7,7 +7,8 @@ import { UsuarioHelper } from '../../services';
 import VisualizarLog from '../VisualizarLog';
 import { Arrayficar } from '../../utils';
 import { Permissoes } from "../../constants";
-const logo = require("../../assets/images/logo.png");
+import Galeria from '../Galeria';
+const noProfile = require("../../assets/images/no-profile.png");
 
 export default class Perfil extends EasyComponent {
     constructor(props){
@@ -75,7 +76,7 @@ export default class Perfil extends EasyComponent {
         return(
             <Box>
                 <Box display="flex" alignItems="center" flexDirection="row !important">
-                    <img alt="Foto de Perfil" style={style.img_mini} src={this.state.usuario.fotoPerfil||logo}/>
+                    <img alt="Foto de Perfil" style={style.img_mini} src={this.state.usuario.fotoPerfil||noProfile}/>
                     <Box>
                         <Typography style={{textTransform: "uppercase"}}>
                             {this.state.usuario.nome}
@@ -94,7 +95,7 @@ export default class Perfil extends EasyComponent {
         return (
             <div className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
+                    <Galeria entidade={this.state.usuario} entidadeProp="fotoPerfil" isNotArray/>
                     <Typography autoCapitalize>
                         {this.state.usuario.grupo}
                     </Typography>
@@ -113,7 +114,7 @@ export default class Perfil extends EasyComponent {
         return (
             <Box className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <img alt="Foto de Perfil" style={style.img} src={this.state.usuario.fotoPerfil||logo}/>
+                    <Galeria entidade={this.state.usuario} entidadeProp="fotoPerfil" isNotArray/>
                     <MaskedTextField
                         onChange={this.change}
                         label="E-mail" variant="outlined"
