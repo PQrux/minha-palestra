@@ -35,7 +35,12 @@ export default class Root extends Component {
     render() {
         if(this.state.estado === "conectado"){
             return (
-              <HomeNavigation/>
+              <BrowserRouter>
+                <Switch>
+                  <Route path="/certificado/:palestra/:usuarioUid" component={Certificado}/>
+                  <Route path="*" component={HomeNavigation}/>
+                </Switch>
+              </BrowserRouter>
             );
         }
         else if(this.state.estado === "desconectado"){

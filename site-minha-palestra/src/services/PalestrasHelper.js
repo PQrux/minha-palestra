@@ -191,4 +191,27 @@ export default class PalestrasHelper{
             .catch(reject);
         });
     }
+    /**
+     * Busca uma palestra específica na base de dados.
+     * @param {string} path Referencia a palestra.
+     * @returns {Promise.<Palestra["prototype"]>}
+     */
+    static buscarPalestra(path){
+        return new Promise(async (resolve,reject)=>{
+            if(!path){
+                reject(new Resultado(-1, "Referência inválida!", null, {path}));
+                return;
+            }
+            firebase.database().ref(path).once("value").then(snap=>{
+                if(!snap.exists()){
+                    reject(new Resultado(-1, "Palestra inexistente!", null, {path}));
+                    return;
+                }
+                resolve(new Palestra().parse(snap.ref.path.toString(), snap.val()));
+            })
+            .catch(err=>{
+                reject(new Resultado(-1, "Erro ao buscar palestra!", err, {path}));
+            })
+        });
+    }
 }

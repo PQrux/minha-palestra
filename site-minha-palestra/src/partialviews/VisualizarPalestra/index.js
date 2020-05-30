@@ -1,4 +1,4 @@
-import { Box, Button, Typography, ThemeProvider, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox, ListItemIcon } from '@material-ui/core';
+import { Box, Button, Typography, ThemeProvider, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox, ListItemIcon, Link } from '@material-ui/core';
 import { Palestra } from "models-minha-palestra";
 import React from 'react';
 import { DatePicker, EasyComponent, FloatingBox, MaskedTextField, ResponsiveDividerBackButton, LeituraButton } from '../../components';
@@ -116,6 +116,18 @@ export default class VisualizarPalestra extends EasyComponent {
             DialogHelper.showError(err);
         });
     }
+    clonarPalestra = () => {
+        Seletor.gerarBusca("palestra", (selecionado)=>{
+            if(!selecionado||!(selecionado instanceof Palestra)) return;
+            const palestra = this.state.palestra;
+            palestra.nome = selecionado.nome;
+            palestra.descricao = selecionado.descricao;
+            palestra.limiteDeParticipantes = selecionado.limiteDeParticipantes;
+            palestra.observacoes = selecionado.observacoes;
+            palestra.fotos = selecionado.fotos;
+            this.setState({palestra: selecionado}, ()=>this.setState({palestra}));
+        }, {tipofiltro: "usuarioCriador", filtro: this.usuario.path});
+    }
     gerarPDF = () => {
         this.setState({loading: true});
         DialogHelper.showLoading("Gerando certificado...");
@@ -227,7 +239,7 @@ export default class VisualizarPalestra extends EasyComponent {
                     {this.renderFinalizar()}
                     {
                         this.state.palestra.aprovada && !this.state.palestra.cancelada && !this.state.palestra.finalizada && this.state.palestra.palestrante !== this.usuario.path ?
-                        <ThemeProvider theme={Themes.error}>
+                        <ThemeProvider theme={Themes.info}>
                             <Button disabled={this.state.loading} onClick={this.switchInscricao} variant="contained" color={this.state.palestra.participantes[this.usuario.getUid()] ? "secondary" : "primary"}>
                                 {this.state.palestra.participantes && this.state.palestra.participantes[this.usuario.getUid()] ? "REMOVER INSCRIÇÃO" : "INSCREVER-ME"}
                             </Button>
@@ -249,6 +261,13 @@ export default class VisualizarPalestra extends EasyComponent {
         return (
         <Box className="DefaultPages_INSIDER">
             <Box className="DefaultPages_ROOT">
+                {
+                    !this.state.palestra.path ?
+                    <Typography>
+                        Dica: Está cansado de digitar? Copie as informações essenciais de uma palestra anterior clicando
+                        <Link color="primary" onClick={this.clonarPalestra}> AQUI.</Link>
+                    </Typography>: undefined
+                }
                 <MaskedTextField
                     label="Nome da Palestra"
                     variant="outlined"
@@ -308,8 +327,8 @@ export default class VisualizarPalestra extends EasyComponent {
                 {
                     this.usuario.grupo !== "ADMINISTRADOR" ? undefined : 
                     <Box className="DefaultPages_ROOT" width="100%">
-                        <Seletor readOnly={!this.state.palestra.path} BoxProps={{width: "100%"}} tipo="usuario" entidade={this.state.palestra.palestrante} onSelecionado={this.changePalestrante}/>
-                        <Seletor readOnly={!this.state.palestra.path} BoxProps={{width: "100%"}} tipo="espaco" entidade={this.state.palestra.espaco} onSelecionado={this.changeEspaco}/>
+                        <Seletor readOnly={!this.state.palestra.path} BoxProps={{width: "100%"}} tipo="usuario" entidade={this.state.palestra.palestrante} onSelecionado={this.changePalestrante} listProps={{tipoFiltro: "grupo", filtro: "PALESTRANTE"}}/>
+                        <Seletor readOnly={!this.state.palestra.path} BoxProps={{width: "100%"}} tipo="espaco" entidade={this.state.palestra.espaco} onSelecionado={this.changeEspaco} listProps={{tipoFiltro: "habilitado", filtro: true}}/>
                         <Seletor readOnly={!this.state.palestra.path} BoxProps={{width: "100%"}} tipo="evento" entidade={this.state.palestra.evento} onSelecionado={this.changeEvento}/>
                     </Box>
                 }

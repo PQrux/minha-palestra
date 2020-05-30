@@ -12,7 +12,7 @@ export default {
             ]
         }
     }),
-    error: createMuiTheme({
+    info: createMuiTheme({
         palette: {
             primary: green,
             secondary: {

@@ -1,0 +1,11 @@
+.Certificado_root{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.Certificado_root > * {
+    margin-bottom: 20px !important;
+}

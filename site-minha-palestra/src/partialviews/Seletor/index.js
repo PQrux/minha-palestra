@@ -8,7 +8,7 @@ import Perfil from '../Perfil';
 import VisualizarEvento from '../VisualizarEvento';
 import VisualizarEspaco from '../VisualizarEspaco';
 import { Box, Button, Typography } from '@material-ui/core';
-import { Usuarios, Eventos, EspacosDeApresentacao } from '../../views';
+import { Usuarios, Eventos, EspacosDeApresentacao, Palestras } from '../../views';
 
 export default class Seletor extends EasyComponent {
     constructor(props){
@@ -67,33 +67,42 @@ export default class Seletor extends EasyComponent {
         }
     }
     selecionar = () => {
+        Seletor.gerarBusca(this.props.tipo, (selecionado)=>{
+            if(selecionado){
+                this.setState({selecionado});
+                if(this.props.onSelecionado) this.props.onSelecionado(selecionado);
+            }
+        }, this.props.listProps);
+    }
+    /**
+     * 
+     * @param {"usuario"|"evento"|"espaco"|"palestra"} tipo 
+     * @param {function(selecionado)} callback 
+     */
+    static gerarBusca(tipo, callback, listProps){
         let selecionado, selector;
+        listProps=listProps||{};
         const selecionar=(selecao)=>{
             selecionado = selecao;
+        },
+        onClick=(cancel)=>{
+            DialogHelper.closeDialog();
+            callback(cancel ? undefined : selecionado);
         }
-        switch(this.props.tipo){
-            case "usuario":selector = (<Usuarios noHistory readOnly onSelecionado={selecionar} tipoFiltro="grupo" filtro="PALESTRANTE"/>);break;
-            case "evento":selector = (<Eventos noHistory readOnly onSelecionado={selecionar}/>);break;
-            case "espaco":selector = (<EspacosDeApresentacao noHistory readOnly onSelecionado={selecionar} tipoFiltro="habilitado" filtro={true}/>);break;
+        switch(tipo){
+            case "usuario":selector = (<Usuarios noHistory readOnly onSelecionado={selecionar} {...listProps}/>);break;
+            case "evento":selector = (<Eventos noHistory readOnly onSelecionado={selecionar} {...listProps}/>);break;
+            case "espaco":selector = (<EspacosDeApresentacao noHistory readOnly onSelecionado={selecionar} {...listProps}/>);break;
+            case "palestra":selector = (<Palestras noHistory readOnly onSelecionado={selecionar} {...listProps}/>);break;
             default: throw "Erro! Tipo inválido.";break;
         }
+
         DialogHelper.showDialog(null, selector, 
             <Box display="flex">
-                <Button color="secondary" variant="outlined" onClick={DialogHelper.closeDialog}>
+                <Button color="secondary" variant="outlined" onClick={()=>onClick(true)}>
                     CANCELAR
                 </Button>
-                <Button 
-                    style={{marginLeft: 10}}
-                    color="primary" 
-                    variant="contained" 
-                    onClick={()=>{
-                        DialogHelper.closeDialog();
-                        if(selecionado){
-                            this.setState({selecionado});
-                            if(this.props.onSelecionado) this.props.onSelecionado(selecionado);
-                        }
-                    }}
-                >
+                <Button style={{marginLeft: 10}} color="primary" variant="contained" onClick={()=>onClick(false)}> 
                     OK
                 </Button>
             </Box>
