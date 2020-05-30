@@ -1,7 +1,7 @@
-import { Box, FormControlLabel, MenuItem, Switch, Button, Typography, ListItem, List, Divider } from '@material-ui/core';
+import { Box, Button, Divider, FormControlLabel, List, ListItem, MenuItem, Switch, Typography } from '@material-ui/core';
 import { Espaco } from "models-minha-palestra";
 import React from 'react';
-import { EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingBox } from '../../components';
+import { EasyComponent, FloatingBox, MaskedTextField } from '../../components';
 import { Permissoes } from "../../constants";
 import { DialogHelper, EspacosHelper } from '../../services';
 import { Arrayficar, DataLocal } from '../../utils';
@@ -38,7 +38,6 @@ export default class VisualizarEspaco extends EasyComponent {
             this.setState({palestras});
         })
         .catch((err)=>{
-            console.log(err);
             this.setState({palestras: []});
         })
     }

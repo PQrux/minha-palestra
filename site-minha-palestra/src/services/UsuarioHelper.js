@@ -40,7 +40,6 @@ export default class UsuarioHelper{
                     }
                 })
                 .catch(err=>{
-                    console.log(err);
                     UsuarioHelper.desconectar();
                     reject(new Resultado(-1,"Erro ao buscar informações na base de dados. Desconectando.", err, {user}));
                 }) 

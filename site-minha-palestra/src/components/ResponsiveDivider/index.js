@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import "./style.css";
 import { Box } from '@material-ui/core';
-import { withRouter } from "react-router-dom";
+import "./style.css";
 
 class ResponsiveDivider extends Component {
   constructor(props){
@@ -16,14 +15,12 @@ class ResponsiveDivider extends Component {
   shouldComponentUpdate(nextProps, nextState){
     if(this.props.noHistory) return true;
     let gencode = window.location.hash;
-    console.log({gencode, thiss: this.gencode, test: gencode === this.gencode})
     if("#"+this.gencode === gencode){
       nextState.firstOpened = false;
     }
     else{
       nextState.firstOpened = true;
     }
-    console.log({sold: nextState.firstOpened})
     return true;
   }
   changeToRight = () => {

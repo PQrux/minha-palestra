@@ -89,15 +89,12 @@ export default class FileHelper{
                     bytesTransfd = (bytesTransfd - progress.b) + snap.bytesTransferred;
                     progress.b = snap.bytesTransferred;
                     if(progressCallback) progressCallback(nErrorFiles, nTransfdFiles, nTotalFiles, bytesTransfd, nTotalBytes);
-                    console.log("em andamento.")
-                    console.log({nErrorFiles, nTransfdFiles, nTotalFiles, bytesTransfd, nTotalBytes});
                 }
             }
             /**
              * @param {import("firebase").storage.UploadTask} currentUpload
              */
             let onError = async (currentUpload, err) => {
-                console.log(currentUpload, err);
                 nErrorFiles++;
             }
             /**
@@ -109,7 +106,6 @@ export default class FileHelper{
                 if(unsubscribe) unsubscribe();
                 let url = await currentUpload.snapshot.ref.getDownloadURL()
                 .catch(err=>{
-                    console.log(err);
                     ok = false;
                     nErrorFiles++;
                 })
@@ -118,7 +114,6 @@ export default class FileHelper{
                     nTransfdFiles++;
                 }
                 if(nTransfdFiles+nErrorFiles === nTotalFiles){
-                    console.log("comitando.")
                     if(propIsArray){
                         if(overrideProp) obj[prop] = urls;
                         else {
@@ -130,8 +125,6 @@ export default class FileHelper{
                         obj[prop] = urls[0];
                     }
                     LogHelper.logarECommitar([obj.path], "ATUALIZACAO", "Adicionado fotos", obj).then(()=>{
-                        console.log("concluído");
-                        console.log(obj);
                         resolve(obj);
                     })
                     .catch(err=>{

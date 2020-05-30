@@ -1,13 +1,12 @@
 import { Box, Button, Typography } from '@material-ui/core';
 import { Evento } from "models-minha-palestra";
 import React from 'react';
-import { DatePicker, EasyComponent, FloatingBox, MaskedTextField, ResponsiveDividerBackButton, LeituraButton } from '../../components';
+import { DatePicker, EasyComponent, FloatingBox, LeituraButton, MaskedTextField } from '../../components';
 import { Permissoes } from "../../constants";
 import { DialogHelper, EventosHelper } from '../../services';
 import { DataLocal } from '../../utils';
-import VisualizarLog from '../VisualizarLog';
-import Seletor from '../Seletor';
 import { Palestras } from '../../views';
+import VisualizarLog from '../VisualizarLog';
 import "./styles.css";
 
 export default class VisualizarEvento extends EasyComponent {

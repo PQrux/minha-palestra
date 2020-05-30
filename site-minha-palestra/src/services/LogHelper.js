@@ -25,7 +25,6 @@ export default class LogHelper{
             firebase.database().ref("Logs").push(log.toJson()).then(ref=>{
                 log.path = ref.path.toString();
                 if(objetoAlvo) objetoAlvo.ultimoLog = log;
-                console.log(objetoAlvo);
                 resolve(log);
             })
             .catch(err=>{

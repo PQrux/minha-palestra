@@ -32,7 +32,7 @@ export default class EasyComponent extends PureEasyComponent {
     }
     renderRead(){
         return (
-            <Box class="DefaultPages_INSIDER easycomponentroot">
+            <Box className="DefaultPages_INSIDER easycomponentroot">
                 <Box className="easycomponentpaper horizontal vertical center" style={this.additionalPaperStyle}>
                     <p>Leitura...</p>
                 </Box>
@@ -41,7 +41,7 @@ export default class EasyComponent extends PureEasyComponent {
     }
     renderWrite(){
         return (
-            <Box class="DefaultPages_INSIDER easycomponentroot">
+            <Box className="DefaultPages_INSIDER easycomponentroot">
                 <Box className="easycomponentpaper horizontal vertical center" style={this.additionalPaperStyle}>
                     <p>Escrita...</p>
                 </Box>
@@ -52,7 +52,7 @@ export default class EasyComponent extends PureEasyComponent {
     renderNotFound(){
         if(this.props.showNotFound){
             return (
-                <Box class="DefaultPages_INSIDER easycomponentroot">
+                <Box className="DefaultPages_INSIDER easycomponentroot">
                     <Box className="easycomponentpaper horizontal vertical center" style={this.additionalPaperStyle}>
                         <Search fontSize="large"/>
                         <p>{this.mensagemNotFound}</p>
@@ -67,7 +67,7 @@ export default class EasyComponent extends PureEasyComponent {
     renderDeny(){
         if(this.props.showDeny){
             return (
-                <Box class="DefaultPages_INSIDER easycomponentroot">
+                <Box className="DefaultPages_INSIDER easycomponentroot">
                     <Box className="easycomponentpaper horizontal vertical center" style={this.additionalPaperStyle}>
                         <ErrorOutline fontSize="large"/>
                         <p>{this.mensagemDeny}</p>
@@ -82,7 +82,7 @@ export default class EasyComponent extends PureEasyComponent {
     }
     renderError(){
         return (
-            <Box class="DefaultPages_INSIDER easycomponentroot">
+            <Box className="DefaultPages_INSIDER easycomponentroot">
                 <Box className="easycomponentpaper horizontal vertical center" style={this.additionalPaperStyle}>
                     <ErrorOutline fontSize="large"/>
                     <p>{this.erro}</p>
@@ -103,7 +103,7 @@ export default class EasyComponent extends PureEasyComponent {
     }
     renderLoading(){
         return (
-            <Box class="DefaultPages_INSIDER easycomponentroot">
+            <Box className="DefaultPages_INSIDER easycomponentroot">
                 <Box className="easycomponentpaper horizontal vertical center" style={this.additionalPaperStyle}>
                     <CircularProgress/>
                     <p>{this.mensagemLoading}</p>

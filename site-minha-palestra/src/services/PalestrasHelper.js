@@ -1,9 +1,9 @@
-import { Palestra, Resultado, ParticipanteDePalestra, Espaco, Evento, Usuario } from "models-minha-palestra";
-import UsuarioHelper from "./UsuarioHelper";
 import firebase from "firebase";
 import "firebase/database";
+import { Palestra, Resultado } from "models-minha-palestra";
 import { LogHelper } from ".";
 import { ApiReader, PDFFromJSON } from "../utils";
+import UsuarioHelper from "./UsuarioHelper";
 export default class PalestrasHelper{
     /**
      * 

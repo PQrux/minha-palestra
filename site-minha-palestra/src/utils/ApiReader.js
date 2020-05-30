@@ -18,7 +18,6 @@ export default function ApiReader(endpoint, method, body){
             .catch(console.log);
         }
         body = Object.assign(body, {token});
-        console.log(body);
         fetch(secret.API_ROOT+endpoint,{
             method,
             body: JSON.stringify(body),

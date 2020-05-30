@@ -20,7 +20,6 @@ export default class AuthenticationCriarConta extends EasyComponent {
             this.props.history.push("cadastrosobrevoce");
         })
         .catch(err=>{
-            console.log(err);
             this.setCarregando(false);
             this.setErro(err.descricao);
         })

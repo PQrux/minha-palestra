@@ -60,7 +60,6 @@ export default function FirebaseJoiner(base, baseConstructor, joiners) {
                 })
                 .catch(err=>{
                     checks[key] = true;
-                    console.log(err);
                     enviar();
                 })
             }

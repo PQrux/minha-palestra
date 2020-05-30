@@ -1,10 +1,10 @@
 import { Box } from '@material-ui/core';
-import { History, Place, Settings, Event, LiveTv, EventSeat } from '@material-ui/icons';
+import { Event, History, LiveTv, Place, Settings } from '@material-ui/icons';
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Navigation, Carregamento } from '../components';
+import { Carregamento, Navigation } from '../components';
 import { DialogHelper, UsuarioHelper } from '../services';
-import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Usuarios, Palestras, Administracao } from "../views";
+import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Palestras, Usuarios } from "../views";
 
 export default class Home extends Component {
   constructor(props){

@@ -23,14 +23,15 @@ export default class DatePicker extends Component {
     this.verificarPropValue();
   }
   verificarPropValue = () => {
+    const state = this.state;
     if(this.props.value){
       let dt = new Date(this.props.value);
       if(dt.getTime()){
-        this.state.dataAtual = dt;
+        state.dataAtual = dt;
         return;
       }
     }
-    this.state.dataAtual = null;
+    state.dataAtual = null;
   }
   componentDidUpdate(prevProps){
     if(!this._mudou_por_aqui && prevProps.value !== this.props.value){
@@ -40,9 +41,10 @@ export default class DatePicker extends Component {
     this._mudou_por_aqui = false;
   }
   change = (date) => {
+    const state = this.state;
     this._mudou_por_aqui = true;
-    this.state.dataAtual = date === null ? null : new Date(date);
-    if(this.props.onChange) this.props.onChange(this.state.dataAtual);
+    state.dataAtual = date === null ? null : new Date(date);
+    if(this.props.onChange) this.props.onChange(state.dataAtual);
     this.setState({});
   }
   verificarAoSair = (dontupdatestate) => {
@@ -64,9 +66,10 @@ export default class DatePicker extends Component {
     this.verificarAoSair();
   }
   componentWillReceiveProps(next){
+    const state = this.state;
     if(next.value && next.value !== this.state.dataAtual){
       let date = new Date(next.value);
-      if(date.getTime()) this.state.dataAtual = date;
+      if(date.getTime()) state.dataAtual = date;
     }
   }
   render() {

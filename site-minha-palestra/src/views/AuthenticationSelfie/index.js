@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
 import { Box, Button, Typography } from '@material-ui/core';
-import { MaskedTextField } from '../../components';
-import Authentication from '../Authentication';
+import React from 'react';
 import Galeria from '../../partialviews/Galeria';
-import AuthenticationFim from '../AuthenticationFim';
 import { DialogHelper } from '../../services';
+import Authentication from '../Authentication';
+import AuthenticationFim from '../AuthenticationFim';
 const noProfile = require("../../assets/images/no-profile.png");
 
 export default class AuthenticationSelfie extends Authentication {

@@ -41,7 +41,6 @@ export default class AuthenticationSobreVoce extends Authentication {
                     />
                     <TextField
                         inputProps={{style: {maxHeight: "60px", overflow: "auto"}}}
-                        multiline
                         onChange={this.change}
                         label="Sobre mim (Opcional)" variant="outlined"
                         className="DefaultPages_INPUTS"

@@ -1,12 +1,11 @@
+import { Box, Button, CircularProgress, Fab, ThemeProvider, Typography } from '@material-ui/core';
+import { Check, Clear, ErrorOutline, KeyboardArrowLeft } from '@material-ui/icons';
 import React, { Component } from 'react';
-import { Palestra } from "models-minha-palestra";
-import { Typography, Box, CircularProgress, Button, ThemeProvider, Fab } from '@material-ui/core';
-import { ErrorOutline, KeyboardArrowLeft, Clear, Check } from '@material-ui/icons';
 import { Themes } from '../../constants';
-import "./styles.css";
-import { VisualizarPalestra } from '../../partialviews';
-import { DataLocal } from '../../utils';
 import { PalestrasHelper } from '../../services';
+import { DataLocal } from '../../utils';
+import "./styles.css";
+
 export default class Certificado extends Component {
     state={
         usuarioUid: "",
@@ -17,7 +16,6 @@ export default class Certificado extends Component {
         const params = this.props.location.pathname.split("/"), palestrapath = "Palestras/"+params[2], usuarioUid = params[3];
         PalestrasHelper.buscarPalestra(palestrapath).then(palestra=>this.setState({palestra, usuarioUid}))
         .catch(err=>{
-            console.log({err});
             this.setState({erro: true});
         })
     }

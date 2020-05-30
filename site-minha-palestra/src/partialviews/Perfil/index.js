@@ -1,13 +1,13 @@
-import { Box, Button, Typography, ListItem, TextField } from '@material-ui/core';
+import { Box, Button, ListItem, TextField, Typography } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
 import { Usuario } from "models-minha-palestra";
 import React from 'react';
-import { DatePicker, EasyComponent, MaskedTextField, ResponsiveDividerBackButton, FloatingBox } from '../../components';
-import { UsuarioHelper } from '../../services';
-import VisualizarLog from '../VisualizarLog';
-import { Arrayficar } from '../../utils';
+import { DatePicker, EasyComponent, FloatingBox, MaskedTextField } from '../../components';
 import { Permissoes } from "../../constants";
+import { UsuarioHelper } from '../../services';
+import { Arrayficar } from '../../utils';
 import Galeria from '../Galeria';
+import VisualizarLog from '../VisualizarLog';
 const noProfile = require("../../assets/images/no-profile.png");
 
 export default class Perfil extends EasyComponent {

@@ -25,7 +25,6 @@ export default class AuthenticationEsqueciSenha extends EasyComponent {
             this.setState({feito: true});
         })
         .catch(err=>{
-            console.log(err);
             this.setCarregando(false);
             this.setErro(err.descricao);
         })

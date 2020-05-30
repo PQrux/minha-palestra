@@ -1,14 +1,14 @@
-import { Box, Button, Typography, ThemeProvider, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox, ListItemIcon, Link } from '@material-ui/core';
+import { Box, Button, Checkbox, Link, List, ListItem, ListItemIcon, ListItemText, ThemeProvider, Typography } from '@material-ui/core';
 import { Palestra } from "models-minha-palestra";
 import React from 'react';
-import { DatePicker, EasyComponent, FloatingBox, MaskedTextField, ResponsiveDividerBackButton, LeituraButton } from '../../components';
+import { DatePicker, EasyComponent, FloatingBox, LeituraButton, MaskedTextField } from '../../components';
 import { Permissoes, Themes } from "../../constants";
 import { DialogHelper } from '../../services';
-import { DataLocal } from '../../utils';
-import VisualizarLog from '../VisualizarLog';
 import PalestrasHelper from '../../services/PalestrasHelper';
+import { DataLocal } from '../../utils';
 import Galeria from '../Galeria';
 import Seletor from '../Seletor';
+import VisualizarLog from '../VisualizarLog';
 
 export default class VisualizarPalestra extends EasyComponent {
     constructor(props){
@@ -99,7 +99,6 @@ export default class VisualizarPalestra extends EasyComponent {
             this.setState({palestra, modificado: false, loading: false});
         })
         .catch(err=>{
-            console.log(err);
             DialogHelper.showError(err);
             this.setState({loading: false});
         })
@@ -145,9 +144,7 @@ export default class VisualizarPalestra extends EasyComponent {
         const {palestra} = this.state;
         let body;
         const change = (participante) => {
-            console.log("vai krl");
             participante.compareceu = !participante.compareceu; 
-            console.log(participante);
             this.setState({});
             DialogHelper.updateDialogBody(body());
         }

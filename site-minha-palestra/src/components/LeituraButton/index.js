@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { EasyComponent } from '..';
-import { Permissao } from "models-minha-palestra";
 import { FormControlLabel, Switch } from '@material-ui/core';
+import { Permissao } from "models-minha-palestra";
+import React from 'react';
+import { EasyComponent } from '..';
 export default class LeituraButton extends EasyComponent {
     constructor(props){
         super(props, new Permissao({grupo: "ADMINISTRADOR", permissao: "w"}));

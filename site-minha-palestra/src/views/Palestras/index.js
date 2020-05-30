@@ -1,10 +1,10 @@
+import { Box, Chip } from '@material-ui/core';
+import { Palestra } from "models-minha-palestra";
 import React from 'react';
-import { List, ResponsiveDivider, SelectibleList, ResponsiveDividerBackButton } from '../../components';
+import { List, ResponsiveDivider, ResponsiveDividerBackButton, SelectibleList } from '../../components';
 import { VisualizarPalestra } from '../../partialviews';
 import { PalestrasHelper } from '../../services';
-import { Palestra } from "models-minha-palestra";
 import { DataLocal } from "../../utils";
-import { Box, Fab, Chip } from '@material-ui/core';
 import "./styles.css";
 export default class Palestras extends SelectibleList {
     constructor(props){

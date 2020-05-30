@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import { EasyComponent } from '../../components';
-import { Permissao } from "models-minha-palestra";
-import "./styles.css";
-import { Permissoes } from '../../constants';
-import { UsuarioHelper, EventosHelper, EspacosHelper, DialogHelper } from '../../services';
-import Perfil from '../Perfil';
-import VisualizarEvento from '../VisualizarEvento';
-import VisualizarEspaco from '../VisualizarEspaco';
 import { Box, Button, Typography } from '@material-ui/core';
-import { Usuarios, Eventos, EspacosDeApresentacao, Palestras } from '../../views';
+import { Permissao, Resultado } from "models-minha-palestra";
+import React from 'react';
+import { EasyComponent } from '../../components';
+import { Permissoes } from '../../constants';
+import { DialogHelper, EspacosHelper, EventosHelper, UsuarioHelper } from '../../services';
+import { EspacosDeApresentacao, Eventos, Palestras, Usuarios } from '../../views';
+import Perfil from '../Perfil';
+import VisualizarEspaco from '../VisualizarEspaco';
+import VisualizarEvento from '../VisualizarEvento';
+import "./styles.css";
 
 export default class Seletor extends EasyComponent {
     constructor(props){
@@ -17,6 +17,7 @@ export default class Seletor extends EasyComponent {
             case "usuario":this.permissor = Permissoes.selecionar_palestrante;break;
             case "evento":this.permissor = Permissoes.selecionar_evento;break;
             case "espaco":this.permissor = Permissoes.selecionar_espaco;break;
+            default: throw new Resultado(-2, "Erro! Defina um tipo de seletor.");
         }
         this.state = {
             selecionado: null,
@@ -41,8 +42,7 @@ export default class Seletor extends EasyComponent {
                     proms = EspacosHelper.buscar(this.props.entidade);
                 break;
                 default:
-                    throw "Erro! Tipo inválido.";
-                break;
+                    throw new Resultado(-2, "Erro! Tipo inválido.");
             }
             proms.then((obj)=>{
                 this.setState({selecionado: obj});
@@ -60,10 +60,10 @@ export default class Seletor extends EasyComponent {
     }
     selecionarRender() {
         switch(this.props.tipo){
-            case "usuario":return (<Perfil minimal readOnly entidade={this.state.selecionado}/>);break;
-            case "evento":return (<VisualizarEvento minimal readOnly entidade={this.state.selecionado}/>);break;
-            case "espaco":return (<VisualizarEspaco minimal readOnly entidade={this.state.selecionado}/>);break;
-            default: throw "Erro! Tipo inválido.";break;
+            case "usuario":return (<Perfil minimal readOnly entidade={this.state.selecionado}/>);
+            case "evento":return (<VisualizarEvento minimal readOnly entidade={this.state.selecionado}/>);
+            case "espaco":return (<VisualizarEspaco minimal readOnly entidade={this.state.selecionado}/>);
+            default: throw new Resultado(-2, "Erro! Tipo inválido.");
         }
     }
     selecionar = () => {
@@ -94,7 +94,7 @@ export default class Seletor extends EasyComponent {
             case "evento":selector = (<Eventos noHistory readOnly onSelecionado={selecionar} {...listProps}/>);break;
             case "espaco":selector = (<EspacosDeApresentacao noHistory readOnly onSelecionado={selecionar} {...listProps}/>);break;
             case "palestra":selector = (<Palestras noHistory readOnly onSelecionado={selecionar} {...listProps}/>);break;
-            default: throw "Erro! Tipo inválido.";break;
+            default: throw new Resultado(-2, "Erro! Tipo inválido.");
         }
 
         DialogHelper.showDialog(null, selector, 

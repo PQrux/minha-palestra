@@ -112,7 +112,6 @@ export default class List extends Component {
     }
     addClick = () => {
         if(this.props.add) this.props.add.onClick();
-        console.log(this.props.changeToRight);
         if(this.props.changeToRight) this.props.changeToRight();
     }
     change=({target})=>{

@@ -1,9 +1,8 @@
-import React from 'react';
 import { Button, Typography } from '@material-ui/core';
+import React from 'react';
 import { MaskedTextField } from '../../components';
 import Authentication from "../Authentication";
-import { DialogHelper } from '../../services';
-import AuthenticationFim from "../AuthenticationFim";
+
 export default class AuthenticationInformacoesLegais extends Authentication {
     changeDate = (value) =>{
         this.state.usuario.dataNascimento = value;
