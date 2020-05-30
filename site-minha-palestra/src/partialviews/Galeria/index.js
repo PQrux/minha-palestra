@@ -1,10 +1,10 @@
 import React from 'react';
 import { EasyComponent } from '../../components';
-import { Box, Button, Typography } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Box, Button, Typography, IconButton, ThemeProvider } from '@material-ui/core';
+import { Add, Delete } from '@material-ui/icons';
 import { ModalHelper, DialogHelper, FileHelper } from '../../services';
 import { FirestoreObject } from "models-minha-palestra";
-import { Permissoes } from "../../constants";
+import { Permissoes, Themes } from "../../constants";
 
 export default class Galeria extends EasyComponent {
     constructor(props){
@@ -30,6 +30,14 @@ export default class Galeria extends EasyComponent {
         .catch(err=>{
             DialogHelper.showError(err);
         })
+    }
+    removeImagem = (index) => {
+        DialogHelper.showConfirmationBox(()=>{
+            DialogHelper.closeDialog();
+            this.state.imgs.splice(index, 1);
+            if(this.props.refreshParent) this.props.refreshParent(this.props.entidade);
+            this.setState({});
+        }, "Confirmação", "Deseja mesmo excluir essa foto?");
     }
     carregarEntidade(){
         let { entidade, entidadeProp } = this.props;
@@ -75,13 +83,23 @@ export default class Galeria extends EasyComponent {
                     </Button> : undefined
                 }
                 {this.state.imgs.map((img,i)=>(
-                    <Button 
-                        {...buttonopts} 
-                        onClick={this.setSelected}
-                        name={i}
-                        style={Object.assign({backgroundImage: `url(${img})`, backgroundColor: "white"}, styles.button)} 
-                        key={i}
-                    />
+                    <Box display="flex" flexDirection="column" alignItems="center">
+                        <Button 
+                            {...buttonopts} 
+                            onClick={this.setSelected}
+                            name={i}
+                            style={Object.assign({backgroundImage: `url(${img})`, backgroundColor: "white"}, styles.button)} 
+                            key={i}
+                        />
+                        {
+                            withAdd ?
+                            <ThemeProvider theme={Themes.info}>
+                                <IconButton color="secondary" onClick={()=>this.removeImagem(i)}>
+                                    <Delete/>
+                                </IconButton>
+                            </ThemeProvider>:undefined
+                        }
+                    </Box>
                 ))}
             </Box>
         )

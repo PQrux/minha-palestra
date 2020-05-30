@@ -125,7 +125,7 @@ export default class VisualizarPalestra extends EasyComponent {
             palestra.limiteDeParticipantes = selecionado.limiteDeParticipantes;
             palestra.observacoes = selecionado.observacoes;
             palestra.fotos = selecionado.fotos;
-            this.setState({palestra: selecionado}, ()=>this.setState({palestra}));
+            this.setState({palestra: selecionado, modificado: true}, ()=>this.setState({palestra}));
         }, {tipofiltro: "usuarioCriador", filtro: this.usuario.path});
     }
     gerarPDF = () => {
@@ -200,6 +200,9 @@ export default class VisualizarPalestra extends EasyComponent {
                     <Typography align="center" variant="h3">
                         {this.state.palestra.nome}
                     </Typography>
+                    <Box display="flex" flexDirection="column">
+                        <Galeria readOnly entidade={this.state.palestra} entidadeProp="fotos"/>
+                    </Box>
                     <Box className="default_border" width="100%">
                         <Box padding="10px">
                             <Typography variant="h6">
@@ -307,7 +310,7 @@ export default class VisualizarPalestra extends EasyComponent {
                     onChange={(v)=>{this.changeDate("dhApresentacao", v)}}
                     disabled={this.state.loading}
                 />
-                <Galeria entidade={this.state.palestra} entidadeProp="fotos"/>
+                <Galeria entidade={this.state.palestra} entidadeProp="fotos" refreshParent={()=>this.setState({modificado: true})}/>
                 {
                     this.usuario.grupo === "ADMINISTRADOR" ? undefined : 
                     <Typography variant="caption">
