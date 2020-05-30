@@ -44,6 +44,7 @@ export default class Galeria extends EasyComponent {
     carregarEntidade(){
         let { entidade, entidadeProp } = this.props;
         if((entidade instanceof FirestoreObject) && entidadeProp){
+            this.disablePermissao = entidade.path === this.usuario.path ? true : false;
             if(this.props.isNotArray){
                 this.state.imgs = [entidade[entidadeProp]||noProfile];
             }

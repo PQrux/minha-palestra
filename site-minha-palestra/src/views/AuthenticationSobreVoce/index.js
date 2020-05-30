@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, TextField } from '@material-ui/core';
 import { MaskedTextField, DatePicker } from '../../components';
 import Authentication from "../Authentication";
 
@@ -39,7 +39,9 @@ export default class AuthenticationSobreVoce extends Authentication {
                         inputVariant="outlined"
                         value={this.state.usuario.dataNascimento}
                     />
-                    <MaskedTextField
+                    <TextField
+                        inputProps={{style: {maxHeight: "60px", overflow: "auto"}}}
+                        multiline
                         onChange={this.change}
                         label="Sobre mim (Opcional)" variant="outlined"
                         className="DefaultPages_INPUTS"

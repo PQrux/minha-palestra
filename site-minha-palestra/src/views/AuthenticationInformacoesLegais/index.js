@@ -15,21 +15,13 @@ export default class AuthenticationInformacoesLegais extends Authentication {
     checkInfo = {
         "cpf": {type: "string", max: 14, min: 14, aviso: "Insira um CPF válido!"},
     }
-    nextPage = "";
+    nextPage = "cadastroselfie";
     changeApelo = ({target}) => {
         this.setState({apelo: target.value});
     }
-    submite = () => {
-        DialogHelper.showDialog("", <AuthenticationFim />,(
-            <Button color="primary" className="DefaultPages_BUTTON" fullWidth variant="outlined" onClick={DialogHelper.closeDialog}>
-                VER PALESTRAS
-            </Button>
-        ));
-        this.submit();
-    }
     renderWrite() {
         return (
-                <form className="DefaultPages_ROOT" onSubmit={this.submite}>
+                <form className="DefaultPages_ROOT" onSubmit={this.submit}>
                     <Typography align="center">Só precisamos de mais algumas informações:</Typography>
                     <MaskedTextField
                         onChange={this.change}

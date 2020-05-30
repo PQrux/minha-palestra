@@ -13,7 +13,7 @@ export default class Root extends Component {
       }
     }
     definirConectado(usuario){
-      if(!usuario||!usuario.nome||!usuario.dataNascimento||!usuario.dataNascimento.getTime()||!usuario.cpf){
+      if(!usuario||!usuario.nome||!usuario.dataNascimento||!usuario.dataNascimento.getTime()||!usuario.cpf||!usuario.fotoPerfil){
         return "desconectado";
       }
       else return "conectado";

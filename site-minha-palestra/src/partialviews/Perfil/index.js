@@ -1,4 +1,4 @@
-import { Box, Button, Typography, ListItem } from '@material-ui/core';
+import { Box, Button, Typography, ListItem, TextField } from '@material-ui/core';
 import { ErrorOutline } from '@material-ui/icons';
 import { Usuario } from "models-minha-palestra";
 import React from 'react';
@@ -95,7 +95,7 @@ export default class Perfil extends EasyComponent {
         return (
             <div className="DefaultPages_INSIDER">
                 <Box className="DefaultPages_ROOT">
-                    <Galeria entidade={this.state.usuario} entidadeProp="fotoPerfil" isNotArray/>
+                    <Galeria entidade={this.state.usuario} entidadeProp="fotoPerfil" isNotArray readOnly/>
                     <Typography autoCapitalize>
                         {this.state.usuario.grupo}
                     </Typography>
@@ -166,7 +166,8 @@ export default class Perfil extends EasyComponent {
                         value={this.state.usuario.dataNascimento}
                         disabled={this.state.loading}
                     />
-                    <MaskedTextField
+                    <TextField
+                        inputProps={{style: {maxHeight: "60px", overflow: "auto"}}}
                         onChange={this.change}
                         label="Sobre mim (Opcional)" variant="outlined"
                         className="DefaultPages_INPUTS"
