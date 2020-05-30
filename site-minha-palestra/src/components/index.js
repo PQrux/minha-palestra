@@ -13,6 +13,7 @@ import FloatingBox from "./FloatingBox";
 import Carregamento from "./Carregamento";
 import SelectibleList from "./SelectibleList";
 import LeituraButton from "./LeituraButton";
+
 export {
     MaskedTextField,
     EasyComponent,

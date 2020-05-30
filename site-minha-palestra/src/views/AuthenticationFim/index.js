@@ -9,7 +9,7 @@ export default class AuthenticationFim extends Component {
                     Parabéns!
                 </Typography>
                 <Typography align="center">
-                    Você concluiu o cadastro no Minha Palestra, seja bem-vindo!!!
+                    Você concluiu o cadastro no {window.strings.app_name}, seja bem-vindo!!!
                 </Typography>
             </Box>
         );

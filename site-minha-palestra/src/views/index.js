@@ -5,9 +5,7 @@ import AuthenticationCriarConta from "./AuthenticationCriarConta";
 import AuthenticationSelfie from "./AuthenticationSelfie";
 import AuthenticationSobreVoce from "./AuthenticationSobreVoce";
 import AuthenticationFim from "./AuthenticationFim";
-import PedidoParaSerPalestrante from "./PedidoParaSerPalestrante";
 import AuthenticationInformacoesLegais from "./AuthenticationInformacoesLegais";
-import AuthenticationQuemE from "./AuthenticationQuemE";
 import AuthenticationEsqueciSenha from "./AuthenticationEsqueciSenha";
 import EspacosDeApresentacao from "./EspacosDeApresentacao";
 import Usuarios from "./Usuarios";
@@ -24,9 +22,7 @@ export {
     AuthenticationSelfie,
     AuthenticationSobreVoce,
     AuthenticationFim,
-    PedidoParaSerPalestrante,
     AuthenticationInformacoesLegais,
-    AuthenticationQuemE,
     AuthenticationEsqueciSenha,
     EspacosDeApresentacao,
     Usuarios,

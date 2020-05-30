@@ -7,9 +7,12 @@ import firebase from "firebase";
 import "firebase/auth";
 import secret from "./secret";
 import $ from "jquery";
+import strings from "./strings.json";
 
+window.strings = strings;
+window.app_version = "1.0.0";
 firebase.initializeApp(secret.firebase_key);
-firebase.auth().setPersistence("session");
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 setTimeout(function () {
     let viewheight = $(window).height();
@@ -19,8 +22,4 @@ setTimeout(function () {
 }, 300);
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

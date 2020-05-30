@@ -25,14 +25,14 @@ export default class Login extends Component {
                 <h1 className="whiteText Login_text_bigText_h1">Descubra um novo mundo</h1>
                 <h2 className="whiteText Login_text_bigText_h2">Repleto de conhecimento</h2>
                 <p className="whiteText">
-                  Com o Minha Palestra, você pode participar de diversas palestras e ainda receber certificados por isso!
+                  Com o {window.strings.app_name}, você pode participar de diversas palestras e ainda receber certificados por isso!
                 </p>
               </Box>
               <Fab variant="extended" color="primary" onClick={this.descer} className="Login_down_button">
                 <KeyboardArrowDown className="whiteText"/>
                 <span className="whiteText">Conectar-se</span>
               </Fab>
-              <p className="whiteText centerText">Minha Palestra v0.9 - {new Date().getFullYear()}</p>
+              <p className="whiteText centerText">{window.strings.app_name} {window.app_version} - {new Date().getFullYear()}</p>
             </Box>
           </Box>
         </Box>
