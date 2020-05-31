@@ -28,7 +28,7 @@ export default class AuthenticationCriarConta extends EasyComponent {
         this.setState({[target.name]: target.value});
     }
     politica = () => {
-        DialogHelper.showDialog("Política de Privacidade", <Typography align="justify">{window.strings.politica_de_privacidade}</Typography>, DialogHelper.okButton);
+        DialogHelper.showDialog("Política de Privacidade", <Typography align="justify" style={{whiteSpace:"pre-line"}}>{window.strings.politica_de_privacidade}</Typography>, DialogHelper.okButton);
     }
     renderWrite() {
         return (

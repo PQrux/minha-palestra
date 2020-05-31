@@ -124,7 +124,7 @@ export default class VisualizarPalestra extends EasyComponent {
             palestra.limiteDeParticipantes = selecionado.limiteDeParticipantes;
             palestra.observacoes = selecionado.observacoes;
             palestra.fotos = selecionado.fotos;
-            this.setState({palestra: selecionado, modificado: true}, ()=>this.setState({palestra}));
+            this.setState({palestra: new Palestra(), modificado: true}, ()=>this.setState({palestra}));
         }, {tipofiltro: "usuarioCriador", filtro: this.usuario.path});
     }
     gerarPDF = () => {

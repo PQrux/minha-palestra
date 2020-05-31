@@ -14,7 +14,7 @@ export default class MenuConfiguracoes extends EasyComponent {
         }
         this.options = [
             {component: <Perfil useCurrentUser showNotFound/>, icon: (<AccountCircle/>), texto: "Meu Perfil"},
-            {texto: "Política de Privacidade", icon: (<Info/>), action: ()=>{DialogHelper.showDialog("Política de Privacidade", <Typography align="justify">{window.strings.politica_de_privacidade}</Typography>, DialogHelper.okButton)}},
+            {texto: "Política de Privacidade", icon: (<Info/>), action: ()=>{DialogHelper.showDialog("Política de Privacidade", <Typography align="justify" style={{whiteSpace:"pre-line"}}>{window.strings.politica_de_privacidade}</Typography>, DialogHelper.okButton)}},
             {texto: "SAIR", icon: (<MeetingRoom/>), action: ()=>{UsuarioHelper.desconectar()}},
         ];
         this.adminOptions = this.props.adminOptions;
@@ -52,6 +52,7 @@ export default class MenuConfiguracoes extends EasyComponent {
                             ))}
                         </Box> : undefined
                     }
+                    <Typography align="center">{window.app_version}</Typography>
                 </Box>
                 {
                     this.options[this.state.selected] && this.options[this.state.selected].component ? this.options[this.state.selected].component : <div></div>
