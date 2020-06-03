@@ -9,7 +9,7 @@ const noProfile = require("../../assets/images/no-profile.png");
 
 export default class Galeria extends EasyComponent {
     constructor(props){
-        super(props, Permissoes.galeria);
+        super(props);
         this.state = {
             imgs: [],
         }
@@ -44,7 +44,19 @@ export default class Galeria extends EasyComponent {
     carregarEntidade(){
         let { entidade, entidadeProp } = this.props;
         if((entidade instanceof FirestoreObject) && entidadeProp){
-            this.disablePermissao = entidade.path === this.usuario.path ? true : false;
+            if(entidade.path === this.usuario.path){
+                this.disablePermissao = true;
+            }
+            else{
+                this.disablePermissao = false;
+                switch(entidade.constructor.name){
+                    case "Espaco": this.permissor = Permissoes.espaco;break;
+                    case "Palestra": this.permissor = Permissoes.palestra;break;
+                    case "Evento": this.permissor = Permissoes.evento;break;
+                    case "Usuario": this.permissor = Permissoes.perfil;break;
+                    default:break;
+                }
+            }
             if(this.props.isNotArray){
                 this.state.imgs = [entidade[entidadeProp]||noProfile];
             }

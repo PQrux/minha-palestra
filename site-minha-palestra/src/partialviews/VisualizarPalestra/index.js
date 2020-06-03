@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Link, List, ListItem, ListItemIcon, ListItemText, ThemeProvider, Typography } from '@material-ui/core';
+import { Box, Button, Checkbox, Link, List, ListItem, ListItemIcon, ListItemText, ThemeProvider, Typography, FormControlLabel, Divider } from '@material-ui/core';
 import { Palestra } from "models-minha-palestra";
 import React from 'react';
 import { DatePicker, EasyComponent, FloatingBox, LeituraButton, MaskedTextField } from '../../components';
@@ -142,23 +142,39 @@ export default class VisualizarPalestra extends EasyComponent {
     }
     finalizarPalestra = () => {
         const {palestra} = this.state;
-        let body;
+        let body, todosPresentes = false;
         const change = (participante) => {
             participante.compareceu = !participante.compareceu; 
             this.setState({});
             DialogHelper.updateDialogBody(body());
         }
+        const marcarTodos = () => {
+            todosPresentes = !todosPresentes;
+            for(let key in palestra.participantes){
+                palestra.participantes[key].compareceu = todosPresentes;
+            }
+            DialogHelper.updateDialogBody(body());
+        }
         body = () => (
-            <List>
-                {Object.getOwnPropertyNames(palestra.participantes||{}).map(key=>(
-                    <ListItem key={key} button onClick={()=>change(palestra.participantes[key])}>
-                        <ListItemText primary={palestra.participantes[key].nome}/>
-                        <ListItemIcon >
-                            <Checkbox checked={palestra.participantes[key].compareceu}/>
-                        </ListItemIcon>
-                    </ListItem>
-                ))}
-            </List>
+            <Box>
+                <FormControlLabel
+                    value={todosPresentes}
+                    onClick={marcarTodos}
+                    control={<Checkbox color="primary" />}
+                    label={(todosPresentes ? "Desmarcar" : "Marcar")+" todos"}
+                />
+                <Divider/>
+                <List>
+                    {Object.getOwnPropertyNames(palestra.participantes||{}).map(key=>(
+                        <ListItem key={key} button onClick={()=>change(palestra.participantes[key])}>
+                            <ListItemText primary={palestra.participantes[key].nome}/>
+                            <ListItemIcon >
+                                <Checkbox checked={palestra.participantes[key].compareceu}/>
+                            </ListItemIcon>
+                        </ListItem>
+                    ))}
+                </List>
+            </Box>
         )
         DialogHelper.showDialog(<Typography align="center" variant="h6">Faça a Chamada</Typography>, body(),(
             <Box>
@@ -333,7 +349,7 @@ export default class VisualizarPalestra extends EasyComponent {
                     </Box>
                 }
                 {
-                    !this.state.palestra.aprovada && !this.state.palestra.cancelada && !this.state.palestra.finalizada ?
+                    this.usuario.grupo === "ADMINISTRADOR" && !this.state.palestra.aprovada && !this.state.palestra.cancelada && !this.state.palestra.finalizada ?
                     <Button 
                         variant="contained"
                         color="primary"

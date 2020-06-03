@@ -36,11 +36,6 @@ export default class MenuConfiguracoes extends EasyComponent {
         return (
             <ResponsiveDivider style={{height: "100%"}} changeToRightRef={(ref)=>{this.changeToRight = ref}} changeToLeftRef={(ref)=>{this.changeToLeft = ref}}>
                 <Box display="flex" flexDirection="column" padding="20px">
-                    {this.options.map(({icon, texto}, i)=>(
-                        <Button style={styles.button} variant="outlined" name={i} key={i} color="primary" onClick={()=>{this.select(i)}}>
-                            {icon} {texto}
-                        </Button>
-                    ))}
                     {
                         this.usuario.grupo === "ADMINISTRADOR" ?
                         <Box display="flex" flexDirection="column">
@@ -52,7 +47,13 @@ export default class MenuConfiguracoes extends EasyComponent {
                             ))}
                         </Box> : undefined
                     }
-                    <Typography align="center">{window.app_version}</Typography>
+                    {this.options.map(({icon, texto}, i)=>(
+                        <Button style={styles.button} variant="outlined" name={i} key={i} color="primary" onClick={()=>{this.select(i)}}>
+                            {icon} {texto}
+                        </Button>
+                    ))}
+                    <Typography align="center">{window.strings.app_name} {window.app_version}.</Typography>
+                    <Typography align="center">{new Date().getFullYear()} Todos os direitos reservados.</Typography>
                 </Box>
                 {
                     this.options[this.state.selected] && this.options[this.state.selected].component ? this.options[this.state.selected].component : <div></div>
