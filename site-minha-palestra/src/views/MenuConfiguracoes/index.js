@@ -39,12 +39,12 @@ export default class MenuConfiguracoes extends EasyComponent {
                     {
                         this.usuario.grupo === "ADMINISTRADOR" ?
                         <Box display="flex" flexDirection="column">
-                            <Divider style={{marginBottom: "10px"}}/>
                             {this.adminOptions.map(o=>(
                                 <Button style={styles.button} variant="outlined" key={o.path} color="primary" onClick={()=>{this.props.history.push(o.path)}}>
                                     {o.icon} {o.label}
                                 </Button>
                             ))}
+                            <Divider style={{marginBottom: "10px"}}/>
                         </Box> : undefined
                     }
                     {this.options.map(({icon, texto}, i)=>(

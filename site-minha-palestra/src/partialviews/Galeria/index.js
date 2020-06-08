@@ -3,13 +3,13 @@ import { EasyComponent } from '../../components';
 import { Box, Button, Typography, IconButton, ThemeProvider } from '@material-ui/core';
 import { Add, Delete, PhotoCamera } from '@material-ui/icons';
 import { ModalHelper, DialogHelper, FileHelper } from '../../services';
-import { FirestoreObject } from "models-minha-palestra";
+import { FirestoreObject, Permissao, Espaco, Palestra, Usuario, Evento } from "models-minha-palestra";
 import { Permissoes, Themes } from "../../constants";
 const noProfile = require("../../assets/images/no-profile.png");
 
 export default class Galeria extends EasyComponent {
     constructor(props){
-        super(props);
+        super(props, new Permissao({}));
         this.state = {
             imgs: [],
         }
@@ -49,13 +49,10 @@ export default class Galeria extends EasyComponent {
             }
             else{
                 this.disablePermissao = false;
-                switch(entidade.constructor.name){
-                    case "Espaco": this.permissor = Permissoes.espaco;break;
-                    case "Palestra": this.permissor = Permissoes.palestra;break;
-                    case "Evento": this.permissor = Permissoes.evento;break;
-                    case "Usuario": this.permissor = Permissoes.perfil;break;
-                    default:break;
-                }
+                if((entidade instanceof Espaco)) this.permissor = Permissoes.espaco;
+                else if((entidade instanceof Palestra)) this.permissor = Permissoes.palestra;
+                else if((entidade instanceof Evento)) this.permissor = Permissoes.evento;
+                else if((entidade instanceof Usuario)) this.permissor = Permissoes.perfil;
             }
             if(this.props.isNotArray){
                 this.state.imgs = [entidade[entidadeProp]||noProfile];

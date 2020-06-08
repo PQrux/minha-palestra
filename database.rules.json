@@ -1,6 +1,31 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true
+    "Usuarios": {
+      ".read": "root.child('Usuarios').child(auth.uid).child('grupo').val() === 'ADMINISTRADOR'",
+      "$uid": {
+        ".read": true,
+        ".write": "($uid === auth.uid && (newData.child('grupo').val() === data.child('grupo').val() || !data.exists() && newData.child('grupo').val() === 'ESPECTADOR')) || root.child('Usuarios').child(auth.uid).child('grupo').val() === 'ADMINISTRADOR'"
+      }
+    },
+    "Espacos": {
+      ".read": true,
+      ".write": "root.child('Usuarios').child(auth.uid).child('grupo').val() === 'ADMINISTRADOR'"
+    },
+    "Eventos": {
+      ".read": true,
+      ".write": "root.child('Usuarios').child(auth.uid).child('grupo').val() === 'ADMINISTRADOR'"
+    },
+    "Logs": {
+      "$uid":{
+        ".read": true,
+      	".write": "!data.exists() && newData.child('usuarioAcao').val() == 'Usuarios/'+auth.uid"
+      }
+    },
+    "Palestras":{
+       ".read": true,
+       "$uid": {
+         ".write": "((!data.exists() || data.child('finalizada').val() !== true) && root.child('Usuarios').child(auth.uid).child('grupo').val() === 'ADMINISTRADOR') || (root.child('Usuarios').child(auth.uid).child('grupo').val() === 'PALESTRANTE' && ((!data.exists() && newData.child('palestrante').val() === 'Usuarios/'+auth.uid) || (data.child('finalizada').val() !== true && data.child('palestrante').val() === 'Usuarios/'+auth.uid && newData.child('palestrante').val() === 'Usuarios/'+auth.uid)))"
+        }
+    }
   }
 }

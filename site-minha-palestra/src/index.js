@@ -10,7 +10,7 @@ import $ from "jquery";
 import strings from "./strings.json";
 
 window.strings = strings;
-window.app_version = "1.0.2";
+window.app_version = "1.0.5";
 firebase.initializeApp(secret.firebase_key);
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
