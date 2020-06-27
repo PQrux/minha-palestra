@@ -1,6 +1,6 @@
+import { AppBar, Link, Toolbar } from '@material-ui/core';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Link, AppBar, Slide, Toolbar, useScrollTrigger } from '@material-ui/core';
 
 
 function Bar(props) {
