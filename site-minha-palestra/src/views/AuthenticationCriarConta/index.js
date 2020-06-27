@@ -23,6 +23,7 @@ export default class AuthenticationCriarConta extends EasyComponent {
             this.setCarregando(false);
             this.setErro(err.descricao);
         })
+        return false;
     }
     change = ({target}) =>{
         this.setState({[target.name]: target.value});
@@ -32,7 +33,7 @@ export default class AuthenticationCriarConta extends EasyComponent {
     }
     renderWrite() {
         return (
-                <form className="DefaultPages_ROOT" onSubmit={this.registrar}>
+                <form className="DefaultPages_ROOT" onSubmit={e => {e.preventDefault();this.registrar();}}>
                     <Typography align="center">Para começar, nos informe seu e-mail e uma senha:</Typography>
                     <MaskedTextField
                         onChange={this.change}

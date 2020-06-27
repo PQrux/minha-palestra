@@ -33,13 +33,14 @@ export default class AuthenticationLogin extends EasyComponent {
             this.setCarregando(false);
             this.setErro(err.descricao);
         })
+        return false;
     }
     goToEsqueci = () =>{
         this.props.history.push("esqueciminhasenha");
     }
     renderWrite() {
         return (
-            <form className="DefaultPages_ROOT" onSubmit={this.submit}>
+            <form className="DefaultPages_ROOT" onSubmit={e =>{e.preventDefault(); this.submit()}}>
                 <img src={logo} style={styles.img} alt="logo"></img>
                 <MaskedTextField
                     onChange={this.change}

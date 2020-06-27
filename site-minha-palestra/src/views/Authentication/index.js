@@ -23,14 +23,14 @@ export default class Authentication extends EasyComponent {
             let prop = this.usuario[i];
             if(prop == null){
                 this.setErro(check.aviso);
-                return;
+                return false;
             }
             if(check.type === "number"){
                 if(typeof prop !== "number"||
                 (check.min && check.min > prop)||
                 (check.max && check.max < prop)){
                     this.setErro(check.aviso);
-                    return;
+                    return false;
                 }
             }
             else if(check.type === "string"){
@@ -38,7 +38,7 @@ export default class Authentication extends EasyComponent {
                 (check.min && check.min > prop.length)||
                 (check.max && check.max < prop.length)){
                     this.setErro(check.aviso);
-                    return;
+                    return false;
                 }
             }
             else if(check.type === "Date"){
@@ -46,7 +46,7 @@ export default class Authentication extends EasyComponent {
                 (check.min && check.min > prop)||
                 (check.max && check.max < prop)){
                     this.setErro(check.aviso);
-                    return;
+                    return false;
                 }
             }
         }
@@ -60,6 +60,7 @@ export default class Authentication extends EasyComponent {
             this.setCarregando(false);
             this.setErro(err.descricao);
         })
+        return false;
     }
     change = ({target}) =>{
         this.usuario[target.name] = target.value;

@@ -16,6 +16,7 @@ export default class AuthenticationSelfie extends Authentication {
             </Button>
         ));
         this.submit();
+        return false;
     }
     render() {
         return (

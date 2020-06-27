@@ -28,6 +28,7 @@ export default class AuthenticationEsqueciSenha extends EasyComponent {
             this.setCarregando(false);
             this.setErro(err.descricao);
         })
+        return false;
     }
     renderWrite() {
         if(this.state.feito)
@@ -43,7 +44,7 @@ export default class AuthenticationEsqueciSenha extends EasyComponent {
         )
         else
         return (
-            <form className="DefaultPages_ROOT" onSubmit={this.submit}>
+            <form className="DefaultPages_ROOT" onSubmit={e=> {e.preventDefault(); this.submit()}}>
                 <Typography align="center">
                     Esqueceu sua senha? Não se preocupe, vamos recuperá-la agora para você.
                 </Typography>

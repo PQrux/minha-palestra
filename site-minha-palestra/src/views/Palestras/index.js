@@ -26,15 +26,15 @@ export default class Palestras extends SelectibleList {
         }
         else{
             this.state.filtros = [
-                {orderby: "aprovada_finalizada", equalTo: "true_false", label: "Palestras Disponíveis"},
-                {orderby: `participantes/${this.usuario.getUid()}/inscrito_compareceu`, equalTo: "true_false", label: "Palestras que estou inscrito", post: (palestras)=>{return palestras.filter(p=>(p.finalizada !== true))}},
-                {orderby: `participantes/${this.usuario.getUid()}/compareceu`, equalTo: true, label: "Palestras que Participei"},
+                {orderby: "aprovada_finalizada", equalTo: "true_false", label: "DISPONÍVEIS"},
+                {orderby: `participantes/${this.usuario.getUid()}/inscrito_compareceu`, equalTo: "true_false", label: "INSCRIÇÕES", post: (palestras)=>{return palestras.filter(p=>(p.finalizada !== true))}},
+                {orderby: `participantes/${this.usuario.getUid()}/compareceu`, equalTo: true, label: "PARTICIPADAS"},
             ]
             if(this.usuario.grupo === "ADMINISTRADOR" || this.usuario.grupo === "PALESTRANTE"){
-                this.state.filtros.push({orderby: "usuarioCriador", equalTo: this.usuario.path, label: "Palestras que Criei"});
-                this.state.filtros.push({orderby: "palestrante", equalTo: this.usuario.path, label: "Palestras que Ministrei"});
+                this.state.filtros.push({orderby: "usuarioCriador", equalTo: this.usuario.path, label: "CRIADAS"});
+                this.state.filtros.push({orderby: "palestrante", equalTo: this.usuario.path, label: "MINISTRADAS"});
             }
-            if(this.usuario.grupo === "ADMINISTRADOR") this.state.filtros.push({orderby: "aprovada_finalizada", equalTo: "false_false", label: "Pendentes de Aprovação"})
+            if(this.usuario.grupo === "ADMINISTRADOR") this.state.filtros.push({orderby: "aprovada_finalizada", equalTo: "false_false", label: "APROVAÇÃO"})
             this.setState({});
             this.listarPalestras();
         }
@@ -80,7 +80,8 @@ export default class Palestras extends SelectibleList {
                                     key={i} 
                                     color="primary" 
                                     onClick={()=>{this.changeFiltro(i)}} 
-                                    variant={this.state.filtroSelecionado === i ? "default" : "outlined"} 
+                                    variant={this.state.filtroSelecionado === i ? "default" : "outlined"}
+                                    style={styles.chip}
                                     label={filtro.label}
                                 />
                             ))}
@@ -108,5 +109,10 @@ export default class Palestras extends SelectibleList {
                 </Box>
             </ResponsiveDivider>
         );
+    }
+}
+const styles = {
+    chip:{
+        borderRadius: "3px"
     }
 }

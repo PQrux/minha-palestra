@@ -21,7 +21,7 @@ export default class AuthenticationSobreVoce extends Authentication {
     nextPage = "cadastroinformacoeslegais";
     renderWrite() {
         return (
-                <form className="DefaultPages_ROOT" onSubmit={this.submit}>
+                <form className="DefaultPages_ROOT" onSubmit={e=>{e.preventDefault(); this.submit()}}>
                     <Typography align="center">Fale um pouco sobre você:</Typography>
                     <MaskedTextField
                         onChange={this.change}

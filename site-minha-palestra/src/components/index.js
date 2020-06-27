@@ -9,6 +9,7 @@ import ResponsiveDividerBackButton from "./ResponsiveDividerBackButton";
 import Modal from "./Modal";
 import DialogPronto from "./DialogPronto";
 import Navigation from "./Navigation";
+import AppBar from "./AppBar";
 import FloatingBox from "./FloatingBox";
 import Carregamento from "./Carregamento";
 import SelectibleList from "./SelectibleList";
@@ -30,4 +31,5 @@ export {
     Carregamento,
     SelectibleList,
     LeituraButton,
+    AppBar,
 }

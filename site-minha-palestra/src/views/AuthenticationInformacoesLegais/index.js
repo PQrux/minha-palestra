@@ -20,7 +20,7 @@ export default class AuthenticationInformacoesLegais extends Authentication {
     }
     renderWrite() {
         return (
-                <form className="DefaultPages_ROOT" onSubmit={this.submit}>
+                <form className="DefaultPages_ROOT" onSubmit={e =>{e.preventDefault();this.submit()}}>
                     <Typography align="center">Só precisamos de mais algumas informações:</Typography>
                     <MaskedTextField
                         onChange={this.change}
