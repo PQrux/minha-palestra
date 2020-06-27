@@ -2,7 +2,7 @@ import { Box } from '@material-ui/core';
 import { Event, History, LiveTv, Place, Settings } from '@material-ui/icons';
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Carregamento, Navigation, AppBar } from '../components';
+import { Carregamento, Navigation } from '../components';
 import { DialogHelper, UsuarioHelper } from '../services';
 import { EspacosDeApresentacao, Eventos, MenuConfiguracoes, Palestras, Usuarios } from "../views";
 
