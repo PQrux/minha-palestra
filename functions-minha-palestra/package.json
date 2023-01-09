@@ -13,8 +13,8 @@
     "updatemodels": "cp -r ../models-minha-palestra/* ./models-minha-palestra && npm install models-minha-palestra"
   },
   "dependencies": {
-    "firebase-admin": "^8.0.0",
-    "firebase-functions": "^3.1.0",
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^3.24.1",
     "html-pdf": "^2.2.0",
     "jsdom": "^16.2.2",
     "models-minha-palestra": "file:models-minha-palestra",
